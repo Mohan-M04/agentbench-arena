@@ -55,6 +55,15 @@ async def lifespan(app: FastAPI):
                     model="gpt-4o-mini",
                     max_steps=8,
                     config={"retry_policy": {"max_retries": 3, "backoff": "exponential"}}
+                ),
+                Agent(
+                    id="agent-webhook-04",
+                    name="External Framework Webhook",
+                    agent_type="external_webhook",
+                    description="Benchmarks any external agent running outside the repository via HTTP POST.",
+                    model="external",
+                    max_steps=10,
+                    config={"endpoint_url": "http://localhost:9000/agent/act"}
                 )
             ]
             for a in default_agents:

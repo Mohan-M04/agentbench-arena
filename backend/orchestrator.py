@@ -9,6 +9,7 @@ from metrics_engine import MetricsEngine
 from agents.react_agent import DirectReActAgent
 from agents.langgraph_agent import LangGraphAgent
 from agents.custom_json_agent import CustomJsonAgent
+from agents.webhook_agent import HttpWebhookAgent
 
 class BenchmarkOrchestrator:
     def __init__(self, db: Session):
@@ -16,7 +17,8 @@ class BenchmarkOrchestrator:
         self.agent_registry = {
             "agent-react-01": DirectReActAgent(),
             "agent-langgraph-02": LangGraphAgent(),
-            "agent-custom-03": CustomJsonAgent()
+            "agent-custom-03": CustomJsonAgent(),
+            "agent-webhook-04": HttpWebhookAgent()
         }
 
     async def execute_suite_run(
