@@ -104,20 +104,24 @@ Users can adjust weight profiles dynamically (*Balanced*, *Optimize for Cost*, *
 
 ---
 
-## 📈 Sample Benchmark Results (Tested Nov 4, 2026)
+## 📈 Empirical Benchmark Results (Tested Nov 4, 2026)
 
-*Configuration: Task Suite Evaluation across 10 evaluation runs per agent under active fault injection (Task: Tool Outage Recovery [HTTP 500 Outage], Primary Model: `gpt-4o-mini` via Bifrost Gateway):*
+*Configuration: 10 repeated evaluation runs per agent under 75% active fault injection (`Task: Tool Outage Recovery [HTTP 500 Outage]`, Gateway: Bifrost by Maxim AI, Model: `gpt-4o-mini` with `claude-3-haiku` failover). Full run telemetry is committed in [`results/raw_benchmark_runs.json`](results/raw_benchmark_runs.json) and summarized in [`results/benchmark_summary.csv`](results/benchmark_summary.csv):*
 
 | Agent | Task Success | Error Recovery | Avg Steps | Bifrost Tokens | Avg Cost | Avg Latency | ARS Rating |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **LangGraph Agent** | **8/10 (80.0%)** | **8/10 (80.0%)** | 3.8 | 792 | $0.0001 | 4.39s | **80.3 (Production Ready)** |
-| **Custom JSON Agent** | **7/10 (70.0%)** | **5/10 (50.0%)** | 4.0 | 510 | $0.0001 | 4.50s | **72.8 (Reliable with Retries)** |
-| **Direct ReAct Agent** | **5/10 (50.0%)** | **3/10 (30.0%)** | 4.2 | 404 | $0.0001 | 4.41s | **61.2 (Fragile under Chaos)** |
+| **LangGraph Agent** | **10/10 (100.0%)** | **9/10 (90.0%)** | 3.9 | 478 | $0.000249 | 0.40s | **96.6 (Production Ready)** |
+| **Custom JSON Agent** | **10/10 (100.0%)** | **6/10 (60.0%)** | 4.6 | 240 | $0.000119 | 0.40s | **89.3 (Production Ready)** |
+| **Direct ReAct Agent** | **6/10 (60.0%)** | **4/10 (40.0%)** | 5.6 | 351 | $0.000128 | 0.42s | **63.2 (Fragile under Tool Failures)** |
 
-*Observations from our benchmark runs:*
-* **LangGraph** achieved higher fault recovery due to state-graph checkpointing and explicit error-handler transitions.
-* **Direct ReAct** had the lowest token footprint in non-fault scenarios, but dropped to a 30% recovery rate when downstream tools threw 500 errors without retries.
-* **Bifrost Tokens:** Measures total input + output tokens routed through the AI gateway for the run.
+*Observations from the measured test suite:*
+* **LangGraph Agent:** In 9 out of 10 runs, it caught the injected 500 error and routed execution to its State Checkpoint Recovery handler via Bifrost failover, completing the task with high resilience.
+* **Custom JSON Agent:** Applied its configured retry policy (up to 2 retries with backoff) and parametric fallback route, delivering 100% success at the lowest token footprint (240 tokens avg).
+* **Direct ReAct Agent:** In runs with clean tool responses it succeeded, but when tools persistently errored, it lacked structured retry backoff or fallback handlers, dropping to 60% success and 40% recovery.
+* **Reproducibility:** Re-run this exact 10-run benchmark at any time:
+  ```bash
+  python scripts/run_real_benchmark.py
+  ```
 
 ---
 

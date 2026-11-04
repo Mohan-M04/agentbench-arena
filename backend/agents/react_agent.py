@@ -14,7 +14,7 @@ class DirectReActAgent(AgentAdapter):
         super().__init__(agent_id, name, config)
         self.bifrost = BifrostGateway()
 
-    async def run(self, task: Dict[str, Any], tools: ToolSandbox, run_config: Dict[str, Any]) -> AgentRunResult:
+    def run_sync(self, task: Dict[str, Any], tools: ToolSandbox, run_config: Dict[str, Any]) -> AgentRunResult:
         start_time = time.time()
         traces = []
         total_tokens = 0
@@ -24,7 +24,7 @@ class DirectReActAgent(AgentAdapter):
         step = 1
 
         # 1. Reason: Formulate plan via Bifrost
-        reason_res = await self.bifrost.route_completion(
+        reason_res = self.bifrost.route_completion_sync(
             messages=[
                 {"role": "system", "content": "You are a ReAct agent. Reason step-by-step and determine which tool to execute."},
                 {"role": "user", "content": task["prompt"]}
@@ -56,7 +56,7 @@ class DirectReActAgent(AgentAdapter):
         step += 1
         tool_calls_count += 1
 
-        tool_res = await tools.execute_tool(target_tool, tool_args)
+        tool_res = tools.execute_tool_sync(target_tool, tool_args)
 
         # 3. Observe & Handle Failures
         if tool_res["status"] == "error":
@@ -68,27 +68,43 @@ class DirectReActAgent(AgentAdapter):
             ))
             step += 1
 
-            # Check if agent has retry / fallback capability
-            if run_config.get("chaos", {}).get("provider_outage") or tool_res.get("error_code") == 500:
-                recovered = True
-                traces.append(StepTrace(
-                    step_number=step,
-                    action_type="RECOVERY",
-                    content="ReAct agent caught tool outage: Triggering Bifrost fallback provider for local synthesis.",
-                    latency_ms=0.0
-                ))
-                step += 1
+            # Standard ReAct loop feeds the error observation back into reasoning
+            replan_res = self.bifrost.route_completion_sync(
+                messages=[
+                    {"role": "system", "content": "You are a ReAct agent. A downstream tool failed with an error. Formulate your next thought."},
+                    {"role": "user", "content": f"Tool error: {tool_res.get('data')}. Objective: {task['prompt']}"}
+                ]
+            )
+            total_tokens += replan_res["total_tokens"]
+            total_cost += replan_res["cost_usd"]
+            traces.append(StepTrace(
+                step_number=step,
+                action_type="THOUGHT",
+                content=f"ReAct reasoning after error: {replan_res['content'][:140]}...",
+                model_provider=replan_res["model"],
+                latency_ms=replan_res["latency_ms"],
+                tokens=replan_res["total_tokens"],
+                cost_usd=replan_res["cost_usd"]
+            ))
+            step += 1
 
-                # Failover synthesis via Bifrost
-                synth_res = await self.bifrost.route_completion(
-                    messages=[{"role": "user", "content": f"Synthesize fallback answer for: {task['prompt']}"}],
-                    force_failover=True
-                )
-                total_tokens += synth_res["total_tokens"]
-                total_cost += synth_res["cost_usd"]
-                final_answer = synth_res["content"]
+            # Without structured state graph or backoff, naive ReAct attempts an unhandled repeat call:
+            traces.append(StepTrace(
+                step_number=step,
+                action_type="TOOL_CALL",
+                content=f"ReAct re-invoking '{target_tool}' without backoff policy...",
+                latency_ms=0.0
+            ))
+            step += 1
+            tool_calls_count += 1
+            retry_res = tools.execute_tool_sync(target_tool, tool_args)
+
+            if retry_res["status"] == "success":
+                recovered = True
+                final_answer = f"ReAct agent recovered after second attempt: {str(retry_res.get('data'))[:150]}"
             else:
-                final_answer = "Failed to complete task due to unhandled tool error."
+                recovered = False
+                final_answer = f"Task aborted: Tool '{target_tool}' persistently failed with {retry_res.get('data')}."
         else:
             data = tool_res.get("data", {})
             traces.append(StepTrace(
@@ -100,7 +116,7 @@ class DirectReActAgent(AgentAdapter):
             step += 1
 
             # Final answer synthesis
-            final_res = await self.bifrost.route_completion(
+            final_res = self.bifrost.route_completion_sync(
                 messages=[
                     {"role": "system", "content": "Produce final concise answer based on observed tool data."},
                     {"role": "user", "content": f"Task: {task['prompt']}\nData: {data}"}
@@ -119,7 +135,7 @@ class DirectReActAgent(AgentAdapter):
 
         duration = round(time.time() - start_time, 2)
         success = (tool_res["status"] == "success") or recovered
-        score = 92.0 if (success and recovered) else (85.0 if success else 25.0)
+        score = 90.0 if (success and recovered) else (85.0 if success else 20.0)
 
         return AgentRunResult(
             agent_id=self.agent_id,
@@ -135,6 +151,9 @@ class DirectReActAgent(AgentAdapter):
             tool_failure_recovery=recovered,
             traces=traces
         )
+
+    async def run(self, task: Dict[str, Any], tools: ToolSandbox, run_config: Dict[str, Any]) -> AgentRunResult:
+        return self.run_sync(task, tools, run_config)
 
     def _determine_args(self, tool_name: str, prompt: str) -> Dict[str, Any]:
         p_lower = prompt.lower()

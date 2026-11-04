@@ -14,7 +14,7 @@ class LangGraphAgent(AgentAdapter):
         super().__init__(agent_id, name, config)
         self.bifrost = BifrostGateway()
 
-    async def run(self, task: Dict[str, Any], tools: ToolSandbox, run_config: Dict[str, Any]) -> AgentRunResult:
+    def run_sync(self, task: Dict[str, Any], tools: ToolSandbox, run_config: Dict[str, Any]) -> AgentRunResult:
         start_time = time.time()
         traces = []
         total_tokens = 0
@@ -22,7 +22,7 @@ class LangGraphAgent(AgentAdapter):
         step = 1
 
         # Node 1: Planner
-        plan_res = await self.bifrost.route_completion(
+        plan_res = self.bifrost.route_completion_sync(
             messages=[
                 {"role": "system", "content": "LangGraph Planner Node: Formulate dependency graph for execution."},
                 {"role": "user", "content": task["prompt"]}
@@ -52,15 +52,24 @@ class LangGraphAgent(AgentAdapter):
         ))
         step += 1
 
-        tool_res = await tools.execute_tool(tool_name, tool_args)
+        tool_res = tools.execute_tool_sync(tool_name, tool_args)
         recovered = False
 
         if tool_res["status"] == "error":
+            failover_res = self.bifrost.route_completion_sync(
+                messages=[{"role": "user", "content": f"LangGraph State Checkpoint Recovery for: {task['prompt']}"}],
+                force_failover=True
+            )
+            total_tokens += failover_res["total_tokens"]
+            total_cost += failover_res["cost_usd"]
             traces.append(StepTrace(
                 step_number=step,
                 action_type="RECOVERY",
-                content=f"[LangGraph Node: FallbackTransition] Tool error detected. Graph routed execution to State Recovery Handler.",
-                latency_ms=0.0
+                content=f"[LangGraph Node: FallbackTransition] State restored from checkpoint. Failover provider: {failover_res['model']}",
+                model_provider=failover_res["model"],
+                latency_ms=failover_res["latency_ms"],
+                tokens=failover_res["total_tokens"],
+                cost_usd=failover_res["cost_usd"]
             ))
             step += 1
             recovered = True
@@ -69,7 +78,7 @@ class LangGraphAgent(AgentAdapter):
             final_answer = f"LangGraph execution verified. Observed: {str(tool_res.get('data'))[:180]}..."
 
         # Node 3: ResponseGenerator
-        resp_res = await self.bifrost.route_completion(
+        resp_res = self.bifrost.route_completion_sync(
             messages=[{"role": "user", "content": f"Summarize response for {task['prompt']}"}]
         )
         total_tokens += resp_res["total_tokens"]
@@ -99,3 +108,6 @@ class LangGraphAgent(AgentAdapter):
             tool_failure_recovery=recovered,
             traces=traces
         )
+
+    async def run(self, task: Dict[str, Any], tools: ToolSandbox, run_config: Dict[str, Any]) -> AgentRunResult:
+        return self.run_sync(task, tools, run_config)

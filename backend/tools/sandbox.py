@@ -36,13 +36,11 @@ class ToolSandbox:
             "tavily_extract": self.tavily.extract
         }
 
-    async def execute_tool(self, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
+    def execute_tool_sync(self, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
         start_time = time.time()
         status = "success"
         output = {}
-        error_msg = None
 
-        # 1. Controlled Failure Injection: Tool Unavailable
         if self.chaos.get("tool_unavailable"):
             latency = round((time.time() - start_time) * 1000, 2)
             log_entry = {
@@ -57,7 +55,6 @@ class ToolSandbox:
             self.tool_logs.append(log_entry)
             return {"status": "error", "error_code": 503, "data": log_entry["raw_output"]}
 
-        # 2. Controlled Failure Injection: HTTP 500 Outage
         if self.chaos.get("inject_500") and random.random() < self.chaos.get("error_rate", 0.8):
             latency = round((time.time() - start_time) * 1000, 2)
             log_entry = {
@@ -72,7 +69,6 @@ class ToolSandbox:
             self.tool_logs.append(log_entry)
             return {"status": "error", "error_code": 500, "data": log_entry["raw_output"]}
 
-        # 3. Controlled Failure Injection: Malformed JSON
         if self.chaos.get("inject_malformed_json"):
             latency = round((time.time() - start_time) * 1000, 2)
             log_entry = {
@@ -87,12 +83,10 @@ class ToolSandbox:
             self.tool_logs.append(log_entry)
             return {"status": "error", "error_code": 422, "data": "Malformed JSON payload from tool"}
 
-        # 4. Latency Injection
         delay = self.chaos.get("latency_seconds", 0.0)
         if delay > 0:
-            await asyncio.sleep(delay)
+            time.sleep(delay)
 
-        # Execute registered tool
         handler = self.registry.get(tool_name)
         if not handler:
             status = "error"
@@ -104,7 +98,6 @@ class ToolSandbox:
                 status = "error"
                 output = {"error": f"Execution error in {tool_name}: {str(e)}"}
 
-        # 5. Plausible but incorrect data / Stale injection
         if self.chaos.get("inject_stale_data") and isinstance(output, dict):
             output["_stale_warning"] = "Data drift detected: outdated rate applied."
 
@@ -120,3 +113,6 @@ class ToolSandbox:
         }
         self.tool_logs.append(log_entry)
         return {"status": status, "data": output}
+
+    async def execute_tool(self, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
+        return self.execute_tool_sync(tool_name, arguments)

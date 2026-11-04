@@ -1,0 +1,4 @@
+agent_id,agent_name,runs,success_count,success_rate_pct,recovery_count,recovery_rate_pct,avg_steps,avg_tokens,avg_cost_usd,avg_latency_sec,ars_score,verdict
+agent-langgraph-02,LangGraph Agent,10,10,100.0,9,90.0,3.9,478,0.000249,0.4,96.6,Production Ready (Enterprise Grade)
+agent-custom-03,Custom JSON Agent,10,10,100.0,6,60.0,4.6,240,0.000119,0.4,89.3,Production Ready (Enterprise Grade)
+agent-react-01,Direct ReAct Agent,10,6,60.0,4,40.0,5.6,351,0.000128,0.42,63.2,Fragile under Tool Failures

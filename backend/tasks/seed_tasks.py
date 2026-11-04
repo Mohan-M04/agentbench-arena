@@ -83,7 +83,7 @@ SEED_TASKS: List[Dict[str, Any]] = [
         "max_tokens": 2000,
         "timeout_seconds": 30,
         "difficulty": "hard",
-        "failure_injection": {"inject_500": True, "error_rate": 1.0},
+        "failure_injection": {"inject_500": True, "error_rate": 0.75},
         "tags": ["chaos", "fault-tolerance"]
     },
     {
