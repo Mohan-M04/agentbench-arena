@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  agentbench-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: agentbench-arena-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./agentbench.db
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - BIFROST_HOST=${BIFROST_HOST:-http://bifrost-gateway:8080}
+      - BIFROST_API_KEY=${BIFROST_API_KEY:-bifrost-default-key}
+    volumes:
+      - ./backend:/app
+      - ./frontend:/frontend
+    restart: unless-stopped
+
+  bifrost-gateway:
+    image: maximhq/bifrost:latest
+    container_name: agentbench-bifrost
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+    restart: unless-stopped
