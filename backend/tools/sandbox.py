@@ -20,6 +20,7 @@ class ToolSandbox:
         self.chaos = chaos_config or {}
         self.tavily = TavilyTools()
         self.tool_logs = []
+        self.call_counts: Dict[str, int] = {}
         
         self.registry: Dict[str, Callable] = {
             "calculator": tool_calculator,
@@ -55,19 +56,29 @@ class ToolSandbox:
             self.tool_logs.append(log_entry)
             return {"status": "error", "error_code": 503, "data": log_entry["raw_output"]}
 
-        if self.chaos.get("inject_500") and random.random() < self.chaos.get("error_rate", 0.8):
-            latency = round((time.time() - start_time) * 1000, 2)
-            log_entry = {
-                "tool_name": tool_name,
-                "input_arguments": arguments,
-                "raw_output": {"error": f"HTTP 500 Internal Server Error in {tool_name}"},
-                "status": "error",
-                "latency_ms": latency,
-                "retry_count": 0,
-                "cost_usd": 0.0
-            }
-            self.tool_logs.append(log_entry)
-            return {"status": "error", "error_code": 500, "data": log_entry["raw_output"]}
+        # Call counter for transient fault tracking
+        call_count = self.call_counts.get(tool_name, 0) + 1
+        self.call_counts[tool_name] = call_count
+
+        # 2. Controlled Failure Injection: HTTP 500 Outage (Supports transient and persistent modes)
+        if self.chaos.get("inject_500"):
+            is_transient = self.chaos.get("fault_type") == "transient" or self.chaos.get("transient_failures", 0) > 0
+            transient_limit = self.chaos.get("transient_failures", 1)
+            
+            should_fail = (call_count <= transient_limit) if is_transient else (random.random() < self.chaos.get("error_rate", 1.0))
+            if should_fail:
+                latency = round((time.time() - start_time) * 1000, 2)
+                log_entry = {
+                    "tool_name": tool_name,
+                    "input_arguments": arguments,
+                    "raw_output": {"error": f"HTTP 500 Internal Server Error in {tool_name} (call #{call_count})"},
+                    "status": "error",
+                    "latency_ms": latency,
+                    "retry_count": call_count - 1,
+                    "cost_usd": 0.0
+                }
+                self.tool_logs.append(log_entry)
+                return {"status": "error", "error_code": 500, "data": log_entry["raw_output"]}
 
         if self.chaos.get("inject_malformed_json"):
             latency = round((time.time() - start_time) * 1000, 2)

@@ -91,9 +91,13 @@ Rather than reporting disconnected metrics, AgentBench Arena computes a single 0
 $$\text{ARS} = (\text{Success Rate} \times 0.35) + (\text{Recovery Rate} \times 0.25) + (\text{Cost Score} \times 0.15) + (\text{Speed Score} \times 0.15) + (\text{Consistency} \times 0.10)$$
 
 *Where:*
+* $\text{Recovery Rate} = (\text{Fault Recoveries} / \text{Total Runs}) \times 100$ (e.g., $7/10 = 70.0\%$)
 * $\text{Cost Score} = \max(10, \min(100, 100 - (\text{Avg Cost} \times 8000)))$
 * $\text{Speed Score} = \max(20, \min(100, 100 - (\text{Avg Latency} \times 10)))$
-* $\text{Consistency} = \max(30, 100 - (\text{Variance} \times 2))$
+* $\text{Consistency} = \max(30, 100 - (\text{Variance} \times 2))$ *(In deterministic simulation mode, variance is 0, so consistency defaults to 100 for all agents)*
+
+*Formula Verification (LangGraph Example):*  
+$\text{ARS} = (100.0 \times 0.35) + (70.0 \times 0.25) + (98.2 \times 0.15) + (96.3 \times 0.15) + (100.0 \times 0.10) = 35.0 + 17.5 + 14.73 + 14.45 + 10.0 = \mathbf{91.7}$
 
 Users can adjust weight profiles dynamically (*Balanced*, *Optimize for Cost*, *Optimize for Recovery*).
 
@@ -119,7 +123,7 @@ Users can adjust weight profiles dynamically (*Balanced*, *Optimize for Cost*, *
 *Observations from the platform validation suite:*
 * **Identical Conditions:** Runs 1, 2, 4, 5, 6, 8, and 9 encountered a persistent HTTP 500 tool outage (`error_rate = 1.0` during fault runs) for all agents; runs 3, 7, and 10 were clean baseline runs.
 * **Persistent Outages Require Fallback:** Because the fault is persistent during an outage run, simply retrying the same broken endpoint will fail. Succeeded agents either route away to state-checkpoint handlers (LangGraph), trigger schema fallback synthesis (Custom JSON), or switch to parametric fallback reasoning (ReAct w/ Fallback).
-* **Parity Between Resilient Architectures:** The ARS scores for the three hedged architectures (91.7, 91.6, 91.9) are essentially tied (within 0.3 points), demonstrating that different frameworks achieve comparable resilience when equipped with recovery policies.
+* **Key Takeaway:** The platform correctly separates agents with error handling (state checkpoints, schema retries, parametric fallbacks) from agents without it, under reproducible, identical faults. The ARS scores for the three hedged architectures (91.7, 91.6, 91.9) demonstrate parity when equipped with recovery policies, while unhedged loops (42.7) fail under persistent faults.
 * **Naive ReAct Baseline:** Demonstrates why unhedged agents fail in production: without backoff or fallback handlers, it repeated the failing call and aborted on all 7 fault runs.
 * **External Webhook (Unranked):** Sits outside the leaderboard as a functional connectivity proof that external agents on port 9000 can be benchmarked over HTTP.
 * **Reproducibility:** Re-run this exact seeded 10-run benchmark at any time:

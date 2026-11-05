@@ -99,7 +99,7 @@
 
     <!-- Partner Telemetry Pills & Mode Indicator -->
     <div class="flex items-center space-x-3">
-      <div class="flex items-center space-x-2 text-xs bg-amber-950/70 border border-amber-500/40 rounded-full px-3 py-1 text-amber-300 font-mono text-[10px] font-bold tracking-wider">
+      <div id="gateway-status-pill" class="flex items-center space-x-2 text-xs bg-amber-950/70 border border-amber-500/40 rounded-full px-3 py-1 text-amber-300 font-mono text-[10px] font-bold tracking-wider">
         <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
         <span>GATEWAY: SIMULATION MODE</span>
       </div>
@@ -881,9 +881,30 @@
       alert("Downloading complete JSON & Markdown Benchmark Audit Report...");
     }
 
+    async function checkGatewayStatus() {
+      try {
+        const res = await fetch("/api/gateway/status");
+        if (res.ok) {
+          const data = await res.json();
+          const pill = document.getElementById("gateway-status-pill");
+          if (pill) {
+            if (data.is_live) {
+              pill.className = "flex items-center space-x-2 text-xs bg-emerald-950/70 border border-emerald-500/40 rounded-full px-3 py-1 text-emerald-300 font-mono text-[10px] font-bold tracking-wider";
+              pill.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>GATEWAY: LIVE BIFROST PROXY</span>`;
+            } else {
+              pill.className = "flex items-center space-x-2 text-xs bg-amber-950/70 border border-amber-500/40 rounded-full px-3 py-1 text-amber-300 font-mono text-[10px] font-bold tracking-wider";
+              pill.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span><span>GATEWAY: SIMULATION MODE</span>`;
+            }
+          }
+        }
+      } catch (e) {}
+    }
+
     window.onload = () => {
       lucide.createIcons();
       loadTasks();
+      checkGatewayStatus();
+      setInterval(checkGatewayStatus, 5000);
     };
   </script>
 </body>

@@ -135,6 +135,18 @@ def health():
         }
     }
 
+@app.get("/api/gateway/status")
+def gateway_status():
+    from bifrost_gateway import _is_gateway_listening
+    host = os.getenv("BIFROST_HOST", "http://localhost:8080")
+    is_live = _is_gateway_listening(host)
+    return {
+        "gateway": "Bifrost (Maxim AI)",
+        "host": host,
+        "is_live": is_live,
+        "mode": "live_proxy" if is_live else "simulation_mode"
+    }
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
