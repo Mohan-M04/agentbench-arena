@@ -11,6 +11,8 @@ class StepTrace(BaseModel):
     latency_ms: float = 0.0
     tokens: int = 0
     cost_usd: float = 0.0
+    mode: str = "SIMULATED"
+    gateway: str = "Bifrost (Maxim AI)"
 
 class AgentRunResult(BaseModel):
     agent_id: str

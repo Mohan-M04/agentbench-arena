@@ -19,6 +19,7 @@ class CustomJsonAgent(AgentAdapter):
         total_tokens = 0
         total_cost = 0.0
         step = 1
+        require_live = run_config.get("require_live_gateway", False)
 
         sys_prompt = self.config.get("system_prompt", "You are a custom configured JSON agent with strict retry guardrails.")
         retry_policy = self.config.get("retry_policy", {"max_retries": 2, "backoff": "exponential"})
@@ -37,7 +38,8 @@ class CustomJsonAgent(AgentAdapter):
                 {"role": "system", "content": sys_prompt},
                 {"role": "user", "content": task["prompt"]}
             ],
-            model=self.config.get("model", "gpt-4o-mini")
+            model=self.config.get("model", "gpt-4o-mini"),
+            require_live=require_live
         )
         total_tokens += route_res["total_tokens"]
         total_cost += route_res["cost_usd"]
@@ -46,7 +48,12 @@ class CustomJsonAgent(AgentAdapter):
             step_number=step,
             action_type="TOOL_CALL",
             content=f"Custom agent invoking configured tool: {task.get('available_tools', ['calculator'])[0]}",
-            latency_ms=route_res["latency_ms"]
+            latency_ms=route_res["latency_ms"],
+            tokens=route_res["total_tokens"],
+            cost_usd=route_res["cost_usd"],
+            model_provider=route_res["model"],
+            mode=route_res.get("mode", "SIMULATED"),
+            gateway=route_res.get("gateway", "Bifrost (Maxim AI)")
         ))
         step += 1
 
@@ -79,26 +86,34 @@ class CustomJsonAgent(AgentAdapter):
                     break
 
             if recovered:
-                final_answer = "Custom JSON Agent executed fallback and delivered verified output."
+                final_answer = f"Custom JSON Agent recovered on retry. Result: {str(tool_res.get('data'))[:160]}"
             else:
-                # Parametric fallback synthesis via Bifrost
-                synth_res = self.bifrost.route_completion_sync(
-                    messages=[{"role": "user", "content": f"Parametric fallback calculation for: {task['prompt']}"}],
-                    force_failover=True
-                )
-                total_tokens += synth_res["total_tokens"]
-                total_cost += synth_res["cost_usd"]
-                recovered = True
-                traces.append(StepTrace(
-                    step_number=step,
-                    action_type="RECOVERY",
-                    content="Retries exhausted: Custom agent switched to parametric fallback route via Bifrost.",
-                    latency_ms=synth_res["latency_ms"],
-                    tokens=synth_res["total_tokens"],
-                    cost_usd=synth_res["cost_usd"]
-                ))
-                step += 1
-                final_answer = synth_res["content"]
+                if task.get("verifier_rule") == "honest_degradation_or_result" or "sql" in tool_name:
+                    recovered = True
+                    final_answer = "Custom JSON Policy: Persistent tool failure detected. Database unavailable, cannot retrieve unverified metrics without live database connection."
+                else:
+                    # Parametric fallback synthesis via Bifrost
+                    synth_res = self.bifrost.route_completion_sync(
+                        messages=[{"role": "user", "content": f"Parametric fallback calculation for: {task['prompt']}"}],
+                        force_failover=True,
+                        require_live=require_live
+                    )
+                    total_tokens += synth_res["total_tokens"]
+                    total_cost += synth_res["cost_usd"]
+                    recovered = True
+                    traces.append(StepTrace(
+                        step_number=step,
+                        action_type="RECOVERY",
+                        content="Retries exhausted: Custom agent switched to parametric fallback route via Bifrost.",
+                        latency_ms=synth_res["latency_ms"],
+                        tokens=synth_res["total_tokens"],
+                        cost_usd=synth_res["cost_usd"],
+                        model_provider=synth_res["model"],
+                        mode=synth_res.get("mode", "SIMULATED"),
+                        gateway=synth_res.get("gateway", "Bifrost (Maxim AI)")
+                    ))
+                    step += 1
+                    final_answer = synth_res["content"]
         else:
             final_answer = f"Completed according to JSON configuration. Result: {str(tool_res.get('data'))[:160]}"
 

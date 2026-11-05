@@ -37,11 +37,22 @@ def run_live_benchmark(runs_per_agent: int = 3):
     print("=" * 90, flush=True)
 
     if not is_live:
-        print("\n⚠️ WARNING: Bifrost daemon is not listening on port 8080.")
+        print("\n❌ ERROR: Bifrost daemon is not listening on port 8080.")
         print("To start Bifrost before running this script, run:")
         print("  npx -y @maximhq/bifrost")
         print("or")
         print("  docker run -p 8080:8080 maximhq/bifrost\n")
+        sys.exit(1)
+
+    has_provider_key = bool(os.getenv("OPENAI_API_KEY") or os.getenv("ANTHROPIC_API_KEY"))
+    if not has_provider_key:
+        print("\n⚠️ PRE-FLIGHT CHECK: No OPENAI_API_KEY or ANTHROPIC_API_KEY detected in environment.")
+        print("Bifrost requires upstream provider credentials to execute real model completions.")
+        print("To configure Bifrost:")
+        print("  1. Add OPENAI_API_KEY=sk-... to backend/.env (or your terminal session)")
+        print("  2. Or configure your provider keys directly in the Bifrost UI at http://localhost:8080")
+        print("\nHalting live benchmark runner until provider key is provided. (No silent fallback to simulation permitted).\n")
+        sys.exit(1)
 
     task = next((t for t in SEED_TASKS if t["id"] == "task-06-calculator-http-500"), None)
     if not task:
@@ -70,7 +81,7 @@ def run_live_benchmark(runs_per_agent: int = 3):
                 "error_rate": 1.0 if inject_fault else 0.0
             }
             sandbox = ToolSandbox(chaos_config=chaos_cfg)
-            run_config = {"repeated_runs": runs_per_agent, "chaos": chaos_cfg}
+            run_config = {"repeated_runs": runs_per_agent, "chaos": chaos_cfg, "require_live_gateway": True}
 
             res = agent_instance.run_sync(task, sandbox, run_config)
             elapsed = round(time.perf_counter() - t_start, 3)

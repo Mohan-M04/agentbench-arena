@@ -119,7 +119,22 @@ def run_benchmark():
                 "latency_seconds": gateway_latency_sec,
                 "final_answer": res.final_answer,
                 "verifier_explanation": verification["explanation"],
-                "traces_count": len(res.traces)
+                "mode": "SIMULATED",
+                "traces_count": len(res.traces),
+                "traces": [
+                    {
+                        "step": tr.step_number,
+                        "type": tr.action_type,
+                        "content": tr.content,
+                        "model": tr.model_provider,
+                        "latency_ms": tr.latency_ms,
+                        "tokens": tr.tokens,
+                        "cost_usd": tr.cost_usd,
+                        "mode": getattr(tr, "mode", "SIMULATED"),
+                        "gateway": getattr(tr, "gateway", "Bifrost (Maxim AI)")
+                    }
+                    for tr in res.traces
+                ]
             }
             agent_runs.append(run_record)
             all_raw_runs.append(run_record)

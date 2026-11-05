@@ -22,13 +22,15 @@ class DirectReActAgent(AgentAdapter):
         tool_calls_count = 0
         recovered = False
         step = 1
+        require_live = run_config.get("require_live_gateway", False)
 
         # 1. Reason: Formulate plan via Bifrost
         reason_res = self.bifrost.route_completion_sync(
             messages=[
                 {"role": "system", "content": "You are a ReAct agent. Reason step-by-step and determine which tool to execute."},
                 {"role": "user", "content": task["prompt"]}
-            ]
+            ],
+            require_live=require_live
         )
         total_tokens += reason_res["total_tokens"]
         total_cost += reason_res["cost_usd"]
@@ -39,7 +41,9 @@ class DirectReActAgent(AgentAdapter):
             model_provider=reason_res["model"],
             latency_ms=reason_res["latency_ms"],
             tokens=reason_res["total_tokens"],
-            cost_usd=reason_res["cost_usd"]
+            cost_usd=reason_res["cost_usd"],
+            mode=reason_res.get("mode", "SIMULATED"),
+            gateway=reason_res.get("gateway", "Bifrost (Maxim AI)")
         ))
         step += 1
 
@@ -67,44 +71,8 @@ class DirectReActAgent(AgentAdapter):
                 latency_ms=0.0
             ))
             step += 1
-
-            # Standard ReAct loop feeds the error observation back into reasoning
-            replan_res = self.bifrost.route_completion_sync(
-                messages=[
-                    {"role": "system", "content": "You are a ReAct agent. A downstream tool failed with an error. Formulate your next thought."},
-                    {"role": "user", "content": f"Tool error: {tool_res.get('data')}. Objective: {task['prompt']}"}
-                ]
-            )
-            total_tokens += replan_res["total_tokens"]
-            total_cost += replan_res["cost_usd"]
-            traces.append(StepTrace(
-                step_number=step,
-                action_type="THOUGHT",
-                content=f"ReAct reasoning after error: {replan_res['content'][:140]}...",
-                model_provider=replan_res["model"],
-                latency_ms=replan_res["latency_ms"],
-                tokens=replan_res["total_tokens"],
-                cost_usd=replan_res["cost_usd"]
-            ))
-            step += 1
-
-            # Without structured state graph or backoff, naive ReAct attempts an unhandled repeat call:
-            traces.append(StepTrace(
-                step_number=step,
-                action_type="TOOL_CALL",
-                content=f"ReAct re-invoking '{target_tool}' without backoff policy...",
-                latency_ms=0.0
-            ))
-            step += 1
-            tool_calls_count += 1
-            retry_res = tools.execute_tool_sync(target_tool, tool_args)
-
-            if retry_res["status"] == "success":
-                recovered = True
-                final_answer = f"ReAct agent recovered after second attempt: {str(retry_res.get('data'))[:150]}"
-            else:
-                recovered = False
-                final_answer = f"Task aborted: Tool '{target_tool}' persistently failed with {retry_res.get('data')}."
+            recovered = False
+            final_answer = f"Task aborted: Unhedged ReAct loop has no retry or fallback policy. Tool '{target_tool}' failed with error: {tool_res.get('data')}."
         else:
             data = tool_res.get("data", {})
             traces.append(StepTrace(
@@ -120,7 +88,8 @@ class DirectReActAgent(AgentAdapter):
                 messages=[
                     {"role": "system", "content": "Produce final concise answer based on observed tool data."},
                     {"role": "user", "content": f"Task: {task['prompt']}\nData: {data}"}
-                ]
+                ],
+                require_live=require_live
             )
             total_tokens += final_res["total_tokens"]
             total_cost += final_res["cost_usd"]
@@ -130,7 +99,11 @@ class DirectReActAgent(AgentAdapter):
             step_number=step,
             action_type="FINAL_ANSWER",
             content=f"Final Answer: {final_answer[:200]}...",
-            latency_ms=0.0
+            latency_ms=final_res["latency_ms"] if 'final_res' in locals() else 0.0,
+            tokens=final_res["total_tokens"] if 'final_res' in locals() else 0,
+            cost_usd=final_res["cost_usd"] if 'final_res' in locals() else 0.0,
+            mode=final_res.get("mode", "SIMULATED") if 'final_res' in locals() else "SIMULATED",
+            gateway=final_res.get("gateway", "Bifrost (Maxim AI)") if 'final_res' in locals() else "Bifrost (Maxim AI)"
         ))
 
         duration = round(time.time() - start_time, 2)

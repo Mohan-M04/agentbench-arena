@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "benchmark_date": "2026-11-05 19:28:18",
+    "benchmark_date": "2026-11-05 20:39:17",
     "task_id": "task-06-calculator-http-500",
     "task_name": "Tool Outage Recovery (HTTP 500)",
     "mode": "Gateway Simulation Mode (Deterministic Token/Cost & Simulated Model Responses)",
@@ -37,10 +37,57 @@
       "tool_calls": 1,
       "tokens": 494,
       "cost_usd": 0.000262,
-      "latency_seconds": 0.41,
+      "latency_seconds": 0.68,
       "final_answer": "LangGraph Agent recovered state using parametric memory checkpoint.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "RECOVERY",
+          "content": "[LangGraph Node: FallbackTransition] State restored from checkpoint. Failover provider: claude-3-haiku",
+          "model": "claude-3-haiku",
+          "latency_ms": 125.0,
+          "tokens": 159,
+          "cost_usd": 0.000127,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph Agent recovered state using parametric memory checkpoint.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 2,
@@ -56,10 +103,57 @@
       "tool_calls": 1,
       "tokens": 494,
       "cost_usd": 0.000262,
-      "latency_seconds": 0.41,
+      "latency_seconds": 0.68,
       "final_answer": "LangGraph Agent recovered state using parametric memory checkpoint.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "RECOVERY",
+          "content": "[LangGraph Node: FallbackTransition] State restored from checkpoint. Failover provider: claude-3-haiku",
+          "model": "claude-3-haiku",
+          "latency_ms": 125.0,
+          "tokens": 159,
+          "cost_usd": 0.000127,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph Agent recovered state using parametric memory checkpoint.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 3,
@@ -75,10 +169,46 @@
       "tool_calls": 1,
       "tokens": 335,
       "cost_usd": 0.000135,
-      "latency_seconds": 0.28,
+      "latency_seconds": 0.55,
       "final_answer": "LangGraph execution verified. Observed: {'expression': '250 * 1.15', 'result': 287.5}...",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 3
+      "mode": "SIMULATED",
+      "traces_count": 3,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph execution verified. Observed: {'expression': '250 * 1.15', 'result': 287.5}...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 4,
@@ -94,10 +224,57 @@
       "tool_calls": 1,
       "tokens": 494,
       "cost_usd": 0.000262,
-      "latency_seconds": 0.41,
+      "latency_seconds": 0.68,
       "final_answer": "LangGraph Agent recovered state using parametric memory checkpoint.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "RECOVERY",
+          "content": "[LangGraph Node: FallbackTransition] State restored from checkpoint. Failover provider: claude-3-haiku",
+          "model": "claude-3-haiku",
+          "latency_ms": 125.0,
+          "tokens": 159,
+          "cost_usd": 0.000127,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph Agent recovered state using parametric memory checkpoint.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 5,
@@ -113,10 +290,57 @@
       "tool_calls": 1,
       "tokens": 494,
       "cost_usd": 0.000262,
-      "latency_seconds": 0.41,
+      "latency_seconds": 0.68,
       "final_answer": "LangGraph Agent recovered state using parametric memory checkpoint.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "RECOVERY",
+          "content": "[LangGraph Node: FallbackTransition] State restored from checkpoint. Failover provider: claude-3-haiku",
+          "model": "claude-3-haiku",
+          "latency_ms": 125.0,
+          "tokens": 159,
+          "cost_usd": 0.000127,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph Agent recovered state using parametric memory checkpoint.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 6,
@@ -132,10 +356,57 @@
       "tool_calls": 1,
       "tokens": 494,
       "cost_usd": 0.000262,
-      "latency_seconds": 0.41,
+      "latency_seconds": 0.68,
       "final_answer": "LangGraph Agent recovered state using parametric memory checkpoint.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "RECOVERY",
+          "content": "[LangGraph Node: FallbackTransition] State restored from checkpoint. Failover provider: claude-3-haiku",
+          "model": "claude-3-haiku",
+          "latency_ms": 125.0,
+          "tokens": 159,
+          "cost_usd": 0.000127,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph Agent recovered state using parametric memory checkpoint.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 7,
@@ -151,10 +422,46 @@
       "tool_calls": 1,
       "tokens": 335,
       "cost_usd": 0.000135,
-      "latency_seconds": 0.28,
+      "latency_seconds": 0.55,
       "final_answer": "LangGraph execution verified. Observed: {'expression': '250 * 1.15', 'result': 287.5}...",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 3
+      "mode": "SIMULATED",
+      "traces_count": 3,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph execution verified. Observed: {'expression': '250 * 1.15', 'result': 287.5}...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 8,
@@ -170,10 +477,57 @@
       "tool_calls": 1,
       "tokens": 494,
       "cost_usd": 0.000262,
-      "latency_seconds": 0.41,
+      "latency_seconds": 0.68,
       "final_answer": "LangGraph Agent recovered state using parametric memory checkpoint.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "RECOVERY",
+          "content": "[LangGraph Node: FallbackTransition] State restored from checkpoint. Failover provider: claude-3-haiku",
+          "model": "claude-3-haiku",
+          "latency_ms": 125.0,
+          "tokens": 159,
+          "cost_usd": 0.000127,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph Agent recovered state using parametric memory checkpoint.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 9,
@@ -189,10 +543,57 @@
       "tool_calls": 1,
       "tokens": 494,
       "cost_usd": 0.000262,
-      "latency_seconds": 0.41,
+      "latency_seconds": 0.68,
       "final_answer": "LangGraph Agent recovered state using parametric memory checkpoint.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "RECOVERY",
+          "content": "[LangGraph Node: FallbackTransition] State restored from checkpoint. Failover provider: claude-3-haiku",
+          "model": "claude-3-haiku",
+          "latency_ms": 125.0,
+          "tokens": 159,
+          "cost_usd": 0.000127,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph Agent recovered state using parametric memory checkpoint.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 10,
@@ -208,10 +609,46 @@
       "tool_calls": 1,
       "tokens": 335,
       "cost_usd": 0.000135,
-      "latency_seconds": 0.28,
+      "latency_seconds": 0.55,
       "final_answer": "LangGraph execution verified. Observed: {'expression': '250 * 1.15', 'result': 287.5}...",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 3
+      "mode": "SIMULATED",
+      "traces_count": 3,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 272.5,
+          "tokens": 174,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "[LangGraph Node: ToolExecutor] Invoking 'calculator' with state params.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "FINAL_ANSWER",
+          "content": "[LangGraph Node: ResponseGenerator] Output verified: LangGraph execution verified. Observed: {'expression': '250 * 1.15', 'result': 287.5}...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 161,
+          "cost_usd": 6.6e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 1,
@@ -230,7 +667,76 @@
       "latency_seconds": 0.59,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 1/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 2/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RECOVERY",
+          "content": "Retries exhausted: Custom agent switched to parametric fallback route via Bifrost.",
+          "model": "claude-3-haiku",
+          "latency_ms": 315.0,
+          "tokens": 154,
+          "cost_usd": 0.000121,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 2,
@@ -249,7 +755,76 @@
       "latency_seconds": 0.59,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 1/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 2/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RECOVERY",
+          "content": "Retries exhausted: Custom agent switched to parametric fallback route via Bifrost.",
+          "model": "claude-3-haiku",
+          "latency_ms": 315.0,
+          "tokens": 154,
+          "cost_usd": 0.000121,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 3,
@@ -268,7 +843,43 @@
       "latency_seconds": 0.28,
       "final_answer": "Completed according to JSON configuration. Result: {'expression': '250 * 1.15', 'result': 287.5}",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 3
+      "mode": "SIMULATED",
+      "traces_count": 3,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Completed according to JSON configuration. Result: {'expression': '250 * 1.15', 'result': 287.5}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 4,
@@ -287,7 +898,76 @@
       "latency_seconds": 0.59,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 1/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 2/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RECOVERY",
+          "content": "Retries exhausted: Custom agent switched to parametric fallback route via Bifrost.",
+          "model": "claude-3-haiku",
+          "latency_ms": 315.0,
+          "tokens": 154,
+          "cost_usd": 0.000121,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 5,
@@ -306,7 +986,76 @@
       "latency_seconds": 0.59,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 1/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 2/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RECOVERY",
+          "content": "Retries exhausted: Custom agent switched to parametric fallback route via Bifrost.",
+          "model": "claude-3-haiku",
+          "latency_ms": 315.0,
+          "tokens": 154,
+          "cost_usd": 0.000121,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 6,
@@ -325,7 +1074,76 @@
       "latency_seconds": 0.59,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 1/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 2/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RECOVERY",
+          "content": "Retries exhausted: Custom agent switched to parametric fallback route via Bifrost.",
+          "model": "claude-3-haiku",
+          "latency_ms": 315.0,
+          "tokens": 154,
+          "cost_usd": 0.000121,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 7,
@@ -344,7 +1162,43 @@
       "latency_seconds": 0.28,
       "final_answer": "Completed according to JSON configuration. Result: {'expression': '250 * 1.15', 'result': 287.5}",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 3
+      "mode": "SIMULATED",
+      "traces_count": 3,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Completed according to JSON configuration. Result: {'expression': '250 * 1.15', 'result': 287.5}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 8,
@@ -363,7 +1217,76 @@
       "latency_seconds": 0.59,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 1/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 2/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RECOVERY",
+          "content": "Retries exhausted: Custom agent switched to parametric fallback route via Bifrost.",
+          "model": "claude-3-haiku",
+          "latency_ms": 315.0,
+          "tokens": 154,
+          "cost_usd": 0.000121,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 9,
@@ -382,7 +1305,76 @@
       "latency_seconds": 0.59,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 1/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "Custom JSON Agent retry attempt 2/2 with backoff...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RECOVERY",
+          "content": "Retries exhausted: Custom agent switched to parametric fallback route via Bifrost.",
+          "model": "claude-3-haiku",
+          "latency_ms": 315.0,
+          "tokens": 154,
+          "cost_usd": 0.000121,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 10,
@@ -401,7 +1393,43 @@
       "latency_seconds": 0.28,
       "final_answer": "Completed according to JSON configuration. Result: {'expression': '250 * 1.15', 'result': 287.5}",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 3
+      "mode": "SIMULATED",
+      "traces_count": 3,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[Custom JSON Agent] Loaded system prompt: 'You are a custom configured JSON agent with strict retry guardrails....'. Retry policy: {'max_retries': 2, 'backoff': 'exponential'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Custom agent invoking configured tool: calculator",
+          "model": "gpt-4o-mini",
+          "latency_ms": 280.0,
+          "tokens": 178,
+          "cost_usd": 7.1e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 3,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Completed according to JSON configuration. Result: {'expression': '250 * 1.15', 'result': 287.5}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 1,
@@ -420,7 +1448,87 @@
       "latency_seconds": 0.27,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 7
+      "mode": "SIMULATED",
+      "traces_count": 7,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' returned error: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 1/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 2/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "RECOVERY",
+          "content": "Retries failed: ReAct switched to parametric fallback synthesis via Bifrost failover provider.",
+          "model": "claude-3-haiku",
+          "latency_ms": 137.5,
+          "tokens": 181,
+          "cost_usd": 0.000142,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 7,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 2,
@@ -439,7 +1547,87 @@
       "latency_seconds": 0.27,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 7
+      "mode": "SIMULATED",
+      "traces_count": 7,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' returned error: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 1/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 2/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "RECOVERY",
+          "content": "Retries failed: ReAct switched to parametric fallback synthesis via Bifrost failover provider.",
+          "model": "claude-3-haiku",
+          "latency_ms": 137.5,
+          "tokens": 181,
+          "cost_usd": 0.000142,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 7,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 3,
@@ -458,7 +1646,43 @@
       "latency_seconds": 0.13,
       "final_answer": "[Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 3
+      "mode": "SIMULATED",
+      "traces_count": 3,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 4,
@@ -477,7 +1701,87 @@
       "latency_seconds": 0.27,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 7
+      "mode": "SIMULATED",
+      "traces_count": 7,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' returned error: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 1/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 2/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "RECOVERY",
+          "content": "Retries failed: ReAct switched to parametric fallback synthesis via Bifrost failover provider.",
+          "model": "claude-3-haiku",
+          "latency_ms": 137.5,
+          "tokens": 181,
+          "cost_usd": 0.000142,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 7,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 5,
@@ -496,7 +1800,87 @@
       "latency_seconds": 0.27,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 7
+      "mode": "SIMULATED",
+      "traces_count": 7,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' returned error: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 1/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 2/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "RECOVERY",
+          "content": "Retries failed: ReAct switched to parametric fallback synthesis via Bifrost failover provider.",
+          "model": "claude-3-haiku",
+          "latency_ms": 137.5,
+          "tokens": 181,
+          "cost_usd": 0.000142,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 7,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 6,
@@ -515,7 +1899,87 @@
       "latency_seconds": 0.27,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 7
+      "mode": "SIMULATED",
+      "traces_count": 7,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' returned error: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 1/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 2/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "RECOVERY",
+          "content": "Retries failed: ReAct switched to parametric fallback synthesis via Bifrost failover provider.",
+          "model": "claude-3-haiku",
+          "latency_ms": 137.5,
+          "tokens": 181,
+          "cost_usd": 0.000142,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 7,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 7,
@@ -534,7 +1998,43 @@
       "latency_seconds": 0.13,
       "final_answer": "[Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 3
+      "mode": "SIMULATED",
+      "traces_count": 3,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 8,
@@ -553,7 +2053,87 @@
       "latency_seconds": 0.27,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 7
+      "mode": "SIMULATED",
+      "traces_count": 7,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' returned error: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 1/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 2/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "RECOVERY",
+          "content": "Retries failed: ReAct switched to parametric fallback synthesis via Bifrost failover provider.",
+          "model": "claude-3-haiku",
+          "latency_ms": 137.5,
+          "tokens": 181,
+          "cost_usd": 0.000142,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 7,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 9,
@@ -572,7 +2152,87 @@
       "latency_seconds": 0.27,
       "final_answer": "[Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 7
+      "mode": "SIMULATED",
+      "traces_count": 7,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' returned error: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 1/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "RETRY_ATTEMPT",
+          "content": "ReAct applying backoff retry attempt 2/2...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "RECOVERY",
+          "content": "Retries failed: ReAct switched to parametric fallback synthesis via Bifrost failover provider.",
+          "model": "claude-3-haiku",
+          "latency_ms": 137.5,
+          "tokens": 181,
+          "cost_usd": 0.000142,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 7,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: claude-3-haiku]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 10,
@@ -591,7 +2251,43 @@
       "latency_seconds": 0.13,
       "final_answer": "[Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 3
+      "mode": "SIMULATED",
+      "traces_count": 3,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "[ReAct w/ Retry] Initial plan formulated for 'Tool Outage Recovery (HTTP 500)'.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 130.0,
+          "tokens": 178,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "ReAct invoking 'calculator' with args: {'expression': '250 * 1.15'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 1,
@@ -605,12 +2301,81 @@
       "recovered": false,
       "steps": 6,
       "tool_calls": 2,
-      "tokens": 350,
-      "cost_usd": 0.000126,
-      "latency_seconds": 0.45,
-      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator'}.",
+      "tokens": 362,
+      "cost_usd": 0.000132,
+      "latency_seconds": 0.47,
+      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}.",
       "verifier_explanation": "Agent failed to recover from fault.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' failed: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "THOUGHT",
+          "content": "ReAct reasoning after error: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 167.5,
+          "tokens": 196,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "TOOL_CALL",
+          "content": "ReAct re-invoking 'calculator' without backoff policy...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 2,
@@ -624,12 +2389,81 @@
       "recovered": false,
       "steps": 6,
       "tool_calls": 2,
-      "tokens": 350,
-      "cost_usd": 0.000126,
-      "latency_seconds": 0.45,
-      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator'}.",
+      "tokens": 362,
+      "cost_usd": 0.000132,
+      "latency_seconds": 0.47,
+      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}.",
       "verifier_explanation": "Agent failed to recover from fault.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' failed: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "THOUGHT",
+          "content": "ReAct reasoning after error: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 167.5,
+          "tokens": 196,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "TOOL_CALL",
+          "content": "ReAct re-invoking 'calculator' without backoff policy...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 3,
@@ -645,10 +2479,57 @@
       "tool_calls": 1,
       "tokens": 353,
       "cost_usd": 0.000135,
-      "latency_seconds": 0.31,
+      "latency_seconds": 0.51,
       "final_answer": "[Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION",
+          "content": "Tool output: {'expression': '120 * 3 + 45', 'result': 405}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 200.0,
+          "tokens": 187,
+          "cost_usd": 7.2e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 4,
@@ -662,12 +2543,81 @@
       "recovered": false,
       "steps": 6,
       "tool_calls": 2,
-      "tokens": 350,
-      "cost_usd": 0.000126,
-      "latency_seconds": 0.45,
-      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator'}.",
+      "tokens": 362,
+      "cost_usd": 0.000132,
+      "latency_seconds": 0.47,
+      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}.",
       "verifier_explanation": "Agent failed to recover from fault.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' failed: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "THOUGHT",
+          "content": "ReAct reasoning after error: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 167.5,
+          "tokens": 196,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "TOOL_CALL",
+          "content": "ReAct re-invoking 'calculator' without backoff policy...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 5,
@@ -681,12 +2631,81 @@
       "recovered": false,
       "steps": 6,
       "tool_calls": 2,
-      "tokens": 350,
-      "cost_usd": 0.000126,
-      "latency_seconds": 0.45,
-      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator'}.",
+      "tokens": 362,
+      "cost_usd": 0.000132,
+      "latency_seconds": 0.47,
+      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}.",
       "verifier_explanation": "Agent failed to recover from fault.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' failed: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "THOUGHT",
+          "content": "ReAct reasoning after error: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 167.5,
+          "tokens": 196,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "TOOL_CALL",
+          "content": "ReAct re-invoking 'calculator' without backoff policy...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 6,
@@ -700,12 +2719,81 @@
       "recovered": false,
       "steps": 6,
       "tool_calls": 2,
-      "tokens": 350,
-      "cost_usd": 0.000126,
-      "latency_seconds": 0.45,
-      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator'}.",
+      "tokens": 362,
+      "cost_usd": 0.000132,
+      "latency_seconds": 0.47,
+      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}.",
       "verifier_explanation": "Agent failed to recover from fault.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' failed: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "THOUGHT",
+          "content": "ReAct reasoning after error: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 167.5,
+          "tokens": 196,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "TOOL_CALL",
+          "content": "ReAct re-invoking 'calculator' without backoff policy...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 7,
@@ -721,10 +2809,57 @@
       "tool_calls": 1,
       "tokens": 353,
       "cost_usd": 0.000135,
-      "latency_seconds": 0.31,
+      "latency_seconds": 0.51,
       "final_answer": "[Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION",
+          "content": "Tool output: {'expression': '120 * 3 + 45', 'result': 405}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 200.0,
+          "tokens": 187,
+          "cost_usd": 7.2e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 8,
@@ -738,12 +2873,81 @@
       "recovered": false,
       "steps": 6,
       "tool_calls": 2,
-      "tokens": 350,
-      "cost_usd": 0.000126,
-      "latency_seconds": 0.45,
-      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator'}.",
+      "tokens": 362,
+      "cost_usd": 0.000132,
+      "latency_seconds": 0.47,
+      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}.",
       "verifier_explanation": "Agent failed to recover from fault.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' failed: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "THOUGHT",
+          "content": "ReAct reasoning after error: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 167.5,
+          "tokens": 196,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "TOOL_CALL",
+          "content": "ReAct re-invoking 'calculator' without backoff policy...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 9,
@@ -757,12 +2961,81 @@
       "recovered": false,
       "steps": 6,
       "tool_calls": 2,
-      "tokens": 350,
-      "cost_usd": 0.000126,
-      "latency_seconds": 0.45,
-      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator'}.",
+      "tokens": 362,
+      "cost_usd": 0.000132,
+      "latency_seconds": 0.47,
+      "final_answer": "Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}.",
       "verifier_explanation": "Agent failed to recover from fault.",
-      "traces_count": 6
+      "mode": "SIMULATED",
+      "traces_count": 6,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION_ERROR",
+          "content": "Tool 'calculator' failed: {'error': 'HTTP 500 Internal Server Error in calculator (call #1)'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "THOUGHT",
+          "content": "ReAct reasoning after error: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 167.5,
+          "tokens": 196,
+          "cost_usd": 6.9e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 5,
+          "type": "TOOL_CALL",
+          "content": "ReAct re-invoking 'calculator' without backoff policy...",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 6,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: Task aborted: Tool 'calculator' persistently failed with {'error': 'HTTP 500 Internal Server Error in calculator (call #2)'}....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 10,
@@ -778,10 +3051,57 @@
       "tool_calls": 1,
       "tokens": 353,
       "cost_usd": 0.000135,
-      "latency_seconds": 0.31,
+      "latency_seconds": 0.51,
       "final_answer": "[Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 4
+      "mode": "SIMULATED",
+      "traces_count": 4,
+      "traces": [
+        {
+          "step": 1,
+          "type": "THOUGHT",
+          "content": "Planning execution for task: 'Tool Outage Recovery (HTTP 500)'. Initial analysis complete.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 307.5,
+          "tokens": 166,
+          "cost_usd": 6.3e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        },
+        {
+          "step": 2,
+          "type": "TOOL_CALL",
+          "content": "Executing tool 'calculator' with parameters: {'expression': '120 * 3 + 45'}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 3,
+          "type": "OBSERVATION",
+          "content": "Tool output: {'expression': '120 * 3 + 45', 'result': 405}",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 4,
+          "type": "FINAL_ANSWER",
+          "content": "Final Answer: [Routed via Bifrost Gateway - Model: gpt-4o-mini]: Analysis and planning synthesized successfully....",
+          "model": "gpt-4o-mini",
+          "latency_ms": 200.0,
+          "tokens": 187,
+          "cost_usd": 7.2e-05,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI) - Simulation Fallback"
+        }
+      ]
     },
     {
       "iteration": 1,
@@ -797,10 +3117,35 @@
       "tool_calls": 1,
       "tokens": 280,
       "cost_usd": 0.00012,
-      "latency_seconds": 0.155,
+      "latency_seconds": 0.189,
       "final_answer": "[External HTTP Agent]: Handled tool outage via external recovery logic.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 2
+      "mode": "SIMULATED",
+      "traces_count": 2,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "RECOVERY",
+          "content": "External HTTP Agent caught tool outage and triggered fallback synthesis.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 2,
@@ -816,10 +3161,35 @@
       "tool_calls": 1,
       "tokens": 280,
       "cost_usd": 0.00012,
-      "latency_seconds": 0.049,
+      "latency_seconds": 0.08,
       "final_answer": "[External HTTP Agent]: Handled tool outage via external recovery logic.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 2
+      "mode": "SIMULATED",
+      "traces_count": 2,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "RECOVERY",
+          "content": "External HTTP Agent caught tool outage and triggered fallback synthesis.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 3,
@@ -835,13 +3205,71 @@
       "tool_calls": 1,
       "tokens": 280,
       "cost_usd": 0.00012,
-      "latency_seconds": 0.065,
+      "latency_seconds": 0.079,
       "final_answer": "[External HTTP Agent]: Processed objective successfully. Result: {'expression': '250 * 1.15', 'result': 287.5}",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 1
+      "mode": "SIMULATED",
+      "traces_count": 1,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 4,
+      "agent_id": "agent-webhook-04",
+      "agent_name": "External HTTP Webhook",
+      "architecture": "HTTP Adapter Verification Mock",
+      "is_ranked": false,
+      "task_id": "task-06-calculator-http-500",
+      "fault_injected": true,
+      "success": true,
+      "recovered": true,
+      "steps": 2,
+      "tool_calls": 1,
+      "tokens": 280,
+      "cost_usd": 0.00012,
+      "latency_seconds": 0.071,
+      "final_answer": "[External HTTP Agent]: Handled tool outage via external recovery logic.",
+      "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
+      "mode": "SIMULATED",
+      "traces_count": 2,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "RECOVERY",
+          "content": "External HTTP Agent caught tool outage and triggered fallback synthesis.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
+    },
+    {
+      "iteration": 5,
       "agent_id": "agent-webhook-04",
       "agent_name": "External HTTP Webhook",
       "architecture": "HTTP Adapter Verification Mock",
@@ -857,26 +3285,32 @@
       "latency_seconds": 0.068,
       "final_answer": "[External HTTP Agent]: Handled tool outage via external recovery logic.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 2
-    },
-    {
-      "iteration": 5,
-      "agent_id": "agent-webhook-04",
-      "agent_name": "External HTTP Webhook",
-      "architecture": "HTTP Adapter Verification Mock",
-      "is_ranked": false,
-      "task_id": "task-06-calculator-http-500",
-      "fault_injected": true,
-      "success": true,
-      "recovered": true,
-      "steps": 2,
-      "tool_calls": 1,
-      "tokens": 280,
-      "cost_usd": 0.00012,
-      "latency_seconds": 0.069,
-      "final_answer": "[External HTTP Agent]: Handled tool outage via external recovery logic.",
-      "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 2
+      "mode": "SIMULATED",
+      "traces_count": 2,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "RECOVERY",
+          "content": "External HTTP Agent caught tool outage and triggered fallback synthesis.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 6,
@@ -892,10 +3326,35 @@
       "tool_calls": 1,
       "tokens": 280,
       "cost_usd": 0.00012,
-      "latency_seconds": 0.09,
+      "latency_seconds": 0.054,
       "final_answer": "[External HTTP Agent]: Handled tool outage via external recovery logic.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 2
+      "mode": "SIMULATED",
+      "traces_count": 2,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "RECOVERY",
+          "content": "External HTTP Agent caught tool outage and triggered fallback synthesis.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 7,
@@ -911,10 +3370,24 @@
       "tool_calls": 1,
       "tokens": 280,
       "cost_usd": 0.00012,
-      "latency_seconds": 0.055,
+      "latency_seconds": 0.045,
       "final_answer": "[External HTTP Agent]: Processed objective successfully. Result: {'expression': '250 * 1.15', 'result': 287.5}",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 1
+      "mode": "SIMULATED",
+      "traces_count": 1,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 8,
@@ -930,10 +3403,35 @@
       "tool_calls": 1,
       "tokens": 280,
       "cost_usd": 0.00012,
-      "latency_seconds": 0.051,
+      "latency_seconds": 0.075,
       "final_answer": "[External HTTP Agent]: Handled tool outage via external recovery logic.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 2
+      "mode": "SIMULATED",
+      "traces_count": 2,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "RECOVERY",
+          "content": "External HTTP Agent caught tool outage and triggered fallback synthesis.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 9,
@@ -949,10 +3447,35 @@
       "tool_calls": 1,
       "tokens": 280,
       "cost_usd": 0.00012,
-      "latency_seconds": 0.05,
+      "latency_seconds": 0.042,
       "final_answer": "[External HTTP Agent]: Handled tool outage via external recovery logic.",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 2
+      "mode": "SIMULATED",
+      "traces_count": 2,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        },
+        {
+          "step": 2,
+          "type": "RECOVERY",
+          "content": "External HTTP Agent caught tool outage and triggered fallback synthesis.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     },
     {
       "iteration": 10,
@@ -968,10 +3491,24 @@
       "tool_calls": 1,
       "tokens": 280,
       "cost_usd": 0.00012,
-      "latency_seconds": 0.052,
+      "latency_seconds": 0.066,
       "final_answer": "[External HTTP Agent]: Processed objective successfully. Result: {'expression': '250 * 1.15', 'result': 287.5}",
       "verifier_explanation": "Agent successfully recovered from injected tool failure without crashing.",
-      "traces_count": 1
+      "mode": "SIMULATED",
+      "traces_count": 1,
+      "traces": [
+        {
+          "step": 1,
+          "type": "EXTERNAL_WEBHOOK_DISPATCH",
+          "content": "Dispatched task to external agent webhook at http://localhost:9000/agent/act.",
+          "model": "gpt-4o-mini",
+          "latency_ms": 0.0,
+          "tokens": 0,
+          "cost_usd": 0.0,
+          "mode": "SIMULATED",
+          "gateway": "Bifrost (Maxim AI)"
+        }
+      ]
     }
   ]
 }

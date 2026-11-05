@@ -1,5 +1,0 @@
-agent_id,agent_name,architecture,mode,total_runs,success_rate,fault_recovery,avg_latency_s,avg_steps,avg_tokens,avg_cost_usd,ars_score
-agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,LIVE_BIFROST,3,3/3 (100%),2/2 (100%),5.56,3.7,441,0.00022,83.1
-agent-custom-03,Custom JSON Agent,Configured Schema Policy,LIVE_BIFROST,3,3/3 (100%),2/2 (100%),3.49,5.0,280,0.00015,86.3
-agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,LIVE_BIFROST,3,3/3 (100%),2/2 (100%),4.19,5.7,349,0.00019,85.2
-agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,LIVE_BIFROST,3,1/3 (33%),0/2 (0%),4.16,5.3,359,0.00013,38.3

@@ -45,7 +45,8 @@ class BifrostGateway:
         self,
         messages: List[Dict[str, str]],
         model: Optional[str] = None,
-        force_failover: bool = False
+        force_failover: bool = False,
+        require_live: bool = False
     ) -> Dict[str, Any]:
         target_model = self.fallback_model if force_failover else (model or self.primary_model)
         
@@ -91,8 +92,19 @@ class BifrostGateway:
                             "gateway": "Bifrost (Maxim AI) - Live Gateway",
                             "mode": "LIVE_BIFROST"
                         }
-            except Exception:
-                pass
+                    elif require_live:
+                        raise RuntimeError(
+                            f"Bifrost live proxy returned HTTP {resp.status_code}: {resp.text}. "
+                            "Provider API key (e.g. OPENAI_API_KEY) must be configured in Bifrost."
+                        )
+            except Exception as e:
+                if require_live:
+                    raise RuntimeError(f"Live Bifrost request failed: {e}")
+        elif require_live:
+            raise ConnectionError(
+                f"Bifrost Gateway daemon is not listening on {self.host}. "
+                "Start it with 'npx -y @maximhq/bifrost' or 'docker run -p 8080:8080 maximhq/bifrost'."
+            )
 
         # 2. High-Fidelity Simulation Fallback
         latency_ms = round(120.0 + (len(str(messages)) % 80) * 2.5, 2)

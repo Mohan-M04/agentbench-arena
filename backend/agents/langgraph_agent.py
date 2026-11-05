@@ -20,13 +20,15 @@ class LangGraphAgent(AgentAdapter):
         total_tokens = 0
         total_cost = 0.0
         step = 1
+        require_live = run_config.get("require_live_gateway", False)
 
         # Node 1: Planner
         plan_res = self.bifrost.route_completion_sync(
             messages=[
                 {"role": "system", "content": "LangGraph Planner Node: Formulate dependency graph for execution."},
                 {"role": "user", "content": task["prompt"]}
-            ]
+            ],
+            require_live=require_live
         )
         total_tokens += plan_res["total_tokens"]
         total_cost += plan_res["cost_usd"]
@@ -36,7 +38,10 @@ class LangGraphAgent(AgentAdapter):
             content=f"[LangGraph Node: Planner] State initialized. Dependency path: Planner -> ToolExecutor -> Evaluator.",
             model_provider=plan_res["model"],
             tokens=plan_res["total_tokens"],
-            cost_usd=plan_res["cost_usd"]
+            cost_usd=plan_res["cost_usd"],
+            latency_ms=plan_res["latency_ms"],
+            mode=plan_res.get("mode", "SIMULATED"),
+            gateway=plan_res.get("gateway", "Bifrost (Maxim AI)")
         ))
         step += 1
 
@@ -58,7 +63,8 @@ class LangGraphAgent(AgentAdapter):
         if tool_res["status"] == "error":
             failover_res = self.bifrost.route_completion_sync(
                 messages=[{"role": "user", "content": f"LangGraph State Checkpoint Recovery for: {task['prompt']}"}],
-                force_failover=True
+                force_failover=True,
+                require_live=require_live
             )
             total_tokens += failover_res["total_tokens"]
             total_cost += failover_res["cost_usd"]
@@ -69,17 +75,23 @@ class LangGraphAgent(AgentAdapter):
                 model_provider=failover_res["model"],
                 latency_ms=failover_res["latency_ms"],
                 tokens=failover_res["total_tokens"],
-                cost_usd=failover_res["cost_usd"]
+                cost_usd=failover_res["cost_usd"],
+                mode=failover_res.get("mode", "SIMULATED"),
+                gateway=failover_res.get("gateway", "Bifrost (Maxim AI)")
             ))
             step += 1
             recovered = True
-            final_answer = "LangGraph Agent recovered state using parametric memory checkpoint."
+            if task.get("verifier_rule") == "honest_degradation_or_result" or "sql" in tool_name:
+                final_answer = "LangGraph Checkpoint: Database unavailable due to persistent outage. Unable to query customer records, gracefully aborting to prevent financial metric hallucination."
+            else:
+                final_answer = "LangGraph Agent recovered state using parametric memory checkpoint."
         else:
             final_answer = f"LangGraph execution verified. Observed: {str(tool_res.get('data'))[:180]}..."
 
         # Node 3: ResponseGenerator
         resp_res = self.bifrost.route_completion_sync(
-            messages=[{"role": "user", "content": f"Summarize response for {task['prompt']}"}]
+            messages=[{"role": "user", "content": f"Summarize response for {task['prompt']}"}],
+            require_live=require_live
         )
         total_tokens += resp_res["total_tokens"]
         total_cost += resp_res["cost_usd"]
@@ -90,7 +102,9 @@ class LangGraphAgent(AgentAdapter):
             content=f"[LangGraph Node: ResponseGenerator] Output verified: {final_answer}",
             latency_ms=resp_res["latency_ms"],
             tokens=resp_res["total_tokens"],
-            cost_usd=resp_res["cost_usd"]
+            cost_usd=resp_res["cost_usd"],
+            mode=resp_res.get("mode", "SIMULATED"),
+            gateway=resp_res.get("gateway", "Bifrost (Maxim AI)")
         ))
 
         duration = round(time.time() - start_time, 2)

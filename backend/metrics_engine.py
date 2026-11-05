@@ -65,9 +65,13 @@ class MetricsEngine:
         costs = [r.get("estimated_cost_usd", 0.0) for r in runs]
         times = [r.get("completion_time_seconds", 0.0) for r in runs]
         recoveries = sum(1 for r in runs if r.get("tool_failure_recovery"))
+        faults_faced = sum(1 for r in runs if r.get("fault_injected", True))
 
         avg_score = sum(scores) / n
         variance = sum((s - avg_score) ** 2 for s in scores) / n if n > 1 else 0.0
+
+        # Exact enterprise recovery rate: recoveries divided by faults faced
+        recovery_rate_on_faults = round((recoveries / max(1, faults_faced)) * 100, 2) if faults_faced > 0 else 100.0
 
         return {
             "runs_count": n,
@@ -79,7 +83,10 @@ class MetricsEngine:
             "avg_tokens": round(sum(tokens) / n),
             "avg_cost_usd": round(sum(costs) / n, 6),
             "avg_completion_time_sec": round(sum(times) / n, 2),
-            "failure_recovery_rate": round((recoveries / n) * 100, 2),
+            "faults_faced_count": faults_faced,
+            "recoveries_count": recoveries,
+            "failure_recovery_rate": recovery_rate_on_faults,
+            "overall_run_recovery_pct": round((recoveries / n) * 100, 2),
             "best_score": max(scores),
             "worst_score": min(scores)
         }
