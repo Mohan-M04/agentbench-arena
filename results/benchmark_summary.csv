@@ -1,5 +1,6 @@
-agent_id,agent_name,runs,success_count,success_rate_pct,faults_encountered,fault_recoveries,fault_recovery_rate_pct,avg_steps,avg_tokens,avg_cost_usd,avg_latency_sec,ars_score,verdict
-agent-langgraph-02,LangGraph Agent,10,10,100.0,7,7,100.0,3.7,446,0.000224,0.37,91.7,Production Ready (Enterprise Grade)
-agent-custom-03,Custom JSON Agent,10,10,100.0,7,7,100.0,5.1,286,0.000156,0.5,91.6,Production Ready (Enterprise Grade)
-agent-webhook-04,External HTTP Agent,10,10,100.0,7,7,100.0,1.7,280,0.00012,0.06,92.3,Production Ready (Enterprise Grade)
-agent-react-01,Reference ReAct Loop,10,3,30.0,7,0,0.0,5.4,351,0.000129,0.41,42.7,Critical Failure Risk
+agent_id,agent_name,architecture,is_ranked,runs,success_count,success_rate_pct,faults_faced,fault_recoveries,fault_recovery_rate_pct,avg_steps,avg_tokens,avg_cost_usd,avg_latency_sec,ars_score,verdict
+agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,True,10,10,100.0,7,7,100.0,3.7,446,0.000224,0.37,91.7,Production Ready (Enterprise Grade)
+agent-custom-03,Custom JSON Agent,Configured Schema Policy,True,10,10,100.0,7,7,100.0,5.1,286,0.000156,0.5,91.6,Production Ready (Enterprise Grade)
+agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,True,10,10,100.0,7,7,100.0,5.8,350,0.000188,0.23,91.9,Production Ready (Enterprise Grade)
+agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,True,10,3,30.0,7,0,0.0,5.4,351,0.000129,0.41,42.7,Critical Failure Risk
+agent-webhook-04,External HTTP Webhook,HTTP Adapter Verification Mock,False,10,10,100.0,7,7,100.0,1.7,280,0.00012,0.07,N/A,Functional Mock (Unranked)

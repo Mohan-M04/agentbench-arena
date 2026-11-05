@@ -104,23 +104,24 @@ Users can adjust weight profiles dynamically (*Balanced*, *Optimize for Cost*, *
 
 ---
 
-## 📈 Empirical Benchmark Results (Tested Nov 5, 2026)
+## 📈 Seeded Benchmark Results (Simulation Mode Validation)
 
-*Configuration: 10 repeated evaluation runs per agent under deterministic fault seeding (`Task: Tool Outage Recovery [HTTP 500 Outage]`, 7 fault runs, 3 clean baseline runs across all agents). Evaluated in **High-Fidelity Gateway Simulation Mode** (deterministic model token/cost tracking and simulated provider failover modeling). Full telemetry is committed in [`results/raw_benchmark_runs.json`](results/raw_benchmark_runs.json) and summarized in [`results/benchmark_summary.csv`](results/benchmark_summary.csv):*
+*Configuration: 10 repeated evaluation runs per agent under deterministic fault seeding (`Task: Tool Outage Recovery [HTTP 500 Outage]`, 7 persistent fault runs, 3 clean baseline runs across all agents). Evaluated in **High-Fidelity Gateway Simulation Mode** (deterministic model token/cost tracking and simulated provider failover modeling). Full telemetry is committed in [`results/raw_benchmark_runs.json`](results/raw_benchmark_runs.json) and summarized in [`results/benchmark_summary.csv`](results/benchmark_summary.csv):*
 
-| Agent Framework | Overall Task Success | Faults Faced | Fault Recovery Rate | Avg Steps | Bifrost Tokens | Avg Cost | Avg Latency | ARS Rating |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **LangGraph Agent** | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 3.7 | 446 | $0.000224 | 0.37s | **91.7 (Highest Resilience in Test)** |
-| **Custom JSON Agent** | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 5.1 | 286 | $0.000156 | 0.50s | **91.6 (Configured Fallback Success)** |
-| **External HTTP Agent** | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 1.7 | 280 | $0.000120 | 0.06s | **92.3 (Decoupled Webhook Endpoint)** |
-| **Reference ReAct Loop** | **3/10 (30.0%)** | 7/10 | **0/7 (0.0%)** | 5.4 | 351 | $0.000129 | 0.41s | **42.7 (Degraded under Persistent Fault)** |
+| Agent Variant | Architecture Paradigm | Overall Task Success | Faults Faced | Fault Recovery Rate | Avg Steps | Bifrost Tokens | Avg Cost | Avg Latency | ARS Rating |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| ⭐ **LangGraph Agent** | State Graph Checkpoints | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 3.7 | 446 | $0.000224 | 0.37s | **91.7** |
+| ⭐ **Custom JSON Agent** | Configured Schema Policy | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 5.1 | 286 | $0.000156 | 0.50s | **91.6** |
+| ⭐ **ReAct w/ Retry & Fallback** | ReAct + Backoff & Fallback | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 5.8 | 350 | $0.000188 | 0.23s | **91.9** |
+| ⭐ **Naive ReAct Loop (No Retry)** | Baseline Unhedged Loop | **3/10 (30.0%)** | 7/10 | **0/7 (0.0%)** | 5.4 | 351 | $0.000129 | 0.41s | **42.7** |
+| 🔌 **External HTTP Webhook** | HTTP Adapter Verification Mock | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 1.7 | 280 | $0.000120 | 0.07s | *N/A (Adapter Test)* |
 
-*Observations from the seeded test suite:*
-* **Identical Conditions:** Runs 1, 2, 4, 5, 6, 8, and 9 encountered the injected HTTP 500 tool outage for all agents; runs 3, 7, and 10 were clean baseline runs.
-* **LangGraph Agent:** In all 7 fault runs, the state graph routed execution from the failed tool node to its `State Recovery Handler`, completing the task with 100% recovery.
-* **Custom JSON Agent:** Applied its configured retry policy (up to 2 retries with backoff) and parametric fallback route, delivering 100% task completion.
-* **External HTTP Agent:** Proves true framework independence by dispatching tasks to an external agent running outside this codebase (e.g., [`examples/external_agent_server.py`](examples/external_agent_server.py) on port 9000).
-* **Reference ReAct Loop:** Successfully completed the 3 clean runs (Runs 3, 7, 10), but when tools threw 500 errors, our basic reference ReAct loop lacked backoff or fallback handlers; it re-invoked the failing tool without backoff and aborted.
+*Observations from the platform validation suite:*
+* **Identical Conditions:** Runs 1, 2, 4, 5, 6, 8, and 9 encountered a persistent HTTP 500 tool outage (`error_rate = 1.0` during fault runs) for all agents; runs 3, 7, and 10 were clean baseline runs.
+* **Persistent Outages Require Fallback:** Because the fault is persistent during an outage run, simply retrying the same broken endpoint will fail. Succeeded agents either route away to state-checkpoint handlers (LangGraph), trigger schema fallback synthesis (Custom JSON), or switch to parametric fallback reasoning (ReAct w/ Fallback).
+* **Parity Between Resilient Architectures:** The ARS scores for the three hedged architectures (91.7, 91.6, 91.9) are essentially tied (within 0.3 points), demonstrating that different frameworks achieve comparable resilience when equipped with recovery policies.
+* **Naive ReAct Baseline:** Demonstrates why unhedged agents fail in production: without backoff or fallback handlers, it repeated the failing call and aborted on all 7 fault runs.
+* **External Webhook (Unranked):** Sits outside the leaderboard as a functional connectivity proof that external agents on port 9000 can be benchmarked over HTTP.
 * **Reproducibility:** Re-run this exact seeded 10-run benchmark at any time:
   ```bash
   python scripts/run_real_benchmark.py

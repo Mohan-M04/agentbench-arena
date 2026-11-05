@@ -10,12 +10,14 @@ from agents.react_agent import DirectReActAgent
 from agents.langgraph_agent import LangGraphAgent
 from agents.custom_json_agent import CustomJsonAgent
 from agents.webhook_agent import HttpWebhookAgent
+from agents.react_retry_agent import ReActWithRetryAgent
 
 class BenchmarkOrchestrator:
     def __init__(self, db: Session):
         self.db = db
         self.agent_registry = {
             "agent-react-01": DirectReActAgent(),
+            "agent-react-retry-05": ReActWithRetryAgent(),
             "agent-langgraph-02": LangGraphAgent(),
             "agent-custom-03": CustomJsonAgent(),
             "agent-webhook-04": HttpWebhookAgent()
