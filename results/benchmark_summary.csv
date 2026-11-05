@@ -1,4 +1,5 @@
-agent_id,agent_name,runs,success_count,success_rate_pct,recovery_count,recovery_rate_pct,avg_steps,avg_tokens,avg_cost_usd,avg_latency_sec,ars_score,verdict
-agent-langgraph-02,LangGraph Agent,10,10,100.0,5,50.0,3.5,414,0.000199,0.35,86.7,Reliable but Needs Guardrails
-agent-custom-03,Custom JSON Agent,10,10,100.0,6,60.0,4.7,255,0.000131,0.43,89.2,Production Ready (Enterprise Grade)
-agent-react-01,Direct ReAct Agent,10,6,60.0,1,10.0,5.0,352,0.000131,0.38,55.8,Fragile under Tool Failures
+agent_id,agent_name,runs,success_count,success_rate_pct,faults_encountered,fault_recoveries,fault_recovery_rate_pct,avg_steps,avg_tokens,avg_cost_usd,avg_latency_sec,ars_score,verdict
+agent-langgraph-02,LangGraph Agent,10,10,100.0,7,7,100.0,3.7,446,0.000224,0.37,91.7,Production Ready (Enterprise Grade)
+agent-custom-03,Custom JSON Agent,10,10,100.0,7,7,100.0,5.1,286,0.000156,0.5,91.6,Production Ready (Enterprise Grade)
+agent-webhook-04,External HTTP Agent,10,10,100.0,7,7,100.0,1.7,280,0.00012,0.06,92.3,Production Ready (Enterprise Grade)
+agent-react-01,Reference ReAct Loop,10,3,30.0,7,0,0.0,5.4,351,0.000129,0.41,42.7,Critical Failure Risk
