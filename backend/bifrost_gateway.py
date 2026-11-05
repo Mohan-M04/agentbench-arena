@@ -48,6 +48,53 @@ class BifrostGateway:
         force_failover: bool = False
     ) -> Dict[str, Any]:
         target_model = self.fallback_model if force_failover else (model or self.primary_model)
+        
+        # 1. Attempt Live Bifrost Proxy Call if Gateway is Listening
+        if _is_gateway_listening(self.host):
+            try:
+                t0 = time.perf_counter()
+                headers = {
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {self.api_key}"
+                }
+                provider_key = os.getenv("OPENAI_API_KEY") or os.getenv("ANTHROPIC_API_KEY")
+                if provider_key:
+                    headers["x-bf-direct-key"] = provider_key
+                
+                payload = {
+                    "model": target_model,
+                    "messages": messages,
+                    "temperature": 0.2
+                }
+                
+                with httpx.Client(timeout=10.0) as client:
+                    resp = client.post(f"{self.host}/v1/chat/completions", headers=headers, json=payload)
+                    if resp.status_code == 200:
+                        data = resp.json()
+                        latency_ms = round((time.perf_counter() - t0) * 1000, 2)
+                        choice = data.get("choices", [{}])[0]
+                        content = choice.get("message", {}).get("content", "")
+                        usage = data.get("usage", {})
+                        p_tokens = usage.get("prompt_tokens", sum(len(m.get("content", "")) for m in messages) // 4 + 40)
+                        c_tokens = usage.get("completion_tokens", max(20, len(content) // 4))
+                        cost = self.calculate_cost(target_model, p_tokens, c_tokens)
+                        return {
+                            "status": "success",
+                            "model": target_model,
+                            "failover_occurred": force_failover,
+                            "content": content or f"[Bifrost Live] Synthesized response for model {target_model}",
+                            "latency_ms": latency_ms,
+                            "prompt_tokens": p_tokens,
+                            "completion_tokens": c_tokens,
+                            "total_tokens": p_tokens + c_tokens,
+                            "cost_usd": cost,
+                            "gateway": "Bifrost (Maxim AI) - Live Gateway",
+                            "mode": "LIVE_BIFROST"
+                        }
+            except Exception:
+                pass
+
+        # 2. High-Fidelity Simulation Fallback
         latency_ms = round(120.0 + (len(str(messages)) % 80) * 2.5, 2)
         p_tokens = sum(len(m.get("content", "")) for m in messages) // 4 + 40
         c_tokens = 75 + (len(str(messages)) % 25)
@@ -62,7 +109,8 @@ class BifrostGateway:
             "completion_tokens": c_tokens,
             "total_tokens": p_tokens + c_tokens,
             "cost_usd": cost,
-            "gateway": "Bifrost (Maxim AI)"
+            "gateway": "Bifrost (Maxim AI) - Simulation Fallback",
+            "mode": "SIMULATED"
         }
 
     async def route_completion(

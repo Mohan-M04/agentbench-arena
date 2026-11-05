@@ -133,6 +133,32 @@ Users can adjust weight profiles dynamically (*Balanced*, *Optimize for Cost*, *
 
 ---
 
+## ⚡ Live Gateway Validation (Maxim AI Bifrost Proxy)
+
+To validate live network integration through Maxim AI's Bifrost daemon, we run a dedicated live validation benchmark (`scripts/run_live_bifrost_benchmark.py`). Bifrost acts as the unified AI proxy on `http://localhost:8080`, handling real HTTP requests, routing, and live latency measurements across agents:
+
+*Configuration: 3 live evaluation runs per agent with dynamic fault injection (`Task: Tool Outage Recovery [HTTP 500 Outage]`). Executed directly against the live Bifrost Gateway daemon (`http://localhost:8080`). Telemetry is recorded in [`results/raw_live_bifrost_runs.json`](results/raw_live_bifrost_runs.json) and summarized in [`results/live_bifrost_benchmark_summary.csv`](results/live_bifrost_benchmark_summary.csv):*
+
+| Agent Variant | Gateway Route | Task Success | Fault Recovery | Measured Latency | Bifrost Tokens | ARS Rating |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| ⭐ **LangGraph Agent** | Live Bifrost Proxy | **3/3 (100.0%)** | **2/2 (100.0%)** | 5.56s | 441 | **83.1** |
+| ⭐ **Custom JSON Agent** | Live Bifrost Proxy | **3/3 (100.0%)** | **2/2 (100.0%)** | 3.49s | 280 | **86.3** |
+| ⭐ **ReAct w/ Retry & Fallback** | Live Bifrost Proxy | **3/3 (100.0%)** | **2/2 (100.0%)** | 4.19s | 349 | **85.2** |
+| ⭐ **Naive ReAct Loop (No Retry)** | Live Bifrost Proxy | **1/3 (33.3%)** | **0/2 (0.0%)** | 4.16s | 359 | **38.3** |
+
+*How to run the live Bifrost validation suite:*
+```bash
+# 1. Start Bifrost Gateway daemon (confirmed from official docs)
+npx -y @maximhq/bifrost
+# or via Docker:
+# docker run -p 8080:8080 maximhq/bifrost
+
+# 2. Run the live benchmark runner (3-5 runs per agent)
+python scripts/run_live_bifrost_benchmark.py 3
+```
+
+---
+
 ## 🛠️ Quickstart (Run in 2 Minutes)
 
 ### 1. Clone the Repository
