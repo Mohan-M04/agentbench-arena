@@ -102,6 +102,7 @@ def run_transient_fault_benchmark():
 
         row = {
             "scenario": "Transient Fault (Task 06)",
+            "mode": "SIMULATED",
             "agent_id": agent_id,
             "agent_name": agent_name,
             "architecture": architecture,
@@ -187,6 +188,7 @@ def run_task11_honest_degradation_benchmark():
 
         row = {
             "scenario": "Honest Degradation (Task 11)",
+            "mode": "SIMULATED",
             "agent_id": agent_id,
             "agent_name": agent_name,
             "architecture": architecture,
@@ -221,18 +223,20 @@ def run_tasks_07_08_09_benchmark():
     agents = get_agents()
     all_rows = []
 
+    schedule = {1: True, 2: True, 3: False, 4: True, 5: True, 6: True, 7: False, 8: True, 9: True, 10: False}
+
     for task_id, task_title in selected_tasks:
         task = next(t for t in SEED_TASKS if t["id"] == task_id)
-        print(f"\n▶ Evaluating: {task['name']} ({task_id})", flush=True)
+        print(f"\n▶ Evaluating: {task['name']} ({task_id}) - 10 Seeded Runs", flush=True)
 
         for agent_id, agent_name, agent_instance, architecture in agents:
-            # 5 runs per agent on each task
+            # 10 runs per agent on each task with identical deterministic fault schedule
             agent_runs = []
-            for i in range(1, 6):
-                inject = (i in [1, 2, 4]) # 3 faults, 2 baseline
+            for i in range(1, 11):
+                inject = schedule[i]
                 chaos_cfg = {"inject_500": inject, "error_rate": 1.0 if inject else 0.0}
                 sb = ToolSandbox(chaos_config=chaos_cfg)
-                res = agent_instance.run_sync(task, sb, {"chaos": chaos_cfg, "repeated_runs": 5})
+                res = agent_instance.run_sync(task, sb, {"chaos": chaos_cfg, "repeated_runs": 10})
                 verification = MetricsEngine.verify_run(task, res.final_answer, res.tool_failure_recovery)
                 agent_runs.append({
                     "iteration": i,
@@ -273,6 +277,8 @@ def run_tasks_07_08_09_benchmark():
             ]))
 
             row = {
+                "scenario": f"Reliability Suite ({task_id})",
+                "mode": "SIMULATED",
                 "task_id": task_id,
                 "task_name": task["name"],
                 "agent_id": agent_id,
@@ -302,7 +308,7 @@ if __name__ == "__main__":
     all_summary = t_summary + h_summary + m_summary
     csv_file = RESULTS_DIR / "advanced_scenarios_summary.csv"
     all_fieldnames = [
-        "scenario", "task_id", "task_name", "agent_id", "agent_name", "architecture",
+        "scenario", "mode", "task_id", "task_name", "agent_id", "agent_name", "architecture",
         "total_runs", "success_rate", "faults_faced", "fault_recovery",
         "avg_steps", "avg_tokens", "avg_latency_s", "avg_cost_usd", "ars_score"
     ]

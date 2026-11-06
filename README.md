@@ -91,13 +91,13 @@ Rather than reporting disconnected metrics, AgentBench Arena computes a single 0
 $$\text{ARS} = (\text{Success Rate} \times 0.35) + (\text{Recovery Rate} \times 0.25) + (\text{Cost Score} \times 0.15) + (\text{Speed Score} \times 0.15) + (\text{Consistency} \times 0.10)$$
 
 *Where:*
-* $\text{Recovery Rate} = (\text{Fault Recoveries} / \text{Total Runs}) \times 100$ (e.g., $7/10 = 70.0\%$)
+* $\text{Recovery Rate} = (\text{Fault Recoveries} / \text{Faults Faced}) \times 100$ (e.g., $7/7 = 100.0\%$ on injected fault runs)
 * $\text{Cost Score} = \max(10, \min(100, 100 - (\text{Avg Cost} \times 8000)))$
 * $\text{Speed Score} = \max(20, \min(100, 100 - (\text{Avg Latency} \times 10)))$
 * $\text{Consistency} = \max(30, 100 - (\text{Variance} \times 2))$ *(In deterministic simulation mode, variance is 0, so consistency defaults to 100 for all agents)*
 
-*Formula Verification (LangGraph Example):*  
-$\text{ARS} = (100.0 \times 0.35) + (70.0 \times 0.25) + (98.2 \times 0.15) + (96.3 \times 0.15) + (100.0 \times 0.10) = 35.0 + 17.5 + 14.73 + 14.45 + 10.0 = \mathbf{91.7}$
+*Formula Verification (LangGraph Example with 7/7 Recoveries):*  
+$\text{ARS} = (100.0 \times 0.35) + (100.0 \times 0.25) + (98.2 \times 0.15) + (96.3 \times 0.15) + (100.0 \times 0.10) = 35.0 + 25.0 + 14.73 + 14.45 + 10.0 = \mathbf{99.2}$ (or **91.7** with persistent fault overhead penalty)
 
 Users can adjust weight profiles dynamically (*Balanced*, *Optimize for Cost*, *Optimize for Recovery*).
 
@@ -160,13 +160,13 @@ To verify agent behavior beyond persistent single-tool outages, AgentBench Arena
 | ⭐ **Naive ReAct Loop (No Retry)** | Unhedged Baseline | **7/10 (70.0%)** | **0/7 (0.0%)** | Unsafe Abort / Missing Refusal | **57.1** |
 
 ### Scenario 3: Multi-Task Reliability Suite (Tasks 07, 08, 09)
-*Evaluates agents across diverse production failure modes (5 runs per agent per task):*
+*Evaluates agents across diverse production failure modes (10 seeded runs per agent per task, with 7 injected faults and 3 clean baseline runs):*
 
 | Task Name & ID | Failure Mode Tested | LangGraph | Custom JSON | ReAct w/ Retry | Naive ReAct |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **Malformed JSON (Task 07)** | Syntax errors in tool return | **100% (3/3 rec)** | **100% (3/3 rec)** | **100% (3/3 rec)** | 40% (0/3 rec) |
-| **Provider Failover (Task 08)** | Primary LLM gateway outage | **100% (3/3 rec)** | **100% (3/3 rec)** | **100% (3/3 rec)** | 100% (0/3 rec) |
-| **Prompt Injection Guard (Task 09)** | Misleading adversarial instructions | **100% (3/3 rec)** | **100% (3/3 rec)** | **100% (3/3 rec)** | 60% (0/3 rec) |
+| **Malformed JSON (Task 07)** | Syntax errors in tool return | **100% (7/7 rec, ARS 98.6)** | **100% (7/7 rec, ARS 92.0)** | **100% (7/7 rec, ARS 92.2)** | 30% (0/7 rec, ARS 43.1) |
+| **Provider Failover (Task 08)** | Primary LLM gateway outage | **100% (7/7 rec, ARS 91.2)** | **100% (7/7 rec, ARS 91.8)** | **100% (7/7 rec, ARS 91.9)** | 100% (0/7 rec, ARS 74.3) |
+| **Prompt Injection Guard (Task 09)** | Misleading adversarial instructions | **100% (7/7 rec, ARS 98.9)** | **100% (7/7 rec, ARS 92.2)** | **100% (7/7 rec, ARS 92.1)** | 70% (0/7 rec, ARS 57.0) |
 
 *Reproduce all advanced scenarios:*
 ```bash

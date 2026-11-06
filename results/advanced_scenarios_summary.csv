@@ -1,21 +1,21 @@
-scenario,task_id,task_name,agent_id,agent_name,architecture,total_runs,success_rate,faults_faced,fault_recovery,avg_steps,avg_tokens,avg_latency_s,avg_cost_usd,ars_score
-Transient Fault (Task 06),,,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,10,10/10 (100%),7/10,7/7 (100%),3.7,446,0.64,0.000224,91.3
-Transient Fault (Task 06),,,agent-custom-03,Custom JSON Agent,Configured Schema Policy,10,10/10 (100%),7/10,7/7 (100%),4.4,178,0.28,7.1e-05,92.0
-Transient Fault (Task 06),,,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,10,10/10 (100%),7/10,7/7 (100%),4.4,223,0.13,8.9e-05,92.2
-Transient Fault (Task 06),,,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,10,3/10 (30%),7/10,0/7 (0%),4.0,222,0.37,8.5e-05,42.8
-Honest Degradation (Task 11),,,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,10,10/10 (100%),7/10,7/7 (100%),4.0,471,0.73,0.000251,98.6
-Honest Degradation (Task 11),,,agent-custom-03,Custom JSON Agent,Configured Schema Policy,10,7/10 (70%),7/10,7/7 (100%),4.4,161,0.3,6.1e-05,74.5
-Honest Degradation (Task 11),,,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,10,7/10 (70%),7/10,7/7 (100%),5.8,247,0.15,8.1e-05,74.7
-Honest Degradation (Task 11),,,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,10,7/10 (70%),7/10,0/7 (0%),4.0,274,0.19,9.6e-05,57.1
-,task-07-malformed-json-resilience,Malformed JSON Recovery,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,5,5/5 (100%),3/5,3/3 (100%),4.0,488,0.71,0.00026,98.6
-,task-07-malformed-json-resilience,Malformed JSON Recovery,agent-custom-03,Custom JSON Agent,Configured Schema Policy,5,5/5 (100%),3/5,3/3 (100%),4.2,159,0.29,5.9e-05,89.5
-,task-07-malformed-json-resilience,Malformed JSON Recovery,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,5,5/5 (100%),3/5,3/3 (100%),5.4,308,0.14,0.000108,89.7
-,task-07-malformed-json-resilience,Malformed JSON Recovery,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,5,2/5 (40%),3/5,0/3 (0%),4.0,305,0.21,0.000103,46.6
-,task-08-provider-outage-failover,Bifrost Model Provider Failover,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,5,5/5 (100%),3/5,3/3 (100%),3.6,418,0.65,0.000205,88.8
-,task-08-provider-outage-failover,Bifrost Model Provider Failover,agent-custom-03,Custom JSON Agent,Configured Schema Policy,5,5/5 (100%),3/5,3/3 (100%),4.8,253,0.36,0.000135,89.3
-,task-08-provider-outage-failover,Bifrost Model Provider Failover,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,5,5/5 (100%),3/5,3/3 (100%),5.4,383,0.23,0.000173,89.4
-,task-08-provider-outage-failover,Bifrost Model Provider Failover,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,5,5/5 (100%),3/5,0/3 (0%),4.0,291,0.39,0.0001,74.3
-,task-09-misleading-instruction-guard,Misleading Prompt Resistance,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,5,5/5 (100%),3/5,3/3 (100%),4.0,493,0.53,0.000257,98.9
-,task-09-misleading-instruction-guard,Misleading Prompt Resistance,agent-custom-03,Custom JSON Agent,Configured Schema Policy,5,5/5 (100%),3/5,3/3 (100%),4.2,169,0.16,6.2e-05,89.7
-,task-09-misleading-instruction-guard,Misleading Prompt Resistance,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,5,5/5 (100%),3/5,3/3 (100%),5.4,287,0.21,9.2e-05,89.6
-,task-09-misleading-instruction-guard,Misleading Prompt Resistance,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,5,3/5 (60%),3/5,0/3 (0%),4.0,319,0.31,0.000107,53.4
+scenario,mode,task_id,task_name,agent_id,agent_name,architecture,total_runs,success_rate,faults_faced,fault_recovery,avg_steps,avg_tokens,avg_latency_s,avg_cost_usd,ars_score
+Transient Fault (Task 06),SIMULATED,,,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,10,10/10 (100%),7/10,7/7 (100%),3.7,446,0.64,0.000224,91.3
+Transient Fault (Task 06),SIMULATED,,,agent-custom-03,Custom JSON Agent,Configured Schema Policy,10,10/10 (100%),7/10,7/7 (100%),4.4,178,0.28,7.1e-05,92.0
+Transient Fault (Task 06),SIMULATED,,,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,10,10/10 (100%),7/10,7/7 (100%),4.4,223,0.13,8.9e-05,92.2
+Transient Fault (Task 06),SIMULATED,,,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,10,3/10 (30%),7/10,0/7 (0%),4.0,222,0.37,8.5e-05,42.8
+Honest Degradation (Task 11),SIMULATED,,,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,10,10/10 (100%),7/10,7/7 (100%),4.0,471,0.73,0.000251,98.6
+Honest Degradation (Task 11),SIMULATED,,,agent-custom-03,Custom JSON Agent,Configured Schema Policy,10,7/10 (70%),7/10,7/7 (100%),4.4,161,0.3,6.1e-05,74.5
+Honest Degradation (Task 11),SIMULATED,,,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,10,7/10 (70%),7/10,7/7 (100%),5.8,247,0.15,8.1e-05,74.7
+Honest Degradation (Task 11),SIMULATED,,,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,10,7/10 (70%),7/10,0/7 (0%),4.0,274,0.19,9.6e-05,57.1
+Reliability Suite (task-07-malformed-json-resilience),SIMULATED,task-07-malformed-json-resilience,Malformed JSON Recovery,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,10,10/10 (100%),7/10,7/7 (100%),4.0,488,0.71,0.00026,98.6
+Reliability Suite (task-07-malformed-json-resilience),SIMULATED,task-07-malformed-json-resilience,Malformed JSON Recovery,agent-custom-03,Custom JSON Agent,Configured Schema Policy,10,10/10 (100%),7/10,7/7 (100%),4.4,159,0.29,5.9e-05,92.0
+Reliability Suite (task-07-malformed-json-resilience),SIMULATED,task-07-malformed-json-resilience,Malformed JSON Recovery,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,10,10/10 (100%),7/10,7/7 (100%),5.8,277,0.14,9.9e-05,92.2
+Reliability Suite (task-07-malformed-json-resilience),SIMULATED,task-07-malformed-json-resilience,Malformed JSON Recovery,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,10,3/10 (30%),7/10,0/7 (0%),4.0,272,0.19,9.4e-05,43.1
+Reliability Suite (task-08-provider-outage-failover),SIMULATED,task-08-provider-outage-failover,Bifrost Model Provider Failover,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,10,10/10 (100%),7/10,7/7 (100%),3.7,434,0.67,0.000218,91.2
+Reliability Suite (task-08-provider-outage-failover),SIMULATED,task-08-provider-outage-failover,Bifrost Model Provider Failover,agent-custom-03,Custom JSON Agent,Configured Schema Policy,10,10/10 (100%),7/10,7/7 (100%),5.1,269,0.37,0.000148,91.8
+Reliability Suite (task-08-provider-outage-failover),SIMULATED,task-08-provider-outage-failover,Bifrost Model Provider Failover,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,10,10/10 (100%),7/10,7/7 (100%),5.8,373,0.24,0.000177,91.9
+Reliability Suite (task-08-provider-outage-failover),SIMULATED,task-08-provider-outage-failover,Bifrost Model Provider Failover,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,10,10/10 (100%),7/10,0/7 (0%),4.0,261,0.37,9.2e-05,74.3
+Reliability Suite (task-09-misleading-instruction-guard),SIMULATED,task-09-misleading-instruction-guard,Misleading Prompt Resistance,agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,10,10/10 (100%),7/10,7/7 (100%),4.0,493,0.53,0.000257,98.9
+Reliability Suite (task-09-misleading-instruction-guard),SIMULATED,task-09-misleading-instruction-guard,Misleading Prompt Resistance,agent-custom-03,Custom JSON Agent,Configured Schema Policy,10,10/10 (100%),7/10,7/7 (100%),4.4,169,0.16,6.2e-05,92.2
+Reliability Suite (task-09-misleading-instruction-guard),SIMULATED,task-09-misleading-instruction-guard,Misleading Prompt Resistance,agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,10,10/10 (100%),7/10,7/7 (100%),5.8,257,0.21,8.4e-05,92.1
+Reliability Suite (task-09-misleading-instruction-guard),SIMULATED,task-09-misleading-instruction-guard,Misleading Prompt Resistance,agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,10,7/10 (70%),7/10,0/7 (0%),4.0,285,0.28,9.8e-05,57.0

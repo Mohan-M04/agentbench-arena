@@ -206,8 +206,8 @@ def create_deck():
 
     bifrost_features = [
         ("Unified OpenAI-Compatible Proxy", "Bifrost runs on localhost:8080 as the high-performance AI gateway. AgentBench Arena routes all LLM reasoning steps through Bifrost's completions API."),
-        ("Multi-Provider Failover Resilience", "When a model provider encounters errors or spending limits, Bifrost automatically routes traffic to fallback providers (gpt-4o-mini -> claude-3-haiku -> local llama)."),
-        ("Token Accounting & Budget Guardrails", "Bifrost records exact prompt and completion tokens per step, enforces spending limits per benchmark run, and records gateway latency."),
+        ("Multi-Provider Failover Resilience", "When a model provider encounters errors or outages, Bifrost routes traffic to fallback providers (gpt-4o-mini -> claude-3-haiku -> local llama)."),
+        ("Token Accounting & Telemetry", "Bifrost records exact prompt and completion tokens per step, model attribution, and gateway latency per benchmark run."),
         ("Strict Pre-Flight Harness", "AgentBench Arena's live runner includes strict pre-flight checks: verifies gateway socket connection and provider keys, failing loudly rather than masking credentials.")
     ]
     for idx, (b_t, b_d) in enumerate(bifrost_features):
@@ -241,10 +241,10 @@ def create_deck():
     add_header(s6, "Track Partner: Tavily API Real-Time Web Intelligence")
 
     tavily_cards = [
-        ("Autonomous Real-Time Research", "Powers tasks requiring up-to-date real-world facts (Task 04: Executive search & citation; Task 05: 30-day product launch extraction)."),
-        ("Ground-Truth Verification Engine", "MetricsEngine uses Tavily search results to verify that agent answers cite authoritative URLs and ground truth rather than hallucinating from memory."),
+        ("Autonomous Real-Time Research", "Powers tasks requiring up-to-date real-world facts (Task 04: Executive search & research; Task 05: 30-day product launch extraction)."),
+        ("Live Web Retrieval Tool", "Provides real-time web search and extraction to ground agent outputs in 2026 data rather than static model training cutoffs."),
         ("Structured Clean Content Extraction", "Uses Tavily's extract and search endpoints to parse web search results directly into structured JSON for agent reasoning steps."),
-        ("Resilient Error Handling", "The Tavily tool adapter features graceful network timeout handling, verified active with over 9,000 promotional credits (GEEKROOM2).")
+        ("Verified Promotional Tier", "The Tavily tool adapter features graceful network timeout handling, verified active with over 9,000 credits (GEEKROOM2).")
     ]
     for idx, (t_t, t_d) in enumerate(tavily_cards):
         row = idx // 2
@@ -298,11 +298,11 @@ def create_deck():
     p_f2.font.size = Pt(12)
     p_f2.font.color.rgb = TEXT_WHITE
 
-    # Enterprise Classification Cards
+    # Reliability Classification Cards
     tiers = [
-        ("ARS >= 88.0", "Production Ready (Enterprise Grade)", "Full resilience with state checkpointing or retry policies. Suitable for autonomous enterprise workflows."),
-        ("70.0 - 87.9", "Reliable but Needs Guardrails", "Passes baseline tasks and transient errors, but requires supervisory oversight on cascading outages."),
-        ("< 50.0", "Critical Failure Risk", "Unhedged loop. Lacks retry/fallback logic; repeated failures cause catastrophic task abortion.")
+        ("ARS >= 88.0", "Production Ready", "High resilience with state checkpointing or retry policies. Passes fault injection and baseline tasks reliably."),
+        ("70.0 - 87.9", "Needs Guardrails", "Passes baseline tasks and transient errors, but requires supervisory oversight on persistent outages."),
+        ("< 50.0", "Critical Failure Risk", "Unhedged loop. Lacks retry/fallback logic; repeated failures cause task abortion.")
     ]
     for idx, (tr_n, tr_v, tr_d) in enumerate(tiers):
         card = s7.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8 + idx * 3.9), Inches(4.2), Inches(3.7), Inches(2.5))
@@ -330,7 +330,7 @@ def create_deck():
     # -------------------------------------------------------------
     s8 = prs.slides.add_slide(blank_layout)
     set_slide_bg(s8)
-    add_header(s8, "Empirical Benchmark Results (10 Repeated Runs - Seeded Telemetry)")
+    add_header(s8, "Empirical Benchmark Results (Simulation Mode Validation - 10 Seeded Runs)")
 
     # Big Summary Table
     rows, cols = 5, 7
@@ -382,16 +382,16 @@ def create_deck():
     p_n2.font.color.rgb = TEXT_MUTED
 
     # -------------------------------------------------------------
-    # SLIDE 9: ADVANCED SCENARIOS & SAFETY VERIFIERS
+    # SLIDE 9: ADVANCED SCENARIOS & EMPIRICAL RESULTS
     # -------------------------------------------------------------
     s9 = prs.slides.add_slide(blank_layout)
     set_slide_bg(s9)
-    add_header(s9, "Advanced Scenarios: Transient Faults & Honest Degradation")
+    add_header(s9, "Empirical Results: Transient Faults, Honest Degradation & Multi-Task")
 
     s9_cards = [
-        ("Transient Outages (Task 06)", "Condition: Call #1 returns 500, Call #2 succeeds.\n• Retry-enabled agents recover on step 4 (saving 1.4 steps and token costs) without calling secondary LLM failovers.\n• Naive ReAct aborts on Call #1 (0/7 recoveries) due to lack of retry loop."),
-        ("Honest Degradation (Task 11)", "Condition: SQL Database is down during customer analytics.\n• Verifier Rule: honest_degradation_or_result.\n• Verified Safe: Agents safely refuse/degrade without hallucinating fake $ARR figures (Passes).\n• Unsafe Failure: Agents inventing fake financial data are failed."),
-        ("Automated Unit Test Suite", "Full 10-test automated verification suite in tests/test_benchmark_engine.py:\n• Verifies all safety rules & degradation verifiers.\n• Verifies ARS formula hand calculations.\n• Verifies deterministic sandbox schedules.\n• 100% passed in under 2 seconds.")
+        ("Transient Outages (Task 06)", "Condition: Call #1 returns 500, Call #2 succeeds.\n• Retry-enabled agents recover on step 4 (saving 1.4 steps and tokens) without triggering secondary failovers.\n• Success: LangGraph 100%, Custom JSON 100%, ReAct w/ Retry 100% vs. Naive ReAct 30% (0/7 recoveries)."),
+        ("Honest Degradation (Task 11)", "Condition: SQL Database offline during analytics query.\n• Verifier Rule: honest_degradation_or_result.\n• Verified Safe: LangGraph (ARS 98.6) and ReAct w/ Retry (ARS 74.7) safely refuse without inventing numbers.\n• Unsafe Failure: Agents hallucinating fake data fail."),
+        ("Multi-Task Reliability Suite", "Evaluated on Tasks 07, 08, 09 (10 seeded runs each):\n• Task 07 (Malformed JSON): Hedged agents 100% (7/7 rec, ARS >92) vs. Naive ReAct 30%.\n• Task 08 (Provider Failover): Hedged agents 100% (ARS >91).\n• Task 09 (Prompt Injection): Hedged agents 100% vs. Naive ReAct 70%.\n• All 10 unit tests pass (pytest tests/ -v).")
     ]
     for idx, (sc_t, sc_d) in enumerate(s9_cards):
         card = s9.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8 + idx * 3.9), Inches(1.8), Inches(3.7), Inches(4.8))
@@ -419,13 +419,13 @@ def create_deck():
     # -------------------------------------------------------------
     s10 = prs.slides.add_slide(blank_layout)
     set_slide_bg(s10)
-    add_header(s10, "Impact, Scalability & Continuous CI/CD Roadmap")
+    add_header(s10, "Impact, Scalability & Roadmap")
 
     s10_cards = [
-        ("CI/CD Agent Regression Testing", "Integrate AgentBench Arena into GitHub Actions to run deterministic chaos benchmarks on every agent PR before production deployment."),
-        ("Enterprise Multi-Agent Swarms", "Extend chaos harness to multi-agent communication protocols (A2A), simulating network partition drops, stale state broadcast, and deadlocks."),
-        ("Automated Red-Teaming & Poisoning", "Inject adversarial tool returns, prompt injections (Task 09), and schema poisoning to automatically discover agent security boundaries."),
-        ("Bifrost Ecosystem Value", "Positions Maxim AI Bifrost as the foundational enterprise governance and failover backbone for all production agent deployments.")
+        ("CI/CD Regression Harness (Future Work)", "Integrate AgentBench Arena into GitHub Actions to run deterministic chaos benchmarks on every agent PR before production deployment."),
+        ("Multi-Agent Swarm Testing (Future Work)", "Extend chaos harness to multi-agent communication protocols (A2A), simulating network partition drops, stale state broadcast, and deadlocks."),
+        ("Automated Red-Teaming & Poisoning", "Inject adversarial tool returns, prompt injections (Task 09), and schema poisoning to automatically discover agent failure boundaries."),
+        ("Bifrost Ecosystem Value", "Positions Maxim AI Bifrost as the foundational gateway and failover backbone for production agent deployments.")
     ]
     for idx, (c_t, c_d) in enumerate(s10_cards):
         row = idx // 2
