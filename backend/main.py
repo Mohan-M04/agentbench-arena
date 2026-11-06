@@ -36,32 +36,40 @@ async def lifespan(app: FastAPI):
             db.commit()
 
         if db.query(Agent).count() == 0:
-            print("🌱 Seeding 3 reference agents (Direct ReAct, LangGraph, Custom JSON)...")
+            print("🌱 Seeding reference agents (LangGraph, ReAct w/ Retry, Custom JSON, Naive ReAct, Webhook)...")
             default_agents = [
                 Agent(
-                    id="agent-react-01",
-                    name="Direct ReAct Agent",
-                    agent_type="react",
-                    description="Standard Reason-Act-Observe loop with Bifrost gateway routing.",
-                    model="gpt-4o-mini",
-                    max_steps=10
-                ),
-                Agent(
                     id="agent-langgraph-02",
-                    name="LangGraph Graph Agent",
+                    name="LangGraph Agent",
                     agent_type="langgraph",
                     description="State-graph based agent with Planner, ToolExecutor, and ResponseGenerator nodes.",
                     model="gpt-4o-mini",
                     max_steps=12
                 ),
                 Agent(
+                    id="agent-react-retry-05",
+                    name="ReAct w/ Retry & Fallback",
+                    agent_type="react_retry",
+                    description="ReAct loop equipped with exponential backoff and parametric fallback synthesis.",
+                    model="gpt-4o-mini",
+                    max_steps=10
+                ),
+                Agent(
                     id="agent-custom-03",
-                    name="Enterprise Configurable Agent",
+                    name="Custom JSON Agent",
                     agent_type="custom_json",
                     description="Configured via JSON with custom exponential backoff retry guardrails.",
                     model="gpt-4o-mini",
                     max_steps=8,
                     config={"retry_policy": {"max_retries": 3, "backoff": "exponential"}}
+                ),
+                Agent(
+                    id="agent-react-01",
+                    name="Naive ReAct Loop (No Retry)",
+                    agent_type="react",
+                    description="Standard Reason-Act-Observe loop without retry or fallback handlers.",
+                    model="gpt-4o-mini",
+                    max_steps=10
                 ),
                 Agent(
                     id="agent-webhook-04",
@@ -130,7 +138,7 @@ def health():
         "version": "2.0.0",
         "tagline": "Benchmark agents by what they do—not just what they say.",
         "partners": {
-            "title_partner": "Bifrost by Maxim AI (Enterprise AI Gateway)",
+            "title_partner": "Bifrost by Maxim AI (AI Gateway)",
             "track_partner": "Tavily (Real-Time Search & Extract API)"
         }
     }

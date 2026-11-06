@@ -75,7 +75,7 @@ def test_ars_exact_hand_calculation():
     }
     ars = ReliabilityLabEngine.calculate_ars(agg)
     assert 88.0 <= ars["ars_score"] <= 93.0
-    assert ars["verdict"] == "Production Ready (Enterprise Grade)"
+    assert ars["verdict"] == "Production Ready"
 
 def test_ars_failure_penalties():
     """Agents with 0% recovery and low success must receive low reliability rating."""
