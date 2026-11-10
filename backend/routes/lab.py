@@ -53,10 +53,10 @@ def get_pareto_frontier():
     """Returns coordinates for the Cost-to-Success Pareto Frontier Chart."""
     return {
         "frontier_curve": [
-            {"cost_usd": 0.0001, "success_rate": 65.0, "label": "Direct ReAct (Baseline)"},
+            {"cost_usd": 0.0001, "success_rate": 30.0, "label": "Naive ReAct (Baseline)"},
+            {"cost_usd": 0.0002, "success_rate": 92.0, "label": "ReAct w/ Retry", "is_pareto": True},
             {"cost_usd": 0.0003, "success_rate": 92.0, "label": "LangGraph (Optimal Pareto)", "is_pareto": True},
-            {"cost_usd": 0.0008, "success_rate": 95.0, "label": "Enterprise Custom (High Cost)", "is_pareto": True},
-            {"cost_usd": 0.0012, "success_rate": 70.0, "label": "Overthinker (Sub-Optimal)", "is_pareto": False}
+            {"cost_usd": 0.0002, "success_rate": 92.0, "label": "Custom JSON Agent", "is_pareto": True}
         ],
         "quadrants": {
             "top_left": "Cheap & Highly Reliable (The Gold Standard)",
@@ -94,8 +94,8 @@ def get_benchmark_recipes():
             "icon": "shield-alert"
         },
         {
-            "id": "recipe-enterprise",
-            "name": "Enterprise Planning & Multi-Tool Suite",
+            "id": "recipe-multitool",
+            "name": "Multi-Tool Reliability Suite",
             "description": "Tests complex multi-step reasoning across SQL, Calendar, Flights, and Files.",
             "task_ids": ["task-10-trip-planning", "task-11-customer-db-insights", "task-12-meeting-transcript-extraction"],
             "chaos_profile": {},

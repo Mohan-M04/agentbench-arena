@@ -137,7 +137,11 @@ class ReActWithRetryAgent(AgentAdapter):
             )
             total_tokens += final_res["total_tokens"]
             total_cost += final_res["cost_usd"]
-            final_answer = f"ReAct execution verified. Result: {str(tool_res.get('data'))[:180]}"
+            data = tool_res.get('data')
+            if isinstance(data, dict) and "summary" in data:
+                final_answer = f"ReAct execution verified. {data['summary']}"
+            else:
+                final_answer = f"ReAct execution verified. Result: {str(data)}"
 
         traces.append(StepTrace(
             step_number=step,

@@ -154,10 +154,12 @@ To verify agent behavior beyond persistent single-tool outages, AgentBench Arena
 
 | Agent Variant | Policy Handling | Success Rate | Fault Recovery | Safe Degradation Status | ARS Rating |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| ⭐ **LangGraph Agent** | Checkpoint Policy | **10/10 (100.0%)** | **7/7 (100.0%)** | Verified Safe (No Hallucination) | **98.6** |
-| ⭐ **ReAct w/ Retry & Fallback** | Degradation Policy | **7/10 (70.0%)** | **7/7 (100.0%)** | Verified Safe (Graceful Refusal) | **74.7** |
-| ⭐ **Custom JSON Agent** | Strict Schema Policy | **7/10 (70.0%)** | **7/7 (100.0%)** | Verified Safe (Graceful Refusal) | **74.5** |
-| ⭐ **Naive ReAct Loop (No Retry)** | Unhedged Baseline | **7/10 (70.0%)** | **0/7 (0.0%)** | Unsafe Abort / Missing Refusal | **57.1** |
+| ⭐ **ReAct w/ Retry & Fallback** | Degradation Policy | **10/10 (100.0%)** | **7/7 (100.0%)** | Verified Safe (Ground Truth + Graceful Refusal) | **92.2** |
+| ⭐ **Custom JSON Agent** | Strict Schema Policy | **10/10 (100.0%)** | **7/7 (100.0%)** | Verified Safe (Ground Truth + Graceful Refusal) | **92.0** |
+| ⭐ **LangGraph Agent** | Checkpoint Policy | **10/10 (100.0%)** | **7/7 (100.0%)** | Verified Safe (Ground Truth + Graceful Refusal) | **91.2** |
+| ⭐ **Naive ReAct Loop (No Retry)** | Unhedged Baseline | **3/10 (30.0%)** | **0/7 (0.0%)** | Unsafe Crash / Aborted on Outage Runs | **43.1** |
+
+*Takeaway:* Out of 10 repeated runs, 7 runs encounter an injected database outage and 3 runs are clean baseline runs with a live database. On clean runs, hedged agents query the live database and return verified ground truth (Total ARR: ,000). On the 7 outage runs, hedged agents detect the tool exception and report honest graceful degradation (Database unavailable...), achieving 100% recovery (7/7). The unhedged Naive ReAct baseline lacks error handling, succeeding on the 3 clean runs but crashing on all 7 outage runs (3/10 success, 0/7 recovery).*
 
 ### Scenario 3: Multi-Task Reliability Suite (Tasks 07, 08, 09)
 *Evaluates agents across diverse production failure modes (10 seeded runs per agent per task, with 7 injected faults and 3 clean baseline runs):*

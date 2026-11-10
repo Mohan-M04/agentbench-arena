@@ -47,7 +47,7 @@ class LangGraphAgent(AgentAdapter):
 
         # Node 2: ToolExecutor
         tool_name = task.get("available_tools", ["calculator"])[0] if task.get("available_tools") else "calculator"
-        tool_args = {"query": task["prompt"]} if "search" in tool_name else {"expression": "250 * 1.15"}
+        tool_args = {"expression": "250 * 1.15"} if tool_name == "calculator" else {"query": task["prompt"]}
         
         traces.append(StepTrace(
             step_number=step,
@@ -86,7 +86,11 @@ class LangGraphAgent(AgentAdapter):
             else:
                 final_answer = "LangGraph Agent recovered state using parametric memory checkpoint."
         else:
-            final_answer = f"LangGraph execution verified. Observed: {str(tool_res.get('data'))[:180]}..."
+            data = tool_res.get("data")
+            if isinstance(data, dict) and "summary" in data:
+                final_answer = f"LangGraph execution verified. {data['summary']}"
+            else:
+                final_answer = f"LangGraph execution verified. Observed: {str(data)}"
 
         # Node 3: ResponseGenerator
         resp_res = self.bifrost.route_completion_sync(

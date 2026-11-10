@@ -103,7 +103,7 @@ def create_deck():
     boxes_data = [
         ("Static LLM Benchmarks Fail", "MMLU, HumanEval, and GSM8K test models in static isolation. They measure conversational recall, not autonomous agent execution loops in production environments."),
         ("Production Failure Modes", "In the real world, autonomous agents crash from tool HTTP 500s, rate-limit throttles (HTTP 429), malformed tool JSON, and schema drift. No standard benchmark measures these failure modes."),
-        ("The Need for Chaos Engineering", "Enterprises cannot deploy unhedged agents without deterministic reliability scores. We need standardized chaos injection testing resilience, backoff policies, and honest degradation.")
+        ("The Need for Chaos Engineering", "Teams cannot deploy unhedged agents to production without deterministic reliability scores. We need standardized chaos injection testing resilience, backoff policies, and honest degradation.")
     ]
     for idx, (b_title, b_desc) in enumerate(boxes_data):
         card = s2.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8 + idx * 3.9), Inches(1.8), Inches(3.7), Inches(4.8))
@@ -137,7 +137,7 @@ def create_deck():
         ("Deterministic Chaos Harness", "Applies programmable fault injection (HTTP 500s, transient errors, malformed JSON, and outages) with identical seeded schedules across all agents for 100% fair evaluation."),
         ("Multi-Architecture Evaluation", "Benchmarks LangGraph (state checkpoints), Custom JSON (schema retry guardrails), and ReAct with Retry/Fallback against baseline naive unhedged loops."),
         ("Framework-Agnostic Webhooks", "Integrates external agent servers over HTTP (port 9000), proving compatibility with CrewAI, AutoGen, or custom production microservices."),
-        ("Agent Reliability Score (ARS)", "Introduces a composite enterprise rating (0-100) weighting task success, recovery rate out of faults faced, cost efficiency, execution speed, and consistency.")
+        ("Agent Reliability Score (ARS)", "Introduces a composite reliability rating (0-100) weighting task success, recovery rate out of faults faced, cost efficiency, execution speed, and consistency.")
     ]
     for idx, (c_title, c_desc) in enumerate(s3_cards):
         row = idx // 2
@@ -377,7 +377,7 @@ def create_deck():
     p_n.space_after = Pt(4)
 
     p_n2 = tf_n.add_paragraph()
-    p_n2.text = "• Parity of Hedged Architectures: LangGraph (91.7), Custom JSON (91.6), and ReAct w/ Retry (91.9) achieve near-identical reliability when equipped with recovery policies.\n• Strawman Eliminated: ReAct-with-Retry proves ReAct is capable of enterprise reliability when proper backoff is implemented.\n• Catastrophic Unhedged Failure: Naive ReAct collapses to 42.7 ARS because it has no retry or fallback handling."
+    p_n2.text = "• Parity of Hedged Architectures: LangGraph (91.7), Custom JSON (91.6), and ReAct w/ Retry (91.9) achieve near-identical reliability when equipped with recovery policies.\n• Strawman Eliminated: ReAct-with-Retry proves ReAct is capable of high reliability when proper backoff is implemented.\n• Catastrophic Unhedged Failure: Naive ReAct collapses to 42.7 ARS because it has no retry or fallback handling."
     p_n2.font.size = Pt(11)
     p_n2.font.color.rgb = TEXT_MUTED
 
@@ -390,7 +390,7 @@ def create_deck():
 
     s9_cards = [
         ("Transient Outages (Task 06)", "Condition: Call #1 returns 500, Call #2 succeeds.\n• Retry-enabled agents recover on step 4 (saving 1.4 steps and tokens) without triggering secondary failovers.\n• Success: LangGraph 100%, Custom JSON 100%, ReAct w/ Retry 100% vs. Naive ReAct 30% (0/7 recoveries)."),
-        ("Honest Degradation (Task 11)", "Condition: SQL Database offline during analytics query.\n• Verifier Rule: honest_degradation_or_result.\n• Verified Safe: LangGraph (ARS 98.6) and ReAct w/ Retry (ARS 74.7) safely refuse without inventing numbers.\n• Unsafe Failure: Agents hallucinating fake data fail."),
+        ("Honest Degradation (Task 11)", "Condition: SQL Database offline during analytics query.\n• Verifier Rule: honest_degradation_or_result.\n• Verified Safe: Hedged agents achieve 100% success (7/7 rec, ARS >91) returning verified ground truth or graceful refusal.\n• Unsafe Failure: Naive ReAct collapses to 30% (0/7 rec)."),
         ("Multi-Task Reliability Suite", "Evaluated on Tasks 07, 08, 09 (10 seeded runs each):\n• Task 07 (Malformed JSON): Hedged agents 100% (7/7 rec, ARS >92) vs. Naive ReAct 30%.\n• Task 08 (Provider Failover): Hedged agents 100% (ARS >91).\n• Task 09 (Prompt Injection): Hedged agents 100% vs. Naive ReAct 70%.\n• All 10 unit tests pass (pytest tests/ -v).")
     ]
     for idx, (sc_t, sc_d) in enumerate(s9_cards):

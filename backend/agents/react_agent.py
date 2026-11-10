@@ -93,7 +93,10 @@ class DirectReActAgent(AgentAdapter):
             )
             total_tokens += final_res["total_tokens"]
             total_cost += final_res["cost_usd"]
-            final_answer = final_res["content"]
+            if isinstance(data, dict) and "summary" in data:
+                final_answer = f"[{final_res.get('gateway', 'Bifrost')}]: {data['summary']}"
+            else:
+                final_answer = final_res["content"]
 
         traces.append(StepTrace(
             step_number=step,

@@ -25,7 +25,7 @@ def _is_gateway_listening(host: str) -> bool:
 
 class BifrostGateway:
     """
-    Enterprise AI Gateway integration for Maxim AI Bifrost.
+    AI Gateway integration for Maxim AI Bifrost.
     Handles unified OpenAI-compatible routing, automatic provider failover,
     token usage tracking, and exact cost calculation.
     """

@@ -29,11 +29,15 @@ def run_live_benchmark(runs_per_agent: int = 3):
     gateway_host = os.getenv("BIFROST_HOST", "http://localhost:8080")
     is_live = _is_gateway_listening(gateway_host)
 
+    has_gemini = bool(os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY"))
+    has_openai = bool(os.getenv("OPENAI_API_KEY"))
+    has_anthropic = bool(os.getenv("ANTHROPIC_API_KEY"))
+
     print("=" * 90, flush=True)
     print("⚡ LIVE BIFROST GATEWAY VALIDATION BENCHMARK (3-5 REAL RUNS PER AGENT)", flush=True)
     print(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}", flush=True)
     print(f"Gateway URL: {gateway_host} | Listening: {'✅ ONLINE' if is_live else '❌ OFFLINE'}", flush=True)
-    print(f"Provider Keys: OpenAI={'sk-...' if os.getenv('OPENAI_API_KEY') else 'Not Set'}, Anthropic={'sk-ant-...' if os.getenv('ANTHROPIC_API_KEY') else 'Not Set'}", flush=True)
+    print(f"Provider Keys: Gemini={'Set (Free Tier)' if has_gemini else 'Not Set'}, OpenAI={'Set' if has_openai else 'Not Set'}, Anthropic={'Set' if has_anthropic else 'Not Set'}", flush=True)
     print("=" * 90, flush=True)
 
     if not is_live:
@@ -44,13 +48,14 @@ def run_live_benchmark(runs_per_agent: int = 3):
         print("  docker run -p 8080:8080 maximhq/bifrost\n")
         sys.exit(1)
 
-    has_provider_key = bool(os.getenv("OPENAI_API_KEY") or os.getenv("ANTHROPIC_API_KEY"))
+    has_provider_key = has_gemini or has_openai or has_anthropic
     if not has_provider_key:
-        print("\n⚠️ PRE-FLIGHT CHECK: No OPENAI_API_KEY or ANTHROPIC_API_KEY detected in environment.")
+        print("\n⚠️ PRE-FLIGHT CHECK: No GEMINI_API_KEY, OPENAI_API_KEY, or ANTHROPIC_API_KEY detected in environment.")
         print("Bifrost requires upstream provider credentials to execute real model completions.")
         print("To configure Bifrost:")
-        print("  1. Add OPENAI_API_KEY=sk-... to backend/.env (or your terminal session)")
-        print("  2. Or configure your provider keys directly in the Bifrost UI at http://localhost:8080")
+        print("  1. Add GEMINI_API_KEY=AIza... (get free key from aistudio.google.com) to backend/.env")
+        print("  2. Or add OPENAI_API_KEY=sk-... to backend/.env")
+        print("  3. Or configure your provider keys directly in the Bifrost UI at http://localhost:8080")
         print("\nHalting live benchmark runner until provider key is provided. (No silent fallback to simulation permitted).\n")
         sys.exit(1)
 

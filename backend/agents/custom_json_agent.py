@@ -115,7 +115,11 @@ class CustomJsonAgent(AgentAdapter):
                     step += 1
                     final_answer = synth_res["content"]
         else:
-            final_answer = f"Completed according to JSON configuration. Result: {str(tool_res.get('data'))[:160]}"
+            data = tool_res.get("data")
+            if isinstance(data, dict) and "summary" in data:
+                final_answer = f"Completed according to JSON configuration. {data['summary']}"
+            else:
+                final_answer = f"Completed according to JSON configuration. Result: {str(data)}"
 
         traces.append(StepTrace(
             step_number=step,
