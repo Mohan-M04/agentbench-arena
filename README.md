@@ -212,9 +212,17 @@ pip install --break-system-packages -r backend/requirements.txt
 
 ### 3. Configure API Keys
 Copy the example environment template:
+
+**Windows (Command Prompt):**
+```cmd
+copy backend\.env.example backend\.env
+```
+
+**PowerShell / macOS / Linux:**
 ```bash
 cp backend/.env.example backend/.env
 ```
+
 Add your **Tavily API key** (`tvly-...`) inside `backend/.env`.
 
 ### 4. Launch AgentBench Arena
@@ -228,7 +236,7 @@ Open your browser and navigate to:
 ### 5. Run Automated Test Suite
 Execute the 10-test unit verification suite (verifier safety rules, ARS formula math, and sandbox fault behavior):
 ```bash
-pytest tests/ -v
+python -m pytest tests/ -v
 ```
 
 ---
