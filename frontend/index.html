@@ -108,9 +108,37 @@
         <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
         <span class="text-slate-300 font-mono text-[11px]">Tavily Web: Online</span>
       </div>
-      <button onclick="exportFullReport()" class="flex items-center gap-1.5 text-xs bg-white/[0.05] hover:bg-white/[0.1] text-slate-200 border border-white/[0.1] px-3.5 py-1.5 rounded-lg font-medium transition">
-        <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Report
-      </button>
+      <!-- EXPORT REPORT DROPDOWN -->
+      <div class="relative" id="export-dropdown-container">
+        <button id="export-dropdown-btn" onclick="toggleExportMenu(event)" class="flex items-center gap-1.5 text-xs bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-200 border border-indigo-500/30 px-3.5 py-1.5 rounded-lg font-medium transition cursor-pointer shadow-sm">
+          <i data-lucide="download" class="w-3.5 h-3.5 text-indigo-400"></i>
+          <span>Export Report</span>
+          <i data-lucide="chevron-down" class="w-3 h-3 text-indigo-300"></i>
+        </button>
+        <div id="export-menu" class="hidden absolute right-0 mt-2 w-64 rounded-xl bg-slate-900 border border-white/10 shadow-2xl py-1.5 z-50 backdrop-blur-md">
+          <a href="/api/lab/export-report?format=markdown" download="AgentBench_Arena_Audit_Report.md" onclick="hideExportMenu()" class="flex items-start gap-2.5 px-3.5 py-2.5 text-xs text-slate-200 hover:bg-white/[0.08] transition">
+            <i data-lucide="file-text" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+            <div>
+              <div class="font-medium text-slate-100">Markdown Audit Report</div>
+              <div class="text-[10px] text-slate-400">Executive summary, ARS tables (.md)</div>
+            </div>
+          </a>
+          <a href="/api/lab/export-report?format=json" download="agentbench_arena_telemetry.json" onclick="hideExportMenu()" class="flex items-start gap-2.5 px-3.5 py-2.5 text-xs text-slate-200 hover:bg-white/[0.08] transition border-t border-white/[0.06]">
+            <i data-lucide="database" class="w-4 h-4 text-cyan-400 mt-0.5 shrink-0"></i>
+            <div>
+              <div class="font-medium text-slate-100">Raw Telemetry Dataset</div>
+              <div class="text-[10px] text-slate-400">125KB JSON traces & step logs (.json)</div>
+            </div>
+          </a>
+          <a href="/api/lab/export-report?format=csv" download="agentbench_summary.csv" onclick="hideExportMenu()" class="flex items-start gap-2.5 px-3.5 py-2.5 text-xs text-slate-200 hover:bg-white/[0.08] transition border-t border-white/[0.06]">
+            <i data-lucide="table" class="w-4 h-4 text-amber-400 mt-0.5 shrink-0"></i>
+            <div>
+              <div class="font-medium text-slate-100">Benchmark Metrics CSV</div>
+              <div class="text-[10px] text-slate-400">Tabular scores for spreadsheet (.csv)</div>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -888,8 +916,31 @@
       }
     }
 
-    function exportFullReport() {
-      alert("Downloading complete JSON & Markdown Benchmark Audit Report...");
+    function toggleExportMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById("export-menu");
+      if (menu) {
+        menu.classList.toggle("hidden");
+        lucide.createIcons();
+      }
+    }
+
+    function hideExportMenu() {
+      const menu = document.getElementById("export-menu");
+      if (menu) {
+        menu.classList.add("hidden");
+      }
+    }
+
+    document.addEventListener("click", function(event) {
+      const container = document.getElementById("export-dropdown-container");
+      if (container && !container.contains(event.target)) {
+        hideExportMenu();
+      }
+    });
+
+    function exportFullReport(format = "markdown") {
+      window.location.href = `/api/lab/export-report?format=${format}`;
     }
 
     async function checkGatewayStatus() {

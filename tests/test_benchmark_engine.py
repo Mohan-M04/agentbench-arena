@@ -133,3 +133,27 @@ def test_persistent_fault_sandbox_behavior():
     call2 = sb.execute_tool_sync("calculator", args)
     assert call1["status"] == "error"
     assert call2["status"] == "error"
+
+# ==============================================================================
+# 4. EXPORT REPORT TESTS
+# ==============================================================================
+
+def test_export_report_formats():
+    """Verify that the export report route generates valid markdown, json, and csv outputs."""
+    from routes.lab import export_benchmark_report
+
+    # Test Markdown
+    res_md = export_benchmark_report(format="markdown")
+    assert res_md.status_code == 200
+    assert "Agent Reliability Scores (ARS)" in res_md.body.decode("utf-8")
+    assert "Content-Disposition" in res_md.headers
+
+    # Test JSON
+    res_json = export_benchmark_report(format="json")
+    assert res_json.status_code == 200
+    assert res_json.filename == "agentbench_arena_telemetry.json"
+
+    # Test CSV
+    res_csv = export_benchmark_report(format="csv")
+    assert res_csv.status_code == 200
+    assert res_csv.filename == "agentbench_summary.csv"
