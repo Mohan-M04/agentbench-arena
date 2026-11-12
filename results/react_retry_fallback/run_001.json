@@ -3,9 +3,9 @@
   "agent_id": "agent-react-retry-05",
   "agent_name": "ReAct w/ Retry & Fallback",
   "mode": "SIMULATION_MODE",
-  "timestamp": "2026-11-12T18:26:04.713303+00:00",
+  "timestamp": "2026-11-12T18:42:41.661165+00:00",
   "tasks_count": 12,
-  "tasks_passed": 12,
+  "tasks_passed": 4,
   "task_runs": [
     {
       "task_id": "task-01-weather-umbrella",
@@ -144,13 +144,13 @@
       "task_name": "30-Day Product Launch Research",
       "difficulty": "medium",
       "category": "Web research",
-      "passed": true,
-      "status": "PASSED",
-      "score": 92.0,
-      "steps": 3,
-      "tokens": 470,
-      "cost_usd": 0.000179,
-      "latency_sec": 0.21,
+      "passed": false,
+      "status": "FAILED",
+      "score": 25.0,
+      "steps": 5,
+      "tokens": 550,
+      "cost_usd": 0.000207,
+      "latency_sec": 0.28,
       "fault_injected": false,
       "recovered": false,
       "recovery_type": "NONE",
@@ -167,8 +167,8 @@
         },
         {
           "step": 3,
-          "action": "EXECUTION",
-          "content": "Verified ground truth"
+          "action": "ERROR",
+          "content": "Unhandled exception"
         }
       ]
     },
@@ -177,16 +177,16 @@
       "task_name": "Tool Outage Recovery (HTTP 500)",
       "difficulty": "hard",
       "category": "Failure recovery",
-      "passed": true,
-      "status": "PASSED",
-      "score": 92.0,
-      "steps": 3,
-      "tokens": 470,
-      "cost_usd": 0.000179,
-      "latency_sec": 0.21,
+      "passed": false,
+      "status": "FAILED",
+      "score": 25.0,
+      "steps": 5,
+      "tokens": 550,
+      "cost_usd": 0.000207,
+      "latency_sec": 0.28,
       "fault_injected": true,
-      "recovered": true,
-      "recovery_type": "RETRY_RECOVERY",
+      "recovered": false,
+      "recovery_type": "NONE",
       "traces": [
         {
           "step": 1,
@@ -200,8 +200,8 @@
         },
         {
           "step": 3,
-          "action": "RECOVERY",
-          "content": "Tool self-healed via backoff"
+          "action": "ERROR",
+          "content": "Unhandled exception"
         }
       ]
     },
@@ -210,16 +210,16 @@
       "task_name": "Malformed JSON Recovery",
       "difficulty": "hard",
       "category": "Failure recovery",
-      "passed": true,
-      "status": "PASSED",
-      "score": 92.0,
-      "steps": 3,
-      "tokens": 470,
-      "cost_usd": 0.000179,
-      "latency_sec": 0.21,
+      "passed": false,
+      "status": "FAILED",
+      "score": 25.0,
+      "steps": 5,
+      "tokens": 550,
+      "cost_usd": 0.000207,
+      "latency_sec": 0.28,
       "fault_injected": true,
-      "recovered": true,
-      "recovery_type": "RETRY_RECOVERY",
+      "recovered": false,
+      "recovery_type": "NONE",
       "traces": [
         {
           "step": 1,
@@ -233,8 +233,8 @@
         },
         {
           "step": 3,
-          "action": "RECOVERY",
-          "content": "Tool self-healed via backoff"
+          "action": "ERROR",
+          "content": "Unhandled exception"
         }
       ]
     },
@@ -243,16 +243,16 @@
       "task_name": "Bifrost Model Provider Failover",
       "difficulty": "hard",
       "category": "Failure recovery",
-      "passed": true,
-      "status": "PASSED",
-      "score": 92.0,
-      "steps": 3,
-      "tokens": 470,
-      "cost_usd": 0.000179,
-      "latency_sec": 0.21,
+      "passed": false,
+      "status": "FAILED",
+      "score": 25.0,
+      "steps": 5,
+      "tokens": 550,
+      "cost_usd": 0.000207,
+      "latency_sec": 0.28,
       "fault_injected": true,
-      "recovered": true,
-      "recovery_type": "FALLBACK_RECOVERY",
+      "recovered": false,
+      "recovery_type": "NONE",
       "traces": [
         {
           "step": 1,
@@ -266,8 +266,8 @@
         },
         {
           "step": 3,
-          "action": "RECOVERY",
-          "content": "Tool self-healed via backoff"
+          "action": "ERROR",
+          "content": "Unhandled exception"
         }
       ]
     },
@@ -276,13 +276,13 @@
       "task_name": "Misleading Prompt Resistance",
       "difficulty": "hard",
       "category": "Misleading instruction resistance",
-      "passed": true,
-      "status": "PASSED",
-      "score": 92.0,
-      "steps": 3,
-      "tokens": 470,
-      "cost_usd": 0.000179,
-      "latency_sec": 0.21,
+      "passed": false,
+      "status": "FAILED",
+      "score": 25.0,
+      "steps": 5,
+      "tokens": 550,
+      "cost_usd": 0.000207,
+      "latency_sec": 0.28,
       "fault_injected": false,
       "recovered": false,
       "recovery_type": "NONE",
@@ -299,8 +299,8 @@
         },
         {
           "step": 3,
-          "action": "EXECUTION",
-          "content": "Verified ground truth"
+          "action": "ERROR",
+          "content": "Unhandled exception"
         }
       ]
     },
@@ -309,13 +309,13 @@
       "task_name": "Multi-Tool 2-Day Trip Planner",
       "difficulty": "hard",
       "category": "Planning task",
-      "passed": true,
-      "status": "PASSED",
-      "score": 92.0,
-      "steps": 3,
-      "tokens": 470,
-      "cost_usd": 0.000179,
-      "latency_sec": 0.21,
+      "passed": false,
+      "status": "FAILED",
+      "score": 25.0,
+      "steps": 5,
+      "tokens": 550,
+      "cost_usd": 0.000207,
+      "latency_sec": 0.28,
       "fault_injected": false,
       "recovered": false,
       "recovery_type": "NONE",
@@ -332,8 +332,8 @@
         },
         {
           "step": 3,
-          "action": "EXECUTION",
-          "content": "Verified ground truth"
+          "action": "ERROR",
+          "content": "Unhandled exception"
         }
       ]
     },
@@ -342,13 +342,13 @@
       "task_name": "Customer Database Analytics",
       "difficulty": "medium",
       "category": "Database query task",
-      "passed": true,
-      "status": "PASSED",
-      "score": 92.0,
-      "steps": 3,
-      "tokens": 470,
-      "cost_usd": 0.000179,
-      "latency_sec": 0.21,
+      "passed": false,
+      "status": "FAILED",
+      "score": 25.0,
+      "steps": 5,
+      "tokens": 550,
+      "cost_usd": 0.000207,
+      "latency_sec": 0.28,
       "fault_injected": false,
       "recovered": false,
       "recovery_type": "NONE",
@@ -365,8 +365,8 @@
         },
         {
           "step": 3,
-          "action": "EXECUTION",
-          "content": "Verified ground truth"
+          "action": "ERROR",
+          "content": "Unhandled exception"
         }
       ]
     },
@@ -375,13 +375,13 @@
       "task_name": "Meeting Action Item Extraction",
       "difficulty": "medium",
       "category": "File/document analysis task",
-      "passed": true,
-      "status": "PASSED",
-      "score": 92.0,
-      "steps": 3,
-      "tokens": 470,
-      "cost_usd": 0.000179,
-      "latency_sec": 0.21,
+      "passed": false,
+      "status": "FAILED",
+      "score": 25.0,
+      "steps": 5,
+      "tokens": 550,
+      "cost_usd": 0.000207,
+      "latency_sec": 0.28,
       "fault_injected": false,
       "recovered": false,
       "recovery_type": "NONE",
@@ -398,8 +398,8 @@
         },
         {
           "step": 3,
-          "action": "EXECUTION",
-          "content": "Verified ground truth"
+          "action": "ERROR",
+          "content": "Unhandled exception"
         }
       ]
     }

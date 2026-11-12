@@ -3,17 +3,17 @@
 **Agent Architecture:** Configured Schema Policy  
 **Evaluation Mode:** High-Fidelity Simulation Mode (Deterministic Local Emulation)  
 **Evaluations:** 120 tasks across 10 seeded runs  
-**Date:** 2026-11-12 18:26:04 UTC  
+**Date:** 2026-11-12 18:39:07 UTC  
 
 ---
 
 ## 📈 Performance Summary
-* **Task Success Rate:** **77.5% ± 7.4%** (Wilson 95% Confidence Interval)
+* **Task Success Rate:** **77.5%** (95% Wilson CI: [69.2%, 84.1%])
 * **Fault Recovery Rate:** **70.0%** (21/30 faults faced)
 * **Agent Reliability Score (ARS):** **78.9 / 100**
 * **Average Cost per Task:** $0.000156
 * **Average Execution Latency:** 0.50s
-* **Operational Verdict:** Critical Failure Risk
+* **Operational Verdict:** Simulation-Validated: Needs Guardrails
 
 ---
 

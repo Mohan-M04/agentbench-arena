@@ -5,7 +5,7 @@
   "mode": "SIMULATION_MODE",
   "evaluations_count": 120,
   "success_rate_pct": 40.0,
-  "success_confidence_interval_95": "40.0% \u00b1 8.6%",
+  "success_confidence_interval_95": "[31.7%, 48.9%]",
   "faults_faced": 30,
   "fault_recoveries": 2,
   "fault_recovery_rate_pct": 6.7,

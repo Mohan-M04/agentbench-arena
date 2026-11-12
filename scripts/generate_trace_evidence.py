@@ -138,10 +138,11 @@ def wilson_score_interval(successes: int, trials: int, confidence: float = 0.95)
     half_width = (z * math.sqrt(p * (1 - p) / trials + z**2 / (4 * trials**2))) / denom
     return max(0.0, centre - half_width), min(1.0, centre + half_width)
 
-def generate_evidence():
+def generate_evidence(runs_count: int = 10, export: str = "all"):
     os.makedirs(RESULTS_DIR, exist_ok=True)
     os.makedirs(REPORTS_DIR, exist_ok=True)
 
+    runs_count = max(1, runs_count)
     summary_rows = []
     task_matrix_data = {t["id"]: {"name": t["name"], "difficulty": t.get("difficulty", "medium")} for t in SEED_TASKS}
 
@@ -149,7 +150,6 @@ def generate_evidence():
         agent_dir = RESULTS_DIR / agent_key
         os.makedirs(agent_dir, exist_ok=True)
 
-        runs_count = 10
         total_evaluations = runs_count * len(SEED_TASKS)
         total_passes = 0
         faults_faced = 0
@@ -236,7 +236,14 @@ def generate_evidence():
         success_rate_pct = round((total_passes / total_evaluations) * 100, 1)
         recovery_rate_pct = round((fault_recoveries / max(1, faults_faced)) * 100, 1)
         ci_low, ci_high = wilson_score_interval(total_passes, total_evaluations)
-        ci_margin = round(((ci_high - ci_low) / 2) * 100, 1)
+        ci_bounds_str = f"[{ci_low*100:.1f}%, {ci_high*100:.1f}%]"
+
+        if a_meta["ars_score"] >= 80:
+            verdict_str = "Simulation-Validated: High Reliability"
+        elif a_meta["ars_score"] >= 70:
+            verdict_str = "Simulation-Validated: Needs Guardrails"
+        else:
+            verdict_str = "Critical Failure Risk"
 
         summary_payload = {
             "agent_id": a_meta["id"],
@@ -245,19 +252,20 @@ def generate_evidence():
             "mode": "SIMULATION_MODE",
             "evaluations_count": total_evaluations,
             "success_rate_pct": success_rate_pct,
-            "success_confidence_interval_95": f"{success_rate_pct}% ± {ci_margin}%",
+            "success_confidence_interval_95": ci_bounds_str,
             "faults_faced": faults_faced,
             "fault_recoveries": fault_recoveries,
             "fault_recovery_rate_pct": recovery_rate_pct,
             "avg_cost_usd": a_meta["avg_cost"],
             "avg_latency_sec": a_meta["avg_latency"],
             "ars_score": a_meta["ars_score"],
-            "verdict": "Production Ready" if a_meta["ars_score"] >= 80 else "Critical Failure Risk",
+            "verdict": verdict_str,
             "individual_runs": run_files
         }
 
-        with open(agent_dir / "summary.json", "w", encoding="utf-8") as f:
-            json.dump(summary_payload, f, indent=2)
+        if export != "none":
+            with open(agent_dir / "summary.json", "w", encoding="utf-8") as f:
+                json.dump(summary_payload, f, indent=2)
 
         # Markdown Report for this agent
         report_md = f"""# 📊 Agent Audit Report: {a_meta['name']}
@@ -270,12 +278,12 @@ def generate_evidence():
 ---
 
 ## 📈 Performance Summary
-* **Task Success Rate:** **{success_rate_pct}% ± {ci_margin}%** (Wilson 95% Confidence Interval)
+* **Task Success Rate:** **{success_rate_pct}%** (95% Wilson CI: {ci_bounds_str})
 * **Fault Recovery Rate:** **{recovery_rate_pct}%** ({fault_recoveries}/{faults_faced} faults faced)
 * **Agent Reliability Score (ARS):** **{a_meta['ars_score']} / 100**
 * **Average Cost per Task:** ${a_meta['avg_cost']:.6f}
 * **Average Execution Latency:** {a_meta['avg_latency']:.2f}s
-* **Operational Verdict:** {summary_payload['verdict']}
+* **Operational Verdict:** {verdict_str}
 
 ---
 
@@ -299,8 +307,9 @@ def generate_evidence():
 Individual execution runs with step-by-step traces, Bifrost tokens, and latency logs:
 {', '.join([f"[`{rf}`](../results/{agent_key}/{rf})" for rf in run_files[:5]])} ... and {len(run_files) - 5} more.
 """
-        with open(REPORTS_DIR / f"{agent_key}.md", "w", encoding="utf-8") as f:
-            f.write(report_md)
+        if export != "none":
+            with open(REPORTS_DIR / f"{agent_key}.md", "w", encoding="utf-8") as f:
+                f.write(report_md)
 
         summary_rows.append({
             "agent_id": a_meta["id"],
@@ -310,7 +319,7 @@ Individual execution runs with step-by-step traces, Bifrost tokens, and latency 
             "runs": total_evaluations,
             "success_count": total_passes,
             "success_rate_pct": success_rate_pct,
-            "confidence_interval": f"±{ci_margin}%",
+            "confidence_interval": ci_bounds_str,
             "faults_faced": faults_faced,
             "fault_recoveries": fault_recoveries,
             "fault_recovery_rate_pct": recovery_rate_pct,
@@ -322,33 +331,36 @@ Individual execution runs with step-by-step traces, Bifrost tokens, and latency 
             "verdict": summary_payload["verdict"]
         })
 
-    # Write updated benchmark_summary.csv
-    with open(RESULTS_DIR / "benchmark_summary.csv", "w", newline="", encoding="utf-8") as f:
-        fieldnames = ["agent_id", "agent_name", "architecture", "is_ranked", "runs", "success_count", "success_rate_pct", "confidence_interval", "faults_faced", "fault_recoveries", "fault_recovery_rate_pct", "avg_steps", "avg_tokens", "avg_cost_usd", "avg_latency_sec", "ars_score", "verdict"]
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(summary_rows)
+    if export != "none":
+        # Write updated benchmark_summary.csv
+        with open(RESULTS_DIR / "benchmark_summary.csv", "w", newline="", encoding="utf-8") as f:
+            fieldnames = ["agent_id", "agent_name", "architecture", "is_ranked", "runs", "success_count", "success_rate_pct", "confidence_interval", "faults_faced", "fault_recoveries", "fault_recovery_rate_pct", "avg_steps", "avg_tokens", "avg_cost_usd", "avg_latency_sec", "ars_score", "verdict"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(summary_rows)
 
-    # Write Task-Level Matrix CSV
-    with open(RESULTS_DIR / "task_level_matrix.csv", "w", newline="", encoding="utf-8") as f:
-        fieldnames = ["task_id", "task_name", "difficulty", "react_retry_fallback", "langgraph", "custom_json", "naive_react"]
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        for t_id, data in task_matrix_data.items():
-            writer.writerow({
-                "task_id": t_id,
-                "task_name": data["name"],
-                "difficulty": data["difficulty"],
-                "react_retry_fallback": data.get("react_retry_fallback", "-"),
-                "langgraph": data.get("langgraph", "-"),
-                "custom_json": data.get("custom_json", "-"),
-                "naive_react": data.get("naive_react", "-")
-            })
+        # Write Task-Level Matrix CSV
+        with open(RESULTS_DIR / "task_level_matrix.csv", "w", newline="", encoding="utf-8") as f:
+            fieldnames = ["task_id", "task_name", "difficulty", "react_retry_fallback", "langgraph", "custom_json", "naive_react"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            for t_id, data in task_matrix_data.items():
+                writer.writerow({
+                    "task_id": t_id,
+                    "task_name": data["name"],
+                    "difficulty": data["difficulty"],
+                    "react_retry_fallback": data.get("react_retry_fallback", "-"),
+                    "langgraph": data.get("langgraph", "-"),
+                    "custom_json": data.get("custom_json", "-"),
+                    "naive_react": data.get("naive_react", "-")
+                })
 
-    print(f"✅ Generated {len(AGENTS) * 10} individual run trace files in {RESULTS_DIR}")
-    print(f"✅ Generated 4 agent audit reports in {REPORTS_DIR}")
-    print(f"✅ Updated {RESULTS_DIR / 'benchmark_summary.csv'}")
-    print(f"✅ Generated {RESULTS_DIR / 'task_level_matrix.csv'}")
+        print(f"✅ Generated {len(AGENTS) * runs_count} individual run trace files in {RESULTS_DIR}")
+        print(f"✅ Generated 4 agent audit reports in {REPORTS_DIR}")
+        print(f"✅ Updated {RESULTS_DIR / 'benchmark_summary.csv'}")
+        print(f"✅ Generated {RESULTS_DIR / 'task_level_matrix.csv'}")
+    else:
+        print(f"✅ In-memory verification complete for {runs_count} run(s) across all agents.")
 
 if __name__ == "__main__":
     generate_evidence()

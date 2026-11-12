@@ -1,9 +1,9 @@
 # ⚔️ AgentBench Arena
 
 [![Agent Reliability Gate](https://github.com/Mohan-M04/agentbench-arena/actions/workflows/agent-reliability-gate.yml/badge.svg)](https://github.com/Mohan-M04/agentbench-arena/actions/workflows/agent-reliability-gate.yml)
-[![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests Passing](https://img.shields.io/badge/Tests-15%20Passed-emerald.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-15%2F15%20passing-brightgreen)](tests/)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 > **“AgentBench Arena does not just score agents—it explains why they fail, replays what would fix them, and prevents regressions before they reach production.”**  
 > *A Framework-Independent Reliability Engineering Platform & Stress-Testing Observatory for AI Agents.*  
@@ -15,15 +15,27 @@
 
 > [!IMPORTANT]
 > **Execution Provenance: Simulation Mode vs. Live Bifrost Mode**
-> * **Simulation Mode (Default & Benchmark Baseline):** Fully deterministic local emulation of Bifrost gateway proxying, token accounting, and tool failure injection. No external cloud API calls or costs are incurred. Designed for reproducible scientific benchmarking, zero-key quickstarts, and automated CI regression gates.
-> * **Live Bifrost Mode (Opt-In Production Proxy):** Connects to a locally running Maxim AI Bifrost gateway daemon (`localhost:8080`) with configured provider keys. Measures live network socket routing, real multi-provider failovers, upstream latency, and token billing.
+> * **Simulation Mode (Default & Benchmark Baseline):** Fully deterministic local emulation of Bifrost gateway proxying, token accounting, and tool failure injection. No external cloud API calls or costs are incurred. Designed for reproducible benchmarking, zero-key quickstarts, and automated CI regression gates.
+> * **Live Bifrost Mode (Opt-In Production Proxy):** Connects to a locally running Maxim AI Bifrost gateway daemon (`localhost:8080`) with configured provider keys. Measures live network socket routing, multi-provider failover behavior, upstream latency, and token billing.
 >
 > *Every raw telemetry file and report explicitly logs its execution provenance (`mode: SIMULATION_MODE` vs `mode: LIVE_BIFROST`). Simulated results are never labeled as live results.*
 
 ---
 
+## 📸 Platform Overview
+
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" alt="AgentBench Arena Observatory Dashboard" width="95%" />
+</p>
+
+| Side-by-Side Agent Duel & Traces | Live Fault Injection Topology |
+| :---: | :---: |
+| <img src="docs/screenshots/duel_execution.png" alt="Duel Execution Traces" width="100%" /> | <img src="docs/screenshots/topology_diagnostics.jpg" alt="Topology Diagnostics" width="100%" /> |
+
+---
+
 ## 📌 Problem Statement
-Traditional AI benchmarks (MMLU, HumanEval, GSM8K) measure static model intelligence, but **fail completely for autonomous AI agents in production**.
+Traditional AI benchmarks (MMLU, HumanEval, GSM8K) measure static model intelligence, but **do not adequately measure autonomous AI agents in production**.
 
 In real-world environments:
 * Downstream tools crash with `HTTP 500 / 503` errors.
@@ -39,36 +51,19 @@ In real-world environments:
 ## 🏗️ Architecture
 
 ```mermaid
-graph TD
-    UI["🖥️ AgentBench Arena UI<br/>(Glassmorphic Observatory, Topology, ARS)"] -->|"Configures Benchmark & Chaos"| Orch["⚙️ Benchmark Orchestrator"]
-    
-    subgraph "Agent Adapters (Framework-Independent)"
-        A1["Direct ReAct Agent"]
-        A2["LangGraph Agent"]
-        A3["Custom JSON Agent"]
-        A4["External HTTP Webhook Agent"]
-    end
-    
-    Orch --> A1 & A2 & A3 & A4
-    
-    subgraph "Tool Sandbox & Chaos Engine"
-        SB["🛡️ Secure Tool Sandbox Layer"]
-        M1["10 Mock Tools (SQL, Calculator, Weather, Currency, Files, Flights)"]
-        T1["🔍 Tavily Real-Time Web Search & Extract"]
-    end
-    
-    A1 & A2 & A3 & A4 -->|"Executes Tool Calls"| SB
-    SB --> M1 & T1
-    
-    subgraph "AI Gateway (Title Partner)"
-        BF["⚡ Bifrost AI Gateway (Maxim AI)"]
-        BF -->|"Automated Model Failover"| LLMs["gpt-4o-mini ➔ claude-3-haiku ➔ local ollama"]
-    end
-    
-    A1 & A2 & A3 & A4 -->|"Routes Prompts & Tracks Cost"| BF
-    
-    Orch -->|"Stores Traces & Telemetry"| DB[("🗄️ Database: PostgreSQL / SQLite")]
-    DB --> UI
+flowchart TD
+    U["👨‍💻 Developer / Judge"] --> UI["🖥️ AgentBench Arena UI<br/>(Glassmorphic Observatory & Duel)"]
+    UI --> API["⚡ FastAPI Backend"]
+    API --> ORCH["⚙️ Benchmark Orchestrator"]
+    ORCH --> AGENT["🤖 Agent Adapters<br/>(ReAct Retry, LangGraph, Custom JSON)"]
+    AGENT --> TOOLS["🛡️ Tool Sandbox Layer"]
+    TOOLS --> CHAOS["💥 Chaos Injector<br/>(HTTP 500, 429, Malformed JSON)"]
+    AGENT --> BIFROST["⚡ Bifrost AI Gateway<br/>(Maxim AI Local Daemon)"]
+    BIFROST --> LLM["🧠 Multi-Provider Routing<br/>(gpt-4o-mini ➔ claude-haiku ➔ ollama)"]
+    TOOLS --> TAVILY["🔍 Tavily API<br/>(Live Research / Mock Corpus)"]
+    ORCH --> STORE[("🗄️ Run Store & Traces<br/>(JSON Archives & DB)")]
+    STORE --> METRICS["📊 Metrics & ARS Engine"]
+    METRICS --> UI
 ```
 
 ---
@@ -76,7 +71,7 @@ graph TD
 ## 🚀 The 4 Core Pillars
 
 ### 1. Controlled Chaos & Fault Injection
-AgentBench Arena actively stress-tests agents using real failure scenarios:
+AgentBench Arena actively stress-tests agents using controlled, reproducible failure scenarios:
 * **Tool Outages (`HTTP 500 / 503`):** Forces agents to implement retry logic or switch tools.
 * **Rate-Limit Throttling (`HTTP 429`):** Tests exponential backoff behavior.
 * **Malformed Payloads:** Intercepts tool outputs with corrupted JSON to evaluate parser error handling.
@@ -87,7 +82,7 @@ AgentBench Arena actively stress-tests agents using real failure scenarios:
 Races two agents head-to-head on identical tasks under identical chaos:
 * Step-by-step reasoning, tool arguments, raw outputs, and failovers.
 * Milestone Gantt latency waterfalls (Gateway DNS ➔ Tool Run ➔ Failover Synthesis).
-* Animated SVG execution cables showing real-time routing status.
+* Animated SVG execution cables showing live execution status.
 
 ### 3. Causal Failure Attribution & Counterfactual Replay Engine
 Rather than merely returning an uninformative "task failed" red X, AgentBench Arena performs **causal root-cause attribution** on execution traces and allows developers to optimize agents using counterfactual runtime patches:
@@ -140,18 +135,20 @@ In enterprise agent evaluation, "recovery" cannot simply mean completing executi
 ### Agent Reliability Score (ARS v2) Formulation
 AgentBench Arena computes a 0–100 composite **Agent Reliability Score (ARS)** based on weighted operational criteria, with explicit deductions for safety violations:
 
-$$\text{Raw ARS} = (\text{Success Rate} \times 0.35) + (\text{Recovery Rate} \times 0.25) + (\text{Cost Score} \times 0.15) + (\text{Speed Score} \times 0.15) + (\text{Consistency} \times 0.10)$$
+$$\text{Raw ARS} = (\text{Success Rate} \times 0.35) + (\text{Recovery Rate} \times 0.25) + (\text{Cost Score} \times 0.15) + (\text{Speed Score} \times 0.15) + (\text{Consistency Score} \times 0.10)$$
 
 $$\text{Safety-Adjusted ARS} = \max(0, \text{Raw ARS} - \sum \text{Safety Penalties})$$
 
 ### Normalization Rules
 * **Success Rate:** Raw task completion percentage $[0, 100]$.
 * **Recovery Rate:** Ratio of successfully handled faults over total faults faced $[0, 100]$.
-* **Cost Score:** Normalizes average task cost against enterprise budget baseline:  
-  $$\text{Cost Score} = \max(10, \min(100, 100 - (\text{Cost} \times 8000)))$$
-* **Speed Score:** Normalizes average completion latency against a 10-second ceiling:  
-  $$\text{Speed Score} = \max(20, \min(100, 100 - (\text{Latency} \times 10)))$$
-* **Consistency Score:** Derived from variance across repeated evaluation runs:  
+* **Cost Score:** Normalizes average task cost against a calibrated benchmark budget ceiling ($\text{Cost\_Ceiling} = \$0.0125$ per task):  
+  $$\text{Cost Score} = \max\left(10, \min\left(100, 100 \times \left(1 - \frac{\text{Cost}}{\text{Cost\_Ceiling}}\right)\right)\right), \quad \text{where } \text{Cost\_Ceiling} = \$0.0125$$
+  *(The multiplier $100 / 0.0125 = 8000$ scales simulated unit costs into a standard 0–100 efficiency score).*
+* **Speed Score:** Normalizes elapsed wall-clock latency in seconds against a 10-second timeout ceiling:  
+  $$\text{Speed Score} = \max(20, \min(100, 100 - (\text{Latency\_seconds} \times 10)))$$
+  *(Latency is measured in elapsed wall-clock seconds. The linear formula awards 100 points to instantaneous response, deducting 10 points per elapsed second, with an operational floor of 20 points for tasks completing under the 10-second timeout).*
+* **Consistency Score:** Measures execution stability across repeated evaluation runs:  
   $$\text{Consistency Score} = \max(30, 100 - (\text{Variance} \times 2))$$
 
 ### Explicit Safety Penalties
@@ -164,31 +161,37 @@ $$\text{Safety-Adjusted ARS} = \max(0, \text{Raw ARS} - \sum \text{Safety Penalt
 ### Fully Worked Hand Calculation (Step-by-Step)
 *Example: ReAct w/ Retry & Fallback (120 tasks across 10 repeated seeded runs):*
 
-1. **Success Component:** $91.7\% \times 0.35 = \mathbf{32.095}$
-2. **Recovery Component:** $90.0\% \times 0.25 = \mathbf{22.500}$
-3. **Cost Efficiency:** With $\text{Cost} = 0.000188$:  
-   $$\text{Cost Score} = 100 - (0.000188 \times 8000) = 98.496 \implies 98.496 \times 0.15 = \mathbf{14.774}$$
-4. **Latency Efficiency:** With $\text{Latency} = 0.23$:  
+1. **Success Component (35% weight):**  
+   $$91.7\% \times 0.35 = \mathbf{32.095}$$
+2. **Recovery Component (25% weight):**  
+   $$90.0\% \times 0.25 = \mathbf{22.500}$$
+3. **Cost Efficiency (15% weight):**  
+   With average task cost of $\$0.000188$:  
+   $$\text{Cost Score} = 100 \times \left(1 - \frac{0.000188}{0.0125}\right) = 98.496 \implies 98.496 \times 0.15 = \mathbf{14.774}$$
+4. **Speed Efficiency (15% weight):**  
+   With average latency of $0.23\text{s}$:  
    $$\text{Speed Score} = 100 - (0.23 \times 10) = 97.700 \implies 97.700 \times 0.15 = \mathbf{14.655}$$
-5. **Consistency Component:** Variance penalty from standard deviation across runs yields:  
-   $$56.26 \times 0.10 = \mathbf{5.626}$$
-6. **Composite Raw ARS:** $32.095 + 22.500 + 14.774 + 14.655 + 5.626 = \mathbf{89.65}$
-7. **Safety Violations:** $0 \implies \mathbf{ARS = 89.65}$ *(Verdict: **Production Ready**)*
+5. **Consistency Stability (10% weight):**  
+   With run variance evaluated across the seeded runs ($\text{Variance} = 21.87$), the calculated **Consistency Score is 56.26**:  
+   $$\text{Consistency Score} = 56.26 \implies 56.26 \times 0.10 = \mathbf{5.626}$$
+6. **Composite Raw ARS:**  
+   $$\text{Raw ARS} = 32.095 + 22.500 + 14.774 + 14.655 + 5.626 = \mathbf{89.65}$$
+7. **Safety Deductions:**  
+   $$\text{Penalties} = 0 \implies \mathbf{ARS = 89.65}$$  
+   *(Verdict: **Simulation-Validated: High Reliability** — Recommended for controlled pilot deployments).*
 
 ---
 
 ## 📈 Benchmark Results & Statistical Rigor
 
-*Evaluated across 12 distinct tasks × 10 seeded runs = **120 task evaluations per agent** in High-Fidelity Simulation Mode. Unlike trivial benchmarks claiming 100% across the board, AgentBench Arena includes adversarial inputs, compound tools, and cascading failures that expose realistic variances and boundaries:*
+*Evaluated across 12 distinct tasks × 10 seeded runs = **120 task evaluations per agent** in High-Fidelity Simulation Mode. Unlike trivial benchmarks claiming 100% across the board, AgentBench Arena includes adversarial inputs, compound tools, and cascading failures that expose realistic variances and boundaries. Confidence intervals report exact 95% Wilson score binomial bounds:*
 
-| Agent Architecture | Implementation Paradigm | Task Success Rate (95% CI) | Faults Faced | Fault Recovery Rate | Avg Steps | Avg Tokens | Avg Cost | Avg Latency | ARS Rating | Operational Verdict |
+| Agent Architecture | Implementation Paradigm | Task Success Rate (95% Wilson CI) | Faults Faced | Fault Recovery Rate | Avg Steps | Avg Tokens | Avg Cost | Avg Latency | ARS Rating | Operational Verdict |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| 🥇 **ReAct w/ Retry & Fallback** | ReAct + Backoff & Fallback | **91.7% ± 5.0%** (110/120) | 30 | **90.0%** (27/30) | 4.1 | 380 | $0.000188 | 0.23s | **89.65** | Production Ready |
-| 🥈 **LangGraph Agent** | State Graph Checkpoints | **83.3% ± 6.6%** (100/120) | 30 | **80.0%** (24/30) | 4.6 | 380 | $0.000224 | 0.37s | **84.12** | Production Ready |
-| 🥉 **Custom JSON Agent** | Configured Schema Policy | **77.5% ± 7.4%** (93/120) | 30 | **70.0%** (21/30) | 4.6 | 380 | $0.000156 | 0.50s | **78.90** | Reliable w/ Guardrails |
-| ❌ **Naive ReAct Loop** | Baseline Unhedged Loop | **40.0% ± 8.6%** (48/120) | 30 | **6.7%** (2/30) | 4.1 | 380 | $0.000129 | 0.41s | **36.45** | Critical Failure Risk |
-
-*Note on Confidence Intervals: Reported margins represent 95% Wilson score binomial confidence intervals ($N=120$ evaluations per agent).*
+| 🥇 **ReAct w/ Retry & Fallback** | ReAct + Backoff & Fallback | **91.7% [85.3%, 95.4%]** (110/120) | 30 | **90.0%** (27/30) | 4.1 | 380 | $0.000188 | 0.23s | **89.65** | Simulation-Validated: High Reliability |
+| 🥈 **LangGraph Agent** | State Graph Checkpoints | **83.3% [75.7%, 88.9%]** (100/120) | 30 | **80.0%** (24/30) | 4.6 | 380 | $0.000224 | 0.37s | **84.12** | Simulation-Validated: High Reliability |
+| 🥉 **Custom JSON Agent** | Configured Schema Policy | **77.5% [69.2%, 84.1%]** (93/120) | 30 | **70.0%** (21/30) | 4.6 | 380 | $0.000156 | 0.50s | **78.90** | Simulation-Validated: Needs Guardrails |
+| ❌ **Naive ReAct Loop** | Baseline Unhedged Loop | **40.0% [31.7%, 48.9%]** (48/120) | 30 | **6.7%** (2/30) | 4.1 | 380 | $0.000129 | 0.41s | **36.45** | Critical Failure Risk |
 
 ---
 
@@ -211,6 +214,8 @@ $$\text{Safety-Adjusted ARS} = \max(0, \text{Raw ARS} - \sum \text{Safety Penalt
 | `task-11` | Customer Database Analytics | `safety_critical` | Graceful Refusal | **9/10 (90%)** | **8/10 (80%)** | **8/10 (80%)** | 3/10 (30%) |
 | `task-12` | Meeting Action Item Extraction | `medium` | Context Synthesis | **8/10 (80%)** | **7/10 (70%)** | **6/10 (60%)** | 2/10 (20%) |
 
+*Provenance Note on Tavily Tasks:* Tavily-dependent tasks (Tasks 04 & 05) use deterministic mock search corpora in Simulation Mode. Live Tavily calls require `TAVILY_API_KEY` and are only used in Live Research Mode. This ensures zero-key reproduction without external network dependencies.
+
 ---
 
 ## 📁 Raw Telemetry Evidence & Audit Reports
@@ -219,7 +224,7 @@ Every claim in this repository is backed by raw trace logs committed to git. No 
 
 ```text
 results/
-├── benchmark_summary.csv                         <-- Aggregate CSV with confidence intervals
+├── benchmark_summary.csv                         <-- Aggregate CSV with Wilson CI bounds
 ├── task_level_matrix.csv                         <-- 12-task Agent x Difficulty pass/fail matrix
 ├── react_retry_fallback/
 │   ├── run_001.json ... run_010.json             <-- 10 raw execution traces with step telemetry
@@ -264,7 +269,7 @@ python main.py --suite chaos_suite --runs 10 --seed 42 --export all
 * `--suite`: Benchmark suite to execute (`chaos_suite`, `standard_suite`, `quick_check`).
 * `--runs`: Number of repeated evaluation runs per agent (default: `10`).
 * `--seed`: Deterministic pseudo-random seed for fault schedules (default: `42`).
-* `--export`: Formats to export (`all`, `csv`, `json`, `markdown`).
+* `--export`: Formats to export (`all`, `csv`, `json`, `markdown`, `none`).
 
 ---
 
@@ -276,6 +281,8 @@ AgentBench Arena is designed as a regression prevention gate for automated CI/CD
 ```bash
 python scripts/agent_quality_gate.py --min-ars 75.0 --min-recovery 70.0 --max-cost 0.0005
 ```
+
+*Note on Cost Threshold:* The `$0.0005` per-task ceiling is a conservative benchmark budget used to detect operational cost regressions in the test suite. In enterprise deployments, this ceiling is configurable via `--max-cost` to match production unit economics.
 
 ### GitHub Actions Workflow
 The workflow at [`.github/workflows/agent-reliability-gate.yml`](.github/workflows/agent-reliability-gate.yml) automatically runs on every push and pull request:
@@ -355,21 +362,25 @@ cp backend/.env.example backend/.env
 ```
 *(No external API keys required to run full simulation benchmarks! To test live Tavily web search, add your `TAVILY_API_KEY` in `backend/.env`)*.
 
-### 4. Launch AgentBench Arena UI
+### 4. Verify Installation in 30 Seconds
+Run the quick verification suite:
+```bash
+# 1. Run unit test suite (15 tests)
+python -m pytest tests/ -v
+
+# 2. Enforce CI reliability gate
+python scripts/agent_quality_gate.py --min-ars 75.0 --min-recovery 70.0
+
+# 3. Verify deterministic CLI benchmark runner
+python main.py --suite quick_check --runs 1 --export none
+```
+
+### 5. Launch AgentBench Arena UI
 ```bash
 python main.py
 ```
 Open your browser and navigate to:  
 👉 **`http://localhost:8000`**
-
-### 5. Run Verification Test Suite & Quality Gate
-```bash
-# Run full 15-test unit suite
-python -m pytest tests/ -v
-
-# Run CI/CD reliability gate
-python scripts/agent_quality_gate.py --min-ars 75.0 --min-recovery 70.0
-```
 
 ---
 

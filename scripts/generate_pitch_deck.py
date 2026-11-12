@@ -350,10 +350,10 @@ def create_deck():
             p.font.color.rgb = ACCENT_CYAN
 
     data = [
-        ["ReAct w/ Retry & Fallback", "Backoff + Fallback", "91.7% ± 5.0%", "30", "90.0% (27/30)", "4.1", "89.65"],
-        ["LangGraph Agent", "State Checkpoints", "83.3% ± 6.6%", "30", "80.0% (24/30)", "4.6", "84.12"],
-        ["Custom JSON Agent", "Schema Policies", "77.5% ± 7.4%", "30", "70.0% (21/30)", "4.6", "78.90"],
-        ["Naive ReAct Loop", "Baseline Unhedged", "40.0% ± 8.6%", "30", "6.7% (2/30)", "4.1", "36.45"],
+        ["ReAct w/ Retry & Fallback", "Backoff + Fallback", "91.7% [85.3%, 95.4%]", "30", "90.0% (27/30)", "4.1", "89.65"],
+        ["LangGraph Agent", "State Checkpoints", "83.3% [75.7%, 88.9%]", "30", "80.0% (24/30)", "4.6", "84.12"],
+        ["Custom JSON Agent", "Schema Policies", "77.5% [69.2%, 84.1%]", "30", "70.0% (21/30)", "4.6", "78.90"],
+        ["Naive ReAct Loop", "Baseline Unhedged", "40.0% [31.7%, 48.9%]", "30", "6.7% (2/30)", "4.1", "36.45"],
     ]
     for row_idx, row_data in enumerate(data):
         for col_idx, val in enumerate(row_data):

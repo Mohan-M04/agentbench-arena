@@ -3,12 +3,12 @@
 **Agent Architecture:** Baseline Unhedged Loop  
 **Evaluation Mode:** High-Fidelity Simulation Mode (Deterministic Local Emulation)  
 **Evaluations:** 120 tasks across 10 seeded runs  
-**Date:** 2026-11-12 18:26:04 UTC  
+**Date:** 2026-11-12 18:39:07 UTC  
 
 ---
 
 ## 📈 Performance Summary
-* **Task Success Rate:** **40.0% ± 8.6%** (Wilson 95% Confidence Interval)
+* **Task Success Rate:** **40.0%** (95% Wilson CI: [31.7%, 48.9%])
 * **Fault Recovery Rate:** **6.7%** (2/30 faults faced)
 * **Agent Reliability Score (ARS):** **36.45 / 100**
 * **Average Cost per Task:** $0.000129

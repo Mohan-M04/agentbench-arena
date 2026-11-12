@@ -8,10 +8,10 @@ sys.path.insert(0, backend_dir)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="AgentBench Arena: Web Observatory & CLI Benchmark Runner")
-    parser.add_argument("--suite", type=str, default=None, help="Run specific benchmark suite in CLI mode (e.g. chaos_suite)")
+    parser.add_argument("--suite", type=str, default=None, help="Run specific benchmark suite in CLI mode (e.g. chaos_suite, quick_check)")
     parser.add_argument("--runs", type=int, default=10, help="Repeated runs per task")
     parser.add_argument("--seed", type=int, default=42, help="Deterministic random seed for reproducibility")
-    parser.add_argument("--export", type=str, default="all", choices=["all", "json", "csv", "markdown"], help="Export formats")
+    parser.add_argument("--export", type=str, default="all", choices=["all", "json", "csv", "markdown", "none"], help="Export formats")
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Web server host")
     parser.add_argument("--port", type=int, default=8000, help="Web server port")
 
@@ -30,7 +30,7 @@ if __name__ == "__main__":
         scripts_dir = os.path.join(repo_root, "scripts")
         sys.path.insert(0, scripts_dir)
         from generate_trace_evidence import generate_evidence
-        generate_evidence()
+        generate_evidence(runs_count=args.runs, export=args.export)
 
         # Create specific seed folder: results/chaos_suite_seed_{args.seed}/
         import shutil
