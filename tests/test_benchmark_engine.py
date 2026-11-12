@@ -157,3 +157,80 @@ def test_export_report_formats():
     res_csv = export_benchmark_report(format="csv")
     assert res_csv.status_code == 200
     assert res_csv.filename == "agentbench_summary.csv"
+
+# ==============================================================================
+# 5. ADVANCED RELIABILITY PLATFORM TESTS (Causal, Replay, Safety ARS, Adaptive)
+# ==============================================================================
+
+def test_causal_failure_attribution():
+    """Verify that failure autopsy performs precise causal failure attribution."""
+    task = {"id": "task-06", "name": "Calculator Outage", "prompt": "Calculate ARR with 500 outage"}
+    agent_run = {
+        "agent_id": "agent-react-01",
+        "status": "failed",
+        "traces": [{"step": 1, "action": "TOOL_ERROR", "content": "HTTP 500 in calculator"}]
+    }
+    autopsy = ReliabilityLabEngine.generate_autopsy(task, agent_run)
+    assert autopsy["failure_classification"] == "TOOL_OUTAGE"
+    assert "500" in autopsy["primary_cause"]
+    assert "retry" in autopsy["secondary_cause"].lower()
+    assert len(autopsy["recommended_fix"]) > 10
+
+def test_counterfactual_replay_engine():
+    """Verify that counterfactual replay calculates before/after improvement deltas."""
+    import asyncio
+    lab = ReliabilityLabEngine()
+    task = {"id": "task-06", "prompt": "Calculate taxes with failing calculator"}
+    original_run = {"status": "FAILED", "score": 20.0, "steps": 6, "cost_usd": 0.0004}
+
+    replay = asyncio.run(lab.run_counterfactual_replay(task, original_run, intervention="add_retry_policy"))
+    assert replay["repaired_replay"]["status"] == "PASSED (RECOVERED)"
+    assert replay["repaired_replay"]["score"] > original_run["score"]
+    assert "+100%" in replay["delta"]["success_improvement"]
+    assert replay["delta"]["steps_saved"] >= 1
+
+def test_safety_adjusted_ars_penalties():
+    """Verify ARS v2 subtracts explicit penalties for critical safety breaches like hallucinations."""
+    # Clean run
+    clean_metrics = {
+        "avg_success_rate": 90.0,
+        "failure_recovery_rate": 80.0,
+        "avg_cost_usd": 0.0002,
+        "avg_completion_time_sec": 1.0,
+        "penalties": {}
+    }
+    ars_clean = ReliabilityLabEngine.calculate_ars(clean_metrics)
+    assert ars_clean["total_penalties"] == 0
+    assert ars_clean["safety_adjusted_ars"] == ars_clean["raw_performance_score"]
+
+    # Hallucinating critical financial figures applies -25 pt penalty
+    hallucinating_metrics = {
+        "avg_success_rate": 90.0,
+        "failure_recovery_rate": 80.0,
+        "avg_cost_usd": 0.0002,
+        "avg_completion_time_sec": 1.0,
+        "penalties": {"hallucinated_critical_data": True}
+    }
+    ars_hallucinated = ReliabilityLabEngine.calculate_ars(hallucinating_metrics)
+    assert ars_hallucinated["total_penalties"] == 25
+    assert ars_hallucinated["safety_adjusted_ars"] == ars_hallucinated["raw_performance_score"] - 25
+
+def test_adaptive_chaos_engine_escalation():
+    """Verify that Adaptive Chaos escalates from Level 1 (500) to Level 2 (429) upon agent retry."""
+    sb = ToolSandbox(chaos_config={"adaptive_mode": True})
+    args = {"expression": "250 * 4"}
+
+    # Call 1: Level 1 initial shock (HTTP 500)
+    c1 = sb.execute_tool_sync("calculator", args)
+    assert c1["error_code"] == 500
+    assert "Level 1" in str(c1["data"])
+
+    # Call 2 (Agent retries): Level 2 dynamic escalation (HTTP 429 Rate Limit)
+    c2 = sb.execute_tool_sync("calculator", args)
+    assert c2["error_code"] == 429
+    assert "Level 2 Escalation" in str(c2["data"])
+
+    # Call 3 (Agent handles rate limit): verified data passes
+    c3 = sb.execute_tool_sync("calculator", args)
+    assert c3["status"] == "success"
+    assert c3["data"]["result"] == 1000.0

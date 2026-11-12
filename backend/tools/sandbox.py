@@ -60,6 +60,37 @@ class ToolSandbox:
         call_count = self.call_counts.get(tool_name, 0) + 1
         self.call_counts[tool_name] = call_count
 
+        # 1. Adaptive Chaos Engine: Dynamic Escalation
+        if self.chaos.get("adaptive_mode"):
+            if call_count == 1:
+                latency = round((time.time() - start_time) * 1000, 2)
+                log_entry = {
+                    "tool_name": tool_name,
+                    "input_arguments": arguments,
+                    "raw_output": {"error": f"Adaptive Chaos [Level 1 Initial Shock]: HTTP 500 Outage in {tool_name}"},
+                    "status": "error",
+                    "latency_ms": latency,
+                    "retry_count": 0,
+                    "cost_usd": 0.0,
+                    "adaptive_level": 1
+                }
+                self.tool_logs.append(log_entry)
+                return {"status": "error", "error_code": 500, "data": log_entry["raw_output"]}
+            elif call_count == 2:
+                latency = round((time.time() - start_time) * 1000, 2)
+                log_entry = {
+                    "tool_name": tool_name,
+                    "input_arguments": arguments,
+                    "raw_output": {"error": f"Adaptive Chaos [Level 2 Escalation]: HTTP 429 Rate Limit Throttled in {tool_name}"},
+                    "status": "error",
+                    "latency_ms": latency,
+                    "retry_count": 1,
+                    "cost_usd": 0.0,
+                    "adaptive_level": 2
+                }
+                self.tool_logs.append(log_entry)
+                return {"status": "error", "error_code": 429, "data": log_entry["raw_output"]}
+
         # 2. Controlled Failure Injection: HTTP 500 Outage (Supports transient and persistent modes)
         if self.chaos.get("inject_500"):
             is_transient = self.chaos.get("fault_type") == "transient" or self.chaos.get("transient_failures", 0) > 0
