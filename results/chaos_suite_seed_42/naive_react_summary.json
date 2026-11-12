@@ -1,0 +1,28 @@
+{
+  "agent_id": "agent-react-01",
+  "agent_name": "Naive ReAct Loop",
+  "architecture": "Baseline Unhedged Loop",
+  "mode": "SIMULATION_MODE",
+  "evaluations_count": 120,
+  "success_rate_pct": 40.0,
+  "success_confidence_interval_95": "40.0% \u00b1 8.6%",
+  "faults_faced": 30,
+  "fault_recoveries": 2,
+  "fault_recovery_rate_pct": 6.7,
+  "avg_cost_usd": 0.000129,
+  "avg_latency_sec": 0.41,
+  "ars_score": 36.45,
+  "verdict": "Critical Failure Risk",
+  "individual_runs": [
+    "run_001.json",
+    "run_002.json",
+    "run_003.json",
+    "run_004.json",
+    "run_005.json",
+    "run_006.json",
+    "run_007.json",
+    "run_008.json",
+    "run_009.json",
+    "run_010.json"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "agent_id": "agent-react-retry-05",
+  "agent_name": "ReAct w/ Retry & Fallback",
+  "architecture": "ReAct + Backoff & Fallback",
+  "mode": "SIMULATION_MODE",
+  "evaluations_count": 120,
+  "success_rate_pct": 91.7,
+  "success_confidence_interval_95": "91.7% \u00b1 5.0%",
+  "faults_faced": 30,
+  "fault_recoveries": 27,
+  "fault_recovery_rate_pct": 90.0,
+  "avg_cost_usd": 0.000188,
+  "avg_latency_sec": 0.23,
+  "ars_score": 89.65,
+  "verdict": "Production Ready",
+  "individual_runs": [
+    "run_001.json",
+    "run_002.json",
+    "run_003.json",
+    "run_004.json",
+    "run_005.json",
+    "run_006.json",
+    "run_007.json",
+    "run_008.json",
+    "run_009.json",
+    "run_010.json"
+  ]
+}

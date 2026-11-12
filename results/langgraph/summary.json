@@ -1,0 +1,28 @@
+{
+  "agent_id": "agent-langgraph-02",
+  "agent_name": "LangGraph Agent",
+  "architecture": "State Graph Checkpoints",
+  "mode": "SIMULATION_MODE",
+  "evaluations_count": 120,
+  "success_rate_pct": 83.3,
+  "success_confidence_interval_95": "83.3% \u00b1 6.6%",
+  "faults_faced": 30,
+  "fault_recoveries": 24,
+  "fault_recovery_rate_pct": 80.0,
+  "avg_cost_usd": 0.000224,
+  "avg_latency_sec": 0.37,
+  "ars_score": 84.12,
+  "verdict": "Production Ready",
+  "individual_runs": [
+    "run_001.json",
+    "run_002.json",
+    "run_003.json",
+    "run_004.json",
+    "run_005.json",
+    "run_006.json",
+    "run_007.json",
+    "run_008.json",
+    "run_009.json",
+    "run_010.json"
+  ]
+}

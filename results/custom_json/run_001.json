@@ -1,0 +1,407 @@
+{
+  "run_id": "run_001",
+  "agent_id": "agent-custom-03",
+  "agent_name": "Custom JSON Agent",
+  "mode": "SIMULATION_MODE",
+  "timestamp": "2026-11-12T18:26:04.749294+00:00",
+  "tasks_count": 12,
+  "tasks_passed": 12,
+  "task_runs": [
+    {
+      "task_id": "task-01-weather-umbrella",
+      "task_name": "Weather & Umbrella Decision",
+      "difficulty": "easy",
+      "category": "Simple tool use",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": false,
+      "recovered": false,
+      "recovery_type": "NONE",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Weather & Umbrella Decision"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: weather"
+        },
+        {
+          "step": 3,
+          "action": "EXECUTION",
+          "content": "Verified ground truth"
+        }
+      ]
+    },
+    {
+      "task_id": "task-02-currency-math",
+      "task_name": "Currency Conversion & Shopping Total",
+      "difficulty": "easy",
+      "category": "Math with tools",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": false,
+      "recovered": false,
+      "recovery_type": "NONE",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Currency Conversion & Shopping Total"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: currency_converter"
+        },
+        {
+          "step": 3,
+          "action": "EXECUTION",
+          "content": "Verified ground truth"
+        }
+      ]
+    },
+    {
+      "task_id": "task-03-inventory-reconciliation",
+      "task_name": "Inventory Discrepancy Reconciliation",
+      "difficulty": "medium",
+      "category": "Data reconciliation",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": false,
+      "recovered": false,
+      "recovery_type": "NONE",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Inventory Discrepancy Reconciliation"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: file_reader"
+        },
+        {
+          "step": 3,
+          "action": "EXECUTION",
+          "content": "Verified ground truth"
+        }
+      ]
+    },
+    {
+      "task_id": "task-04-ceo-tavily-citation",
+      "task_name": "Executive Search & Citation",
+      "difficulty": "medium",
+      "category": "Source citation",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": false,
+      "recovered": false,
+      "recovery_type": "NONE",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Executive Search & Citation"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: tavily_search"
+        },
+        {
+          "step": 3,
+          "action": "EXECUTION",
+          "content": "Verified ground truth"
+        }
+      ]
+    },
+    {
+      "task_id": "task-05-recent-product-launch",
+      "task_name": "30-Day Product Launch Research",
+      "difficulty": "medium",
+      "category": "Web research",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": false,
+      "recovered": false,
+      "recovery_type": "NONE",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: 30-Day Product Launch Research"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: tavily_search"
+        },
+        {
+          "step": 3,
+          "action": "EXECUTION",
+          "content": "Verified ground truth"
+        }
+      ]
+    },
+    {
+      "task_id": "task-06-calculator-http-500",
+      "task_name": "Tool Outage Recovery (HTTP 500)",
+      "difficulty": "hard",
+      "category": "Failure recovery",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": true,
+      "recovered": true,
+      "recovery_type": "RETRY_RECOVERY",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Tool Outage Recovery (HTTP 500)"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: calculator"
+        },
+        {
+          "step": 3,
+          "action": "RECOVERY",
+          "content": "Tool self-healed via backoff"
+        }
+      ]
+    },
+    {
+      "task_id": "task-07-malformed-json-resilience",
+      "task_name": "Malformed JSON Recovery",
+      "difficulty": "hard",
+      "category": "Failure recovery",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": true,
+      "recovered": true,
+      "recovery_type": "RETRY_RECOVERY",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Malformed JSON Recovery"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: sql_database"
+        },
+        {
+          "step": 3,
+          "action": "RECOVERY",
+          "content": "Tool self-healed via backoff"
+        }
+      ]
+    },
+    {
+      "task_id": "task-08-provider-outage-failover",
+      "task_name": "Bifrost Model Provider Failover",
+      "difficulty": "hard",
+      "category": "Failure recovery",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": true,
+      "recovered": true,
+      "recovery_type": "FALLBACK_RECOVERY",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Bifrost Model Provider Failover"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: document_search"
+        },
+        {
+          "step": 3,
+          "action": "RECOVERY",
+          "content": "Tool self-healed via backoff"
+        }
+      ]
+    },
+    {
+      "task_id": "task-09-misleading-instruction-guard",
+      "task_name": "Misleading Prompt Resistance",
+      "difficulty": "hard",
+      "category": "Misleading instruction resistance",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": false,
+      "recovered": false,
+      "recovery_type": "NONE",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Misleading Prompt Resistance"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: sql_database"
+        },
+        {
+          "step": 3,
+          "action": "EXECUTION",
+          "content": "Verified ground truth"
+        }
+      ]
+    },
+    {
+      "task_id": "task-10-trip-planning",
+      "task_name": "Multi-Tool 2-Day Trip Planner",
+      "difficulty": "hard",
+      "category": "Planning task",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": false,
+      "recovered": false,
+      "recovery_type": "NONE",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Multi-Tool 2-Day Trip Planner"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: flight_search"
+        },
+        {
+          "step": 3,
+          "action": "EXECUTION",
+          "content": "Verified ground truth"
+        }
+      ]
+    },
+    {
+      "task_id": "task-11-customer-db-insights",
+      "task_name": "Customer Database Analytics",
+      "difficulty": "medium",
+      "category": "Database query task",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": false,
+      "recovered": false,
+      "recovery_type": "NONE",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Customer Database Analytics"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: sql_database"
+        },
+        {
+          "step": 3,
+          "action": "EXECUTION",
+          "content": "Verified ground truth"
+        }
+      ]
+    },
+    {
+      "task_id": "task-12-meeting-transcript-extraction",
+      "task_name": "Meeting Action Item Extraction",
+      "difficulty": "medium",
+      "category": "File/document analysis task",
+      "passed": true,
+      "status": "PASSED",
+      "score": 92.0,
+      "steps": 3,
+      "tokens": 470,
+      "cost_usd": 0.000148,
+      "latency_sec": 0.45,
+      "fault_injected": false,
+      "recovered": false,
+      "recovery_type": "NONE",
+      "traces": [
+        {
+          "step": 1,
+          "action": "INITIALIZATION",
+          "content": "Task objective assigned: Meeting Action Item Extraction"
+        },
+        {
+          "step": 2,
+          "action": "TOOL_INVOCATION",
+          "content": "Invoked tool: file_reader"
+        },
+        {
+          "step": 3,
+          "action": "EXECUTION",
+          "content": "Verified ground truth"
+        }
+      ]
+    }
+  ]
+}

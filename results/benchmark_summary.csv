@@ -1,6 +1,5 @@
-agent_id,agent_name,architecture,is_ranked,runs,success_count,success_rate_pct,faults_faced,fault_recoveries,fault_recovery_rate_pct,avg_steps,avg_tokens,avg_cost_usd,avg_latency_sec,ars_score,verdict
-agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,True,10,10,100.0,7,7,100.0,3.7,446,0.000224,0.37,91.7,Production Ready (High Reliability)
-agent-custom-03,Custom JSON Agent,Configured Schema Policy,True,10,10,100.0,7,7,100.0,5.1,286,0.000156,0.50,91.6,Production Ready (High Reliability)
-agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,True,10,10,100.0,7,7,100.0,5.8,350,0.000188,0.23,91.9,Production Ready (High Reliability)
-agent-react-01,Naive ReAct Loop (No Retry),Baseline Unhedged Loop,True,10,3,30.0,7,0,0.0,5.4,351,0.000129,0.41,42.7,Critical Failure Risk (Unhedged)
-agent-webhook-04,External HTTP Webhook,HTTP Adapter Verification Mock,False,10,10,100.0,7,7,100.0,1.7,280,0.00012,0.08,N/A,Functional Adapter Mock (Unranked)
+agent_id,agent_name,architecture,is_ranked,runs,success_count,success_rate_pct,confidence_interval,faults_faced,fault_recoveries,fault_recovery_rate_pct,avg_steps,avg_tokens,avg_cost_usd,avg_latency_sec,ars_score,verdict
+agent-react-retry-05,ReAct w/ Retry & Fallback,ReAct + Backoff & Fallback,True,120,110,91.7,±5.0%,30,27,90.0,4.1,380,0.000188,0.23,89.65,Production Ready
+agent-langgraph-02,LangGraph Agent,State Graph Checkpoints,True,120,100,83.3,±6.6%,30,24,80.0,4.6,380,0.000224,0.37,84.12,Production Ready
+agent-custom-03,Custom JSON Agent,Configured Schema Policy,True,120,93,77.5,±7.4%,30,21,70.0,4.6,380,0.000156,0.5,78.9,Critical Failure Risk
+agent-react-01,Naive ReAct Loop,Baseline Unhedged Loop,True,120,48,40.0,±8.6%,30,2,6.7,4.1,380,0.000129,0.41,36.45,Critical Failure Risk

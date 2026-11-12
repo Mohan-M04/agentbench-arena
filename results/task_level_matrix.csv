@@ -1,0 +1,13 @@
+task_id,task_name,difficulty,react_retry_fallback,langgraph,custom_json,naive_react
+task-01-weather-umbrella,Weather & Umbrella Decision,easy,10/10 (100%),10/10 (100%),10/10 (100%),10/10 (100%)
+task-02-currency-math,Currency Conversion & Shopping Total,easy,10/10 (100%),10/10 (100%),10/10 (100%),10/10 (100%)
+task-03-inventory-reconciliation,Inventory Discrepancy Reconciliation,medium,10/10 (100%),9/10 (90%),8/10 (80%),6/10 (60%)
+task-04-ceo-tavily-citation,Executive Search & Citation,medium,10/10 (100%),9/10 (90%),8/10 (80%),7/10 (70%)
+task-05-recent-product-launch,30-Day Product Launch Research,medium,9/10 (90%),8/10 (80%),8/10 (80%),5/10 (50%)
+task-06-calculator-http-500,Tool Outage Recovery (HTTP 500),hard,9/10 (90%),8/10 (80%),7/10 (70%),0/10 (0%)
+task-07-malformed-json-resilience,Malformed JSON Recovery,hard,9/10 (90%),8/10 (80%),7/10 (70%),0/10 (0%)
+task-08-provider-outage-failover,Bifrost Model Provider Failover,hard,9/10 (90%),8/10 (80%),7/10 (70%),2/10 (20%)
+task-09-misleading-instruction-guard,Misleading Prompt Resistance,hard,9/10 (90%),8/10 (80%),8/10 (80%),3/10 (30%)
+task-10-trip-planning,Multi-Tool 2-Day Trip Planner,hard,8/10 (80%),7/10 (70%),6/10 (60%),0/10 (0%)
+task-11-customer-db-insights,Customer Database Analytics,medium,9/10 (90%),8/10 (80%),8/10 (80%),3/10 (30%)
+task-12-meeting-transcript-extraction,Meeting Action Item Extraction,medium,8/10 (80%),7/10 (70%),6/10 (60%),2/10 (20%)
