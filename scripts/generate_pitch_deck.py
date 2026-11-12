@@ -82,8 +82,8 @@ def create_deck():
     p2.space_after = Pt(10)
 
     p3 = tf.add_paragraph()
-    p3.text = "“Benchmark agents by what they do — not just what they say.”"
-    p3.font.size = Pt(18)
+    p3.text = "“AgentBench Arena does not just score agents — it explains why they fail, replays what would fix them, and prevents regressions before they reach production.”"
+    p3.font.size = Pt(17)
     p3.font.italic = True
     p3.font.color.rgb = ACCENT_PURPLE
     p3.space_after = Pt(24)
@@ -422,9 +422,9 @@ def create_deck():
     add_header(s10, "Impact, Scalability & Roadmap")
 
     s10_cards = [
-        ("CI/CD Regression Harness (Future Work)", "Integrate AgentBench Arena into GitHub Actions to run deterministic chaos benchmarks on every agent PR before production deployment."),
+        ("CI/CD Regression Quality Gate (Shipped)", "Integrates AgentBench Arena via GitHub Actions (agent-reliability-gate.yml) and CLI to enforce ARS >= 85 and zero-hallucination gates on every PR."),
         ("Multi-Agent Swarm Testing (Future Work)", "Extend chaos harness to multi-agent communication protocols (A2A), simulating network partition drops, stale state broadcast, and deadlocks."),
-        ("Automated Red-Teaming & Poisoning", "Inject adversarial tool returns, prompt injections (Task 09), and schema poisoning to automatically discover agent failure boundaries."),
+        ("Adaptive Chaos & Causal Autopsy", "Dynamically escalates failures from transient 500s to rate-limits, diagnosing root causes and replaying counterfactual optimization patches."),
         ("Bifrost Ecosystem Value", "Positions Maxim AI Bifrost as the foundational gateway and failover backbone for production agent deployments.")
     ]
     for idx, (c_t, c_d) in enumerate(s10_cards):
