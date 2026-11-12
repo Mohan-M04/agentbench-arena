@@ -1,6 +1,19 @@
 import os
 import sys
+import types
 import argparse
+
+# Windows Defender Application Control / Smart App Control compatibility guard:
+# Unsigned _multiprocessing.pyd in user AppData may be blocked by Windows 11/Enterprise WDAC policies.
+# Providing a lightweight stub ensures uvicorn server and benchmark runners execute cleanly.
+try:
+    import _multiprocessing
+except (ImportError, OSError):
+    mock_mp = types.ModuleType("_multiprocessing")
+    mock_mp.closesocket = lambda fd: None
+    mock_mp.send = lambda fd, buf, flags=0: None
+    mock_mp.recv = lambda fd, size, flags=0: b""
+    sys.modules["_multiprocessing"] = mock_mp
 
 # Change working directory to backend so all relative imports & .env work
 backend_dir = os.path.join(os.path.dirname(__file__), "backend")
@@ -14,6 +27,7 @@ if __name__ == "__main__":
     parser.add_argument("--export", type=str, default="all", choices=["all", "json", "csv", "markdown", "none"], help="Export formats")
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Web server host")
     parser.add_argument("--port", type=int, default=8000, help="Web server port")
+    parser.add_argument("--reload", action="store_true", default=False, help="Enable auto-reload (requires working multiprocessing)")
 
     args, unknown = parser.parse_known_args()
 
@@ -53,4 +67,5 @@ if __name__ == "__main__":
     # Web Observatory Server Mode (Default)
     os.chdir(backend_dir)
     import uvicorn
-    uvicorn.run("main:app", host=args.host, port=args.port, reload=True)
+    # Use reload only when requested via --reload to maintain Windows WDAC compatibility
+    uvicorn.run("main:app", host=args.host, port=args.port, reload=args.reload)

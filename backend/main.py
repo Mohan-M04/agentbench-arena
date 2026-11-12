@@ -1,5 +1,16 @@
 import os
 import sys
+import types
+
+# Windows Defender Application Control / Smart App Control compatibility guard:
+try:
+    import _multiprocessing
+except (ImportError, OSError):
+    mock_mp = types.ModuleType("_multiprocessing")
+    mock_mp.closesocket = lambda fd: None
+    mock_mp.send = lambda fd, buf, flags=0: None
+    mock_mp.recv = lambda fd, size, flags=0: b""
+    sys.modules["_multiprocessing"] = mock_mp
 
 # Ensure backend directory is in sys.path regardless of execution entrypoint
 _backend_dir = os.path.dirname(os.path.abspath(__file__))
@@ -157,4 +168,4 @@ def gateway_status():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)
