@@ -25,7 +25,7 @@ if __name__ == "__main__":
     parser.add_argument("--runs", type=int, default=10, help="Repeated runs per task")
     parser.add_argument("--seed", type=int, default=42, help="Deterministic random seed for reproducibility")
     parser.add_argument("--export", type=str, default="all", choices=["all", "json", "csv", "markdown", "none"], help="Export formats")
-    parser.add_argument("--host", type=str, default="0.0.0.0", help="Web server host")
+    parser.add_argument("--host", type=str, default="127.0.0.1", help="Web server host (defaults to 127.0.0.1 for local Windows compatibility)")
     parser.add_argument("--port", type=int, default=8000, help="Web server port")
     parser.add_argument("--reload", action="store_true", default=False, help="Enable auto-reload (requires working multiprocessing)")
 
@@ -66,6 +66,10 @@ if __name__ == "__main__":
 
     # Web Observatory Server Mode (Default)
     os.chdir(backend_dir)
+    print("\n" + "=" * 65)
+    print("🚀 AgentBench Arena Observatory is starting...")
+    print(f"👉 Click to open: http://localhost:{args.port}  or  http://127.0.0.1:{args.port}")
+    print("=" * 65 + "\n")
     import uvicorn
     # Use reload only when requested via --reload to maintain Windows WDAC compatibility
     uvicorn.run("main:app", host=args.host, port=args.port, reload=args.reload)
