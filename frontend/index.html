@@ -722,12 +722,12 @@
 
         <div class="flex items-center gap-5 bg-slate-950/80 border border-white/[0.1] p-5 rounded-2xl shadow-inner">
           <div class="text-right">
-            <span class="text-[10px] font-mono text-slate-400 block uppercase font-bold">LANGGRAPH OVERALL</span>
-            <span id="ars-verdict-label" class="text-xs font-bold text-emerald-400 block mt-0.5">Production Ready</span>
-            <span class="text-[10px] text-slate-500 font-mono">100% Recovery SLA</span>
+            <span class="text-[10px] font-mono text-slate-400 block uppercase font-bold">LANGGRAPH OVERALL (ARS v2)</span>
+            <span id="ars-verdict-label" class="text-xs font-bold text-emerald-400 block mt-0.5">High Reliability</span>
+            <span class="text-[10px] text-slate-500 font-mono">80.0% Recovery SLA</span>
           </div>
           <div class="text-5xl font-black font-mono text-emerald-400 border-l border-white/[0.1] pl-5" id="ars-score-val">
-            91.2
+            84.12
           </div>
         </div>
       </div>
@@ -1314,6 +1314,13 @@
       loadTasks();
       checkGatewayStatus();
       setInterval(checkGatewayStatus, 5000);
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("duel") === "1") {
+        setTimeout(launchArenaDuel, 800);
+      }
+      if (params.get("replay") === "1") {
+        setTimeout(runWhatIfReplay, 1000);
+      }
     };
   </script>
 </body>

@@ -154,10 +154,10 @@ $$\\text{{ARS}} = (\\text{{Success Rate}} \\times 0.35) + (\\text{{Recovery Rate
 ### Summary Rankings:
 | Rank | Agent Name | Architecture Paradigm | Overall Task Success | Faults Faced | Fault Recovery Rate | Avg Steps | Bifrost Tokens | Avg Cost | Avg Latency | ARS Rating | Verdict |
 | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| 🥇 | **ReAct w/ Retry & Fallback** | ReAct + Backoff & Fallback | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 5.8 | 350 | $0.000188 | 0.23s | **91.9** | Production Ready (High Reliability) |
-| 🥈 | **LangGraph Agent** | State Graph Checkpoints | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 3.7 | 446 | $0.000224 | 0.37s | **91.7** | Production Ready (High Reliability) |
-| 🥉 | **Custom JSON Agent** | Configured Schema Policy | **10/10 (100.0%)** | 7/10 | **7/7 (100.0%)** | 5.1 | 286 | $0.000156 | 0.50s | **91.6** | Production Ready (High Reliability) |
-| 4 | **Naive ReAct Loop (No Retry)** | Baseline Unhedged Loop | **3/10 (30.0%)** | 7/10 | **0/7 (0.0%)** | 5.4 | 351 | $0.000129 | 0.41s | **42.7** | Critical Failure Risk (Unhedged) |
+| 🥇 | **ReAct w/ Retry & Fallback** | ReAct + Backoff & Fallback | **110/120 (91.7%)** | 27/30 | **27/30 (90.0%)** | 4.1 | 380 | $0.000188 | 0.23s | **89.65** | Simulation-Validated: High Reliability |
+| 🥈 | **LangGraph Agent** | State Graph Checkpoints | **100/120 (83.3%)** | 24/30 | **24/30 (80.0%)** | 4.6 | 380 | $0.000224 | 0.37s | **84.12** | Simulation-Validated: High Reliability |
+| 🥉 | **Custom JSON Agent** | Configured Schema Policy | **93/120 (77.5%)** | 21/30 | **21/30 (70.0%)** | 4.6 | 380 | $0.000156 | 0.50s | **78.90** | Simulation-Validated: Needs Guardrails |
+| 4 | **Naive ReAct Loop (No Retry)** | Baseline Unhedged Loop | **48/120 (40.0%)** | 2/30 | **2/30 (6.7%)** | 4.1 | 380 | $0.000129 | 0.41s | **36.45** | Critical Failure Risk (Unhedged) |
 
 ---
 

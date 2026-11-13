@@ -390,7 +390,7 @@ def create_deck():
 
     s9_cards = [
         ("Causal Failure Attribution", "Goes beyond pass/fail red Xs to perform root-cause trace diagnosis:\n• 5 Failure Taxonomies: TOOL_OUTAGE, BAD_ARGUMENTS, MALFORMED_RESPONSE, DATA_OUTAGE, INSTRUCTION_HIJACK.\n• Trace parser pinpoints exact failing step, HTTP code, and provides actionable engineering recommendations."),
-        ("Counterfactual Replay Engine", "Enables 'What-If' root-cause verification without modifying production code:\n• Injects runtime patches: Bifrost Failover, Exponential Backoff, Tool Auto-Heal, Schema Repair Parser.\n• Proves impact with quantified deltas: e.g. +100% Success, -48.7% Cost, +72 pts ARS Gain."),
+        ("Counterfactual Replay Engine", "Enables 'What-If' root-cause verification without modifying production code:\n• Injects runtime patches: Bifrost Failover, Exponential Backoff, Tool Auto-Heal, Schema Repair Parser.\n• Proves impact with quantified deltas: e.g. +100% Success, -45.0% Cost, +71.0 pts ARS Gain (25.0 → 96.0 pts)."),
         ("Automated CI/CD Quality Gate", "Enforces regression prevention before agents reach production:\n• CLI Gate Runner: python scripts/agent_quality_gate.py --min-ars 75.0\n• GitHub Actions: Automatically blocks PRs on failure.\n• Full 15-Test Unit Suite: 100% passing across verifiers, sandbox, and ARS math.")
     ]
     for idx, (sc_t, sc_d) in enumerate(s9_cards):

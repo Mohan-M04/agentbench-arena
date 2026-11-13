@@ -96,15 +96,15 @@ Rather than merely returning an uninformative "task failed" red X, AgentBench Ar
 ```text
 Original Run
 Agent: Naive ReAct Loop (Unhedged)
-Result: FAILED (20 pts)
-Steps: 6 | Cost: $0.000410
+Result: FAILED (25.0 pts)
+Steps: 6 | Cost: $0.000400
 Cause: Downstream HTTP 500 Server Crash in Tool Execution
 
 Counterfactual Replay
-Intervention: Added Exponential Backoff Retry Policy
-Result: PASSED (RECOVERED) (92 pts)
-Steps: 4 (Saved 2 steps) | Cost: $0.000210 (-48.7%)
-Improvement: +100% Task Success, -48.7% Cost, +72 pts ARS Gain
+Intervention: Enable Bifrost Gateway Failover
+Result: PASSED (RECOVERED) (96.0 pts)
+Steps: 4 (Saved 2 steps) | Cost: $0.000220 (-45.0%)
+Improvement: +100% Task Success, -45.0% Cost, +71.0 pts ARS Gain
 ```
 
 ### 4. Adaptive Chaos Engine (Dynamic Breaking-Point Escalation)
@@ -140,11 +140,11 @@ $$\text{Safety-Adjusted ARS} = \max(0, \text{Raw ARS} - \sum \text{Safety Penalt
 ### Normalization Rules
 * **Success Rate:** Raw task completion percentage $[0, 100]$.
 * **Recovery Rate:** Ratio of successfully handled faults over total faults faced $[0, 100]$.
-* **Cost Score:** Normalizes average task cost against a calibrated benchmark budget ceiling ($\text{Cost\_Ceiling} = \$0.0125$ per task):  
-  $$\text{Cost Score} = \max\left(10, \min\left(100, 100 \times \left(1 - \frac{\text{Cost}}{\text{Cost\_Ceiling}}\right)\right)\right), \quad \text{where } \text{Cost\_Ceiling} = \$0.0125$$
+* **Cost Score:** Normalizes average task cost against a calibrated benchmark budget ceiling ($\text{Cost Ceiling} = \$0.0125$ per task):  
+  $$\text{Cost Score} = \max\left(10, \min\left(100, 100 \times \left(1 - \frac{\text{Cost}}{\text{Cost Ceiling}}\right)\right)\right), \quad \text{where } \text{Cost Ceiling} = \$0.0125$$
   *(The multiplier $100 / 0.0125 = 8000$ scales simulated unit costs into a standard 0–100 efficiency score).*
 * **Speed Score:** Normalizes elapsed wall-clock latency in seconds against a 10-second timeout ceiling:  
-  $$\text{Speed Score} = \max(20, \min(100, 100 - (\text{Latency\_seconds} \times 10)))$$
+  $$\text{Speed Score} = \max(20, \min(100, 100 - (\text{Latency (sec)} \times 10)))$$
   *(Latency is measured in elapsed wall-clock seconds. The linear formula awards 100 points to instantaneous response, deducting 10 points per elapsed second, with an operational floor of 20 points for tasks completing under the 10-second timeout).*
 * **Consistency Score:** Measures execution stability across repeated evaluation runs:  
   $$\text{Consistency Score} = \max(30, 100 - (\text{Variance} \times 2))$$
@@ -323,7 +323,7 @@ For judges reviewing the submission video, this 3-minute flow demonstrates how A
 5. **Step 5: Causal Root-Cause Attribution (1:20 - 1:40)**  
    *Highlight diagnosis:* UI highlights `Primary Cause: TOOL_OUTAGE` and suggests `Recommended Fix: Add Exponential Backoff Retry Policy`.
 6. **Step 6: Counterfactual Replay ("What-If" Fix) (1:40 - 2:10)**  
-   *One-click patch:* Click **"Apply Intervention: Backoff Retry Policy"**. Replay executes instantly showing before/after comparison: `+100% Success, -48.7% Cost, +72 pts ARS Gain`.
+   *One-click patch:* Click **"Apply Intervention: Bifrost Gateway Failover"**. Replay executes instantly showing before/after comparison: `+100% Success, -45.0% Cost, +71.0 pts ARS Gain (25.0 → 96.0 pts)`.
 7. **Step 7: Resilience Comparison (2:10 - 2:30)**  
    *Show LangGraph:* State graph checkpoint catches the exception and gracefully reroutes to fallback reasoning.
 8. **Step 8: Safety & Honest Degradation (2:30 - 2:50)**  
