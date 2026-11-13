@@ -28,7 +28,19 @@ jobs:
 
       - name: Run Automated Verification Suite (15 Tests)
         run: |
-          python -m pytest tests/ -v
+          python -m pytest tests/ -v > pytest_log.txt 2>&1 || true
+          cat pytest_log.txt
+          if grep -q "ERROR" pytest_log.txt || grep -q "FAILED" pytest_log.txt || grep -q "No module named" pytest_log.txt; then
+            echo "❌ Pytest detected errors or failures:"
+            exit 1
+          fi
+
+      - name: Upload Test Log Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-log
+          path: pytest_log.txt
 
       - name: Enforce CI/CD Regression Quality Gate (ARS >= 75)
         run: |
