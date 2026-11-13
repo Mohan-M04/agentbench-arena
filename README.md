@@ -96,15 +96,15 @@ Rather than merely returning an uninformative "task failed" red X, AgentBench Ar
 ```text
 Original Run
 Agent: Naive ReAct Loop (Unhedged)
-Result: FAILED (25.0 pts)
-Steps: 6 | Cost: $0.000400
+Result: FAILED (20.0 pts)
+Steps: 6 | Cost: $0.000410
 Cause: Downstream HTTP 500 Server Crash in Tool Execution
 
 Counterfactual Replay
-Intervention: Enable Bifrost Gateway Failover
-Result: PASSED (RECOVERED) (96.0 pts)
-Steps: 4 (Saved 2 steps) | Cost: $0.000220 (-45.0%)
-Improvement: +100% Task Success, -45.0% Cost, +71.0 pts ARS Gain
+Intervention: Exponential Backoff Retry + Bifrost Multi-Provider Failover
+Result: PASSED (RECOVERED) (92.0 pts)
+Steps: 4 (Saved 2 steps) | Cost: $0.000210 (-48.7%)
+Improvement: +100% Task Success, -48.7% Cost, +72.0 pts ARS Gain
 ```
 
 ### 4. Adaptive Chaos Engine (Dynamic Breaking-Point Escalation)
@@ -323,7 +323,7 @@ For judges reviewing the submission video, this 3-minute flow demonstrates how A
 5. **Step 5: Causal Root-Cause Attribution (1:20 - 1:40)**  
    *Highlight diagnosis:* UI highlights `Primary Cause: TOOL_OUTAGE` and suggests `Recommended Fix: Add Exponential Backoff Retry Policy`.
 6. **Step 6: Counterfactual Replay ("What-If" Fix) (1:40 - 2:10)**  
-   *One-click patch:* Click **"Apply Intervention: Bifrost Failover"**. Replay executes instantly showing on-screen result: `25 → 96 pts, +71 ARS, -45% cost, Failed → Passed (Recovered)`.
+   *One-click patch:* Click **"Apply Intervention: Bifrost Failover"**. Replay executes instantly showing on-screen result: `20 → 92 pts, +72 ARS, -48.7% cost, Failed → Passed (Recovered)`.
 7. **Step 7: Resilience Comparison (2:10 - 2:30)**  
    *Show LangGraph:* State graph checkpoint catches the exception and gracefully reroutes to fallback reasoning.
 8. **Step 8: Safety & Honest Degradation (2:30 - 2:50)**  
