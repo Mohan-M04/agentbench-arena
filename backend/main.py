@@ -18,7 +18,7 @@ if _backend_dir not in sys.path:
     sys.path.insert(0, _backend_dir)
 
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -133,6 +133,10 @@ async def verify_stale_answer(req: StaleVerifyRequest):
 
 
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "..", "frontend")
+
+@app.get("/favicon.ico")
+def favicon():
+    return Response(status_code=204)
 
 @app.get("/")
 def serve_arena():
