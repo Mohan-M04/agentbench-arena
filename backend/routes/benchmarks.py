@@ -127,6 +127,6 @@ def get_comparison(run_id: str, db: Session = Depends(get_db)):
     }
 
 @router.get("/{run_id}/export")
-def export_results(run_id: str, format: str = Query("json", enum=["json", "csv"]), db: Session = Depends(get_db)):
+def export_results(run_id: str, format: str = "json", db: Session = Depends(get_db)):
     data = get_comparison(run_id, db)
     return JSONResponse(content=data)

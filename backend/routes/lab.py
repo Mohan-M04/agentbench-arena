@@ -107,7 +107,7 @@ def get_benchmark_recipes():
     ]
 
 @router.get("/export-report")
-def export_benchmark_report(format: str = Query("markdown", enum=["markdown", "json", "csv"])):
+def export_benchmark_report(format: str = "markdown"):
     """Exports the complete benchmark evaluation report in Markdown, JSON, or CSV."""
     results_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "results"))
 
