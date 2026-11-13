@@ -9,7 +9,8 @@
 > *A Framework-Independent Reliability Engineering Platform & Stress-Testing Observatory for AI Agents.*  
 > **Geek Room AI Global Hackathon (Nov 2026)**  
 > **Primary Track:** *Build a Benchmarking Platform for AI Agents, Not Just Models*  
-> **Key Partners:** **Bifrost by Maxim AI** & **Tavily API**
+> **Key Partners:** **Bifrost by Maxim AI** & **Tavily API**  
+> **Presentation:** [Download the Pitch Deck](AgentBench_Arena_Hackathon_Pitch_Deck.pptx) | [View on GitHub](https://github.com/Mohan-M04/agentbench-arena/blob/main/AgentBench_Arena_Hackathon_Pitch_Deck.pptx)
 
 ---
 
@@ -411,3 +412,4 @@ In compliance with Geek Room Hackathon Rule 2, AI tools were utilized throughout
 * **Developer:** Mohan M (GitHub: [@Mohan-M04](https://github.com/Mohan-M04))
 * **Hackathon:** Geek Room AI Global Hackathon (November 2026)
 * **Primary Track:** Build a Benchmarking Platform for AI Agents, Not Just Models
+* **Pitch Deck:** [Download Presentation (PPTX)](AgentBench_Arena_Hackathon_Pitch_Deck.pptx) | [View on GitHub](https://github.com/Mohan-M04/agentbench-arena/blob/main/AgentBench_Arena_Hackathon_Pitch_Deck.pptx)
