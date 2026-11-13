@@ -1315,6 +1315,9 @@
       checkGatewayStatus();
       setInterval(checkGatewayStatus, 5000);
       const params = new URLSearchParams(window.location.search);
+      if (params.get("screen") === "lab") {
+        setScreen("lab");
+      }
       if (params.get("duel") === "1") {
         setTimeout(launchArenaDuel, 800);
       }

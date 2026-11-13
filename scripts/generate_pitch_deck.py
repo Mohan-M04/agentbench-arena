@@ -300,8 +300,8 @@ def create_deck():
 
     # Reliability Classification Cards
     tiers = [
-        ("ARS >= 88.0", "Production Ready", "High resilience with state checkpointing or retry policies. Passes fault injection and baseline tasks reliably."),
-        ("70.0 - 87.9", "Needs Guardrails", "Passes baseline tasks and transient errors, but requires supervisory oversight on persistent outages."),
+        ("ARS >= 80.0", "High Reliability", "High resilience with state checkpointing or retry policies. Passes fault injection and baseline tasks reliably."),
+        ("70.0 - 79.9", "Needs Guardrails", "Passes baseline tasks and transient errors; satisfies CI gate (ARS >= 75), but requires supervisory oversight on persistent outages."),
         ("< 50.0", "Critical Failure Risk", "Unhedged loop. Lacks retry/fallback logic; repeated failures cause task abortion.")
     ]
     for idx, (tr_n, tr_v, tr_d) in enumerate(tiers):
