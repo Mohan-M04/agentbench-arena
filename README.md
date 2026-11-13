@@ -409,7 +409,7 @@ In compliance with Geek Room Hackathon Rule 2, AI tools were utilized throughout
 ---
 
 ## 👥 Authors & Submission
-* **Developer:** Mohan M (GitHub: [@Mohan-M04](https://github.com/Mohan-M04))
+* **Developer:** Mohan M (GitHub: [@Mohan-M04](https://github.com/Mohan-M04) | Email: mohanachar20054@gmail.com)
 * **Hackathon:** Geek Room AI Global Hackathon (November 2026)
 * **Primary Track:** Build a Benchmarking Platform for AI Agents, Not Just Models
 * **Pitch Deck:** [Download Presentation (PPTX)](AgentBench_Arena_Hackathon_Pitch_Deck.pptx) | [View on GitHub](https://github.com/Mohan-M04/agentbench-arena/blob/main/AgentBench_Arena_Hackathon_Pitch_Deck.pptx)
