@@ -27,7 +27,20 @@ jobs:
 
       - name: Run Automated Verification Suite (15 Tests)
         run: |
-          python -m pytest tests/ -v
+          set -o pipefail
+          python -m pytest tests/ -v -s --tb=short 2>&1 | tee pytest_results.log
+
+      - name: Publish Pytest Diagnostics to Step Summary
+        if: always()
+        run: |
+          echo "### 🧪 Automated Verification Suite Results" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          if [ -f pytest_results.log ]; then
+            cat pytest_results.log >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No pytest log found." >> $GITHUB_STEP_SUMMARY
+          fi
+          echo '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Enforce CI/CD Regression Quality Gate (ARS >= 75)
         run: |
