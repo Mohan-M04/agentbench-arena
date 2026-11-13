@@ -458,7 +458,7 @@
             </div>
             <div class="flex items-center gap-2">
               <span class="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-300 flex items-center gap-1.5 font-bold">
-                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i> CI/CD Gate: PASSED (ARS &gt;= 85)
+                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i> CI/CD Gate: PASSED (ARS &gt;= 75)
               </span>
             </div>
           </div>
@@ -1089,31 +1089,107 @@
 
     function initParetoChart() {
       if (paretoChartInstance) return;
-      const ctx = document.getElementById('paretoChart').getContext('2d');
+      const canvas = document.getElementById('paretoChart');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const agentsData = [
+        { label: 'ReAct w/ Retry', x: 0.000188, y: 91.7, color: '#10b981' },
+        { label: 'LangGraph Agent', x: 0.000224, y: 83.3, color: '#06b6d4' },
+        { label: 'Custom JSON Agent', x: 0.000156, y: 77.5, color: '#f59e0b' },
+        { label: 'Naive ReAct Loop', x: 0.000129, y: 40.0, color: '#f43f5e' }
+      ];
+
+      const xs = agentsData.map(a => a.x);
+      const ys = agentsData.map(a => a.y);
+      const padX = (Math.max(...xs) - Math.min(...xs)) * 0.25 || 0.00003;
+
+      const pointLabelsPlugin = {
+        id: 'pointLabels',
+        afterDatasetsDraw(chart) {
+          const { ctx, scales: { x, y } } = chart;
+          chart.data.datasets.forEach((dataset) => {
+            dataset.data.forEach((point) => {
+              const px = x.getPixelForValue(point.x);
+              const py = y.getPixelForValue(point.y);
+              ctx.save();
+              ctx.font = '600 10px "JetBrains Mono", monospace';
+              ctx.fillStyle = '#e2e8f0';
+              ctx.textAlign = 'left';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(`${point.label} (${point.y}%)`, px + 10, py);
+              ctx.restore();
+            });
+          });
+        }
+      };
+
       paretoChartInstance = new Chart(ctx, {
         type: 'scatter',
         data: {
           datasets: [{
-            label: 'Agents (Cost vs Reliability)',
-            data: [
-              { x: 0.0001, y: 30, label: 'Naive ReAct (Baseline)' },
-              { x: 0.0002, y: 92, label: 'ReAct w/ Retry' },
-              { x: 0.0003, y: 92, label: 'LangGraph (Pareto Optimal)' },
-              { x: 0.0002, y: 92, label: 'Custom JSON Agent' }
-            ],
-            backgroundColor: ['#6366f1', '#06b6d4', '#10b981', '#f43f5e'],
-            pointRadius: 8
+            label: 'Agents (Cost vs Success Rate)',
+            data: agentsData,
+            backgroundColor: agentsData.map(a => a.color),
+            borderColor: '#ffffff',
+            borderWidth: 1.5,
+            pointRadius: 8,
+            pointHoverRadius: 11
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          scales: {
-            x: { title: { display: true, text: 'Cost per Task (USD)', color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
-            y: { title: { display: true, text: 'Success Rate (%)', color: '#94a3b8' }, min: 50, max: 100, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+          layout: {
+            padding: {
+              right: 140, // space for text labels so they don't clip
+              top: 15,
+              bottom: 10
+            }
           },
-          plugins: { legend: { display: false } }
-        }
+          scales: {
+            x: {
+              title: { display: true, text: 'Cost per Task (USD)', color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } },
+              min: Math.max(0, Math.min(...xs) - padX),
+              max: Math.max(...xs) + padX,
+              grid: { color: 'rgba(255, 255, 255, 0.06)' },
+              ticks: {
+                color: '#94a3b8',
+                font: { family: 'JetBrains Mono', size: 9 },
+                callback: (val) => `$${Number(val).toFixed(6)}`
+              }
+            },
+            y: {
+              title: { display: true, text: 'Task Success Rate (%)', color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } },
+              min: Math.max(0, Math.min(...ys) - 15),
+              max: Math.min(100, Math.max(...ys) + 5),
+              grid: { color: 'rgba(255, 255, 255, 0.06)' },
+              ticks: {
+                color: '#94a3b8',
+                font: { family: 'JetBrains Mono', size: 9 },
+                callback: (val) => `${val}%`
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.95)',
+              titleColor: '#38bdf8',
+              bodyColor: '#f8fafc',
+              borderColor: 'rgba(255, 255, 255, 0.1)',
+              borderWidth: 1,
+              padding: 10,
+              callbacks: {
+                label: function(context) {
+                  const p = context.raw;
+                  return `${p.label} — Success: ${p.y}%, Cost: $${p.x.toFixed(6)}`;
+                }
+              }
+            }
+          }
+        },
+        plugins: [pointLabelsPlugin]
       });
     }
 

@@ -422,7 +422,7 @@ def create_deck():
     add_header(s10, "Impact, Scalability & Roadmap")
 
     s10_cards = [
-        ("CI/CD Regression Quality Gate (Shipped)", "Integrates AgentBench Arena via GitHub Actions (agent-reliability-gate.yml) and CLI to enforce ARS >= 85 and zero-hallucination gates on every PR."),
+        ("CI/CD Regression Quality Gate (Shipped)", "Integrates AgentBench Arena via GitHub Actions (agent-reliability-gate.yml) and CLI to enforce ARS >= 75 and zero-hallucination gates on every PR."),
         ("Multi-Agent Swarm Testing (Future Work)", "Extend chaos harness to multi-agent communication protocols (A2A), simulating network partition drops, stale state broadcast, and deadlocks."),
         ("Adaptive Chaos & Causal Autopsy", "Dynamically escalates failures from transient 500s to rate-limits, diagnosing root causes and replaying counterfactual optimization patches."),
         ("Bifrost Ecosystem Value", "Positions Maxim AI Bifrost as the foundational gateway and failover backbone for production agent deployments.")

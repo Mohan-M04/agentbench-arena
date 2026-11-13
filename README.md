@@ -14,9 +14,7 @@
 ---
 
 > [!IMPORTANT]
-> **Execution Provenance: Simulation Mode vs. Live Bifrost Mode**
-> * **Simulation Mode (Default & Benchmark Baseline):** Fully deterministic local emulation of Bifrost gateway proxying, token accounting, and tool failure injection. No external cloud API calls or costs are incurred. Designed for reproducible benchmarking, zero-key quickstarts, and automated CI regression gates.
-> * **Live Bifrost Mode (Opt-In Production Proxy):** Connects to a locally running Maxim AI Bifrost gateway daemon (`localhost:8080`) with configured provider keys. Measures live network socket routing, multi-provider failover behavior, upstream latency, and token billing.
+> **Evaluation Mode & Provenance.** Results in this repo come from a deterministic, seeded harness (`--seed 42`) that injects identical fault schedules (HTTP 500/429, malformed JSON, provider dropout, adversarial prompts) into each agent architecture. Seeding makes every run reproducible, free, and CI-friendly. Read the numbers as a comparison of architectures under the same failures, not as a benchmark of any specific LLM. Live mode routes calls through the Bifrost gateway and uses Tavily for retrieval.
 >
 > *Every raw telemetry file and report explicitly logs its execution provenance (`mode: SIMULATION_MODE` vs `mode: LIVE_BIFROST`). Simulated results are never labeled as live results.*
 
