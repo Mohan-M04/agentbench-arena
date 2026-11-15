@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: agentbench-arena
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: HOST
+        value: 0.0.0.0

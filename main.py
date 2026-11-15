@@ -25,8 +25,10 @@ if __name__ == "__main__":
     parser.add_argument("--runs", type=int, default=10, help="Repeated runs per task")
     parser.add_argument("--seed", type=int, default=42, help="Deterministic random seed for reproducibility")
     parser.add_argument("--export", type=str, default="all", choices=["all", "json", "csv", "markdown", "none"], help="Export formats")
-    parser.add_argument("--host", type=str, default="127.0.0.1", help="Web server host (defaults to 127.0.0.1 for local Windows compatibility)")
-    parser.add_argument("--port", type=int, default=8000, help="Web server port")
+    default_host = os.environ.get("HOST", "127.0.0.1")
+    default_port = int(os.environ.get("PORT", 8000))
+    parser.add_argument("--host", type=str, default=default_host, help="Web server host (defaults to 127.0.0.1 locally, or HOST env var for cloud deployment)")
+    parser.add_argument("--port", type=int, default=default_port, help="Web server port (defaults to 8000, or PORT env var)")
     parser.add_argument("--reload", action="store_true", default=False, help="Enable auto-reload (requires working multiprocessing)")
 
     args, unknown = parser.parse_known_args()
