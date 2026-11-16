@@ -4,10 +4,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from dotenv import load_dotenv
 
-ENV_PATH = Path(__file__).resolve().parent / ".env"
+BACKEND_DIR = Path(__file__).resolve().parent
+ENV_PATH = BACKEND_DIR / ".env"
 load_dotenv(dotenv_path=ENV_PATH)
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./agentbench.db")
+DEFAULT_DB_PATH = (BACKEND_DIR / "agentbench.db").as_posix()
+DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DEFAULT_DB_PATH}")
 
 connect_args = {}
 if DATABASE_URL.startswith("sqlite"):
